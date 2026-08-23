@@ -1,0 +1,4 @@
+interface:
+  display_name: "Define Goal"
+  short_description: "Turn a request into a verifiable goal"
+  default_prompt: "Use $define-goal to turn this request into a concise, verifiable goal."

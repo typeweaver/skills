@@ -1,0 +1,4 @@
+interface:
+  display_name: "Craft It"
+  short_description: "Implement maintainable, repository-native software"
+  default_prompt: "Use $craft-it to implement this change with maintainable structure, durable documentation, and strong tests."

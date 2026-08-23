@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask Barbara Liskov"
+  short_description: "Judge contracts through Liskov's mindset"
+  default_prompt: "Use $ask-barbara-liskov to judge these contracts through Barbara Liskov's engineering mindset."

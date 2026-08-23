@@ -1,0 +1,4 @@
+interface:
+  display_name: "Aurelius"
+  short_description: "A trusted senior engineering companion"
+  default_prompt: "Use $aurelius as my trusted senior engineering companion for this work."

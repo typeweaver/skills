@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conventional Commit"
+  short_description: "Create coherent Conventional Commits"
+  default_prompt: "Use $conventional-commit to commit this work as coherent Conventional Commits."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review It"
+  short_description: "Review a local change or complete pull request"
+  default_prompt: "Use $review-it to independently review this local change or complete pull request."

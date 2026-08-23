@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan It"
+  short_description: "Create a durable, handoff-ready engineering plan"
+  default_prompt: "Use $plan-it to turn this shared understanding into a durable engineering plan."

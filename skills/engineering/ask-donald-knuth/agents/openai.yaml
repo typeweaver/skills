@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask Donald Knuth"
+  short_description: "Judge algorithms through Knuth's mindset"
+  default_prompt: "Use $ask-donald-knuth to judge this algorithm through Donald Knuth's engineering mindset."

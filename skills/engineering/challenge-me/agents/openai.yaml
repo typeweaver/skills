@@ -1,0 +1,4 @@
+interface:
+  display_name: "Challenge Me"
+  short_description: "Shape and challenge an unclear problem"
+  default_prompt: "Use $challenge-me to shape this idea into a shared, decision-ready understanding."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask Rich Hickey"
+  short_description: "Judge engineering through Rich Hickey's mindset"
+  default_prompt: "Use $ask-rich-hickey to judge this problem through Rich Hickey's engineering mindset."

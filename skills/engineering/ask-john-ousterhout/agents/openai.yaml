@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask John Ousterhout"
+  short_description: "Judge design through Ousterhout's mindset"
+  default_prompt: "Use $ask-john-ousterhout to judge this design through John Ousterhout's engineering mindset."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Pull Request"
+  short_description: "Create or update a focused pull request"
+  default_prompt: "Use $create-pull-request to present this completed work as a focused pull request."

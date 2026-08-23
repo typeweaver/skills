@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask Martin Fowler"
+  short_description: "Judge change through Martin Fowler's mindset"
+  default_prompt: "Use $ask-martin-fowler to judge this change through Martin Fowler's engineering mindset."

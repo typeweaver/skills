@@ -1,0 +1,4 @@
+interface:
+  display_name: "To Issues"
+  short_description: "Record follow-ups locally or sync approved issues"
+  default_prompt: "Use $to-issues to record these follow-ups locally and sync them externally only when authorized."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "PR Review Loop"
+  short_description: "Handle review feedback until the PR is merged"
+  default_prompt: "Use $pr-review-loop to handle review feedback until this pull request is merged."

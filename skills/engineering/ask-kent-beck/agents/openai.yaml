@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask Kent Beck"
+  short_description: "Judge change through Kent Beck's mindset"
+  default_prompt: "Use $ask-kent-beck to judge this change through Kent Beck's engineering mindset."
