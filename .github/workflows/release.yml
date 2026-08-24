@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency: release-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  # Required for npm trusted publishing (OIDC) and provenance.
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          # Node 24 ships an npm recent enough for trusted publishing.
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Create the version PR or publish to npm
+        # With open changesets this opens/updates a "Version Packages" PR.
+        # Merging that PR re-runs this job with no open changesets, which
+        # publishes typeweaver-skills to npm via trusted publishing.
+        # Precondition (one-time): the package exists on npm under the rexeus
+        # org with this repository and workflow configured as its trusted
+        # publisher; the first release is published manually by a logged-in
+        # owner.
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,6 @@
 {
   "name": "typeweaver-skills",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Guided installer for Typeweaver Skills: software-engineering skills and agents for Claude Code, Codex, OpenCode, and Kiro",
   "keywords": [
     "agent-skills",
@@ -25,6 +25,10 @@
     "content"
   ],
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "bundle-content": "node dist/src/bundle-content.js",

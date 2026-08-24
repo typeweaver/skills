@@ -65,6 +65,12 @@ small, explicit, and portable across supported agent harnesses.
   harness's native format.
 - Prefer a small set of durable roles over overlapping specialist agents.
 
+## Releases
+
+- The npm package `typeweaver-skills` is versioned with Changesets: add a
+  changeset (`pnpm changeset`) to every release-worthy change. The release
+  workflow opens a version PR on `main`; merging it publishes to npm.
+
 ## Safety
 
 - Preserve unrelated working-tree changes.
