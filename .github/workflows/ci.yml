@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash -n scripts/*.sh
+      - run: ./scripts/check-skills.sh
+      - run: ./scripts/check-agents.sh
+      - run: ./scripts/link-skills.sh --dry-run
+      - run: ./scripts/link-agents.sh --dry-run
+      - run: git diff --check
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+
+  cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - name: Generated adapters must match their sources
+        run: pnpm generate:check
+      - name: Non-interactive install round trip
+        working-directory: cli
+        run: |
+          node dist/src/bundle-content.js
+          export HOME="$RUNNER_TEMP/home"
+          # XDG_CONFIG_HOME is the XDG Base Directory config root
+          # (default ~/.config); OpenCode and our receipt live under it.
+          export XDG_CONFIG_HOME="$HOME/.config"
+          mkdir -p "$HOME/.claude" "$HOME/.codex" "$HOME/.config/opencode" "$HOME/.kiro"
+          node dist/src/bin.js install --claude-code --codex --opencode --kiro --yes < /dev/null
+          node dist/src/bin.js doctor < /dev/null
+          node dist/src/bin.js uninstall < /dev/null
