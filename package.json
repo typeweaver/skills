@@ -1,0 +1,15 @@
+{
+  "name": "typeweaver-skills-workspace",
+  "private": true,
+  "scripts": {
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "generate": "pnpm --filter typeweaver-skills run build && node cli/dist/src/bin.js generate --repo .",
+    "generate:check": "pnpm --filter typeweaver-skills run build && node cli/dist/src/bin.js generate --repo . --check",
+    "test": "pnpm --filter typeweaver-skills test"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.64.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}
