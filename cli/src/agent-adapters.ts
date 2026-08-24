@@ -5,7 +5,7 @@ import YAML from "yaml";
  * `instructions.md`. The shared instruction body is identical across
  * harnesses; everything harness-specific is adapter frontmatter data.
  */
-export interface AgentSpec {
+export type AgentSpec = {
   readonly name: string;
   readonly description: string;
   readonly instructions: string;
@@ -15,12 +15,12 @@ export interface AgentSpec {
     readonly codex?: AdapterSpec;
     readonly "codex-profile"?: AdapterSpec;
   };
-}
+};
 
-export interface AdapterSpec {
+export type AdapterSpec = {
   readonly description?: string;
   readonly frontmatter?: Record<string, unknown>;
-}
+};
 
 const MARKER = "# Managed by typeweaver/skills; do not edit — generated from";
 
@@ -29,7 +29,7 @@ const yamlBlock = (data: Record<string, unknown>): string =>
 
 /** Quotes and escapes a value so it is a valid TOML string literal. */
 const escapeTomlValue = (value: string): string =>
-  `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+  `"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
 
 const markdownAdapter = (frontmatter: Record<string, unknown>, instructions: string): string =>
   `---\n${yamlBlock(frontmatter)}\n---\n\n${instructions.trim()}\n`;

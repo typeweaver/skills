@@ -6,21 +6,21 @@ import { envFromProcess } from "../env.js";
 import { nextReceiptFiles, planInstall, planOrphans } from "../planner.js";
 import { readReceipt, writeReceipt } from "../receipt.js";
 
-export interface InstallSelection {
+export type InstallSelection = {
   readonly harnesses: ReadonlyArray<Harness>;
   /** Empty means: everything the package contains. */
   readonly skills: ReadonlyArray<string>;
   readonly agents: ReadonlyArray<string>;
   readonly dryRun: boolean;
-}
+};
 
-export interface RunReport {
+export type RunReport = {
   readonly created: number;
   readonly updated: number;
   readonly unchanged: number;
   readonly preserved: ReadonlyArray<string>;
   readonly removed: number;
-}
+};
 
 export const runInstall = Effect.fn("commands.install")(function* (
   selection: InstallSelection,
@@ -31,11 +31,18 @@ export const runInstall = Effect.fn("commands.install")(function* (
   const index = yield* indexContent(root);
 
   const skills =
-    selection.skills.length > 0 ? selection.skills : Array.from(index.skills.keys()).sort();
+    selection.skills.length > 0 ? selection.skills : Array.from(index.skills.keys()).toSorted();
   const agents =
-    selection.agents.length > 0 ? selection.agents : Array.from(index.agents.keys()).sort();
+    selection.agents.length > 0 ? selection.agents : Array.from(index.agents.keys()).toSorted();
 
-  const desired = yield* desiredFiles(root, index, selection.harnesses, skills, agents, env);
+  const desired = yield* desiredFiles({
+    agents,
+    env,
+    harnesses: selection.harnesses,
+    index,
+    root,
+    skills,
+  });
   const desiredHashes = new Map(desired.map((file) => [file.target, file.hash]));
   const receipt = yield* readReceipt(env);
   const disk = yield* diskState(new Set([...desiredHashes.keys(), ...Object.keys(receipt.files)]));

@@ -1,9 +1,8 @@
 import { Console, Effect, FileSystem } from "effect";
 import { Command, Flag, Prompt } from "effect/unstable/cli";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import type { Harness } from "./domain.js";
-import { HARNESSES } from "./domain.js";
+import { HARNESSES, isRecord } from "./domain.js";
 import { detectHarnesses, envFromProcess } from "./env.js";
 import { NoHarnessDetectedError, NonInteractiveWithoutFlagsError } from "./errors.js";
 import { runDoctor } from "./commands/doctor.js";
@@ -22,9 +21,10 @@ const parseCommaList = (value: string): ReadonlyArray<string> =>
 const packageVersion: Effect.Effect<string, never, FileSystem.FileSystem> = Effect.gen(
   function* () {
     const fs = yield* FileSystem.FileSystem;
-    const pkgPath = join(dirname(dirname(dirname(fileURLToPath(import.meta.url)))), "package.json");
+    const pkgPath = join(dirname(dirname(import.meta.dirname)), "package.json");
     const raw = yield* fs.readFileString(pkgPath);
-    return (JSON.parse(raw) as { version: string }).version;
+    const value: unknown = JSON.parse(raw);
+    return isRecord(value) && typeof value["version"] === "string" ? value["version"] : "0.0.0";
   },
 ).pipe(Effect.orElseSucceed(() => "0.0.0"));
 
@@ -67,12 +67,16 @@ type InstallConfig = {
 const resolveHarnesses = (config: InstallConfig) =>
   Effect.gen(function* () {
     const flagged = HARNESSES.filter((harness) => config[harness]);
-    if (flagged.length > 0) return flagged;
+    if (flagged.length > 0) {
+      return flagged;
+    }
 
     const detected = yield* detectHarnesses(envFromProcess());
-    if (config.yes) return detected;
+    if (config.yes) {
+      return detected;
+    }
 
-    if (process.stdout.isTTY !== true) {
+    if (!process.stdout.isTTY) {
       return yield* new NonInteractiveWithoutFlagsError({
         message:
           "No TTY and no harness flags. Pass explicit flags, e.g. " +
@@ -95,7 +99,7 @@ const install = Command.make("install", installFlags, (config) =>
   Effect.gen(function* () {
     const harnesses = yield* resolveHarnesses(config);
     if (harnesses.length === 0) {
-      return yield* new NoHarnessDetectedError({
+      yield* new NoHarnessDetectedError({
         message:
           "No harness selected or detected (~/.claude, ~/.codex, ~/.config/opencode, ~/.kiro).",
       });

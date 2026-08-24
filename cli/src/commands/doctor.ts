@@ -25,16 +25,24 @@ export const runDoctor = Effect.fn("commands.doctor")(function* (packageVersion:
   let healthy = 0;
   for (const [target, hash] of Object.entries(receipt.files)) {
     const onDisk = disk.get(target);
-    if (onDisk === undefined) missing.push(target);
-    else if (onDisk !== hash) modified.push(target);
-    else healthy += 1;
+    if (onDisk === undefined) {
+      missing.push(target);
+    } else if (onDisk !== hash) {
+      modified.push(target);
+    } else {
+      healthy += 1;
+    }
   }
 
   yield* Console.log(
     `Files: ${healthy} healthy, ${modified.length} modified, ${missing.length} missing`,
   );
-  for (const path of modified) yield* Console.log(`  modified: ${path}`);
-  for (const path of missing) yield* Console.log(`  missing: ${path}`);
+  for (const path of modified) {
+    yield* Console.log(`  modified: ${path}`);
+  }
+  for (const path of missing) {
+    yield* Console.log(`  missing: ${path}`);
+  }
   if (receipt.packageVersion !== packageVersion) {
     yield* Console.log(
       `Update available: installed content is from ${receipt.packageVersion}. Run \`typeweaver-skills update\`.`,

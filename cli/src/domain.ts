@@ -9,25 +9,25 @@ export type Harness = (typeof HARNESSES)[number];
  * configuration root, `$XDG_CONFIG_HOME` when set and `~/.config` otherwise.
  * OpenCode and our receipt live under it.
  */
-export interface Env {
+export type Env = {
   readonly home: string;
   readonly codexHome: string;
   readonly configHome: string;
-}
+};
 
 /** One file the installer wants to exist, with its rendered content. */
-export interface DesiredFile {
+export type DesiredFile = {
   readonly target: string;
   readonly content: Uint8Array;
   readonly hash: string;
-}
+};
 
 /** What the installer remembers about files it manages. */
-export interface Receipt {
+export type Receipt = {
   readonly packageVersion: string;
   readonly harnesses: ReadonlyArray<Harness>;
   readonly files: Readonly<Record<string, string>>;
-}
+};
 
 export const emptyReceipt: Receipt = {
   packageVersion: "none",
@@ -42,9 +42,13 @@ export type PlannedAction =
   | { readonly _tag: "PreserveUserFile"; readonly target: string }
   | { readonly _tag: "RemoveOrphan"; readonly target: string };
 
-export interface Plan {
+export type Plan = {
   readonly actions: ReadonlyArray<PlannedAction>;
-}
+};
+
+/** Narrowing guard for parsed JSON/YAML values. */
+export const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
 
 export const sha256 = (content: Uint8Array): string =>
   createHash("sha256").update(content).digest("hex");

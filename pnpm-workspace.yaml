@@ -1,2 +1,12 @@
 packages:
   - cli
+
+catalog:
+  "@effect/language-service": 0.87.2
+  "@effect/platform-node": 4.0.0-rc.111
+  "@effect/vitest": 4.0.0-rc.111
+  "@types/node": 24.13.3
+  effect: 4.0.0-rc.111
+  typescript: 5.9.3
+  vitest: 4.1.11
+  yaml: 2.9.0

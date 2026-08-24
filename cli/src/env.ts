@@ -1,13 +1,14 @@
-import { Effect, FileSystem, PlatformError } from "effect";
+import type { PlatformError } from "effect";
+import { Effect, FileSystem } from "effect";
 import { join } from "node:path";
 import type { Env, Harness } from "./domain.js";
 
 export const envFromProcess = (): Env => {
-  const home = process.env.HOME ?? process.env.USERPROFILE ?? "";
+  const home = process.env["HOME"] ?? process.env["USERPROFILE"] ?? "";
   return {
     home,
-    codexHome: process.env.CODEX_HOME ?? join(home, ".codex"),
-    configHome: process.env.XDG_CONFIG_HOME ?? join(home, ".config"),
+    codexHome: process.env["CODEX_HOME"] ?? join(home, ".codex"),
+    configHome: process.env["XDG_CONFIG_HOME"] ?? join(home, ".config"),
   };
 };
 
@@ -25,7 +26,9 @@ export const detectHarnesses = (
     ];
     const found: Array<Harness> = [];
     for (const [harness, dir] of candidates) {
-      if (yield* fs.exists(dir)) found.push(harness);
+      if (yield* fs.exists(dir)) {
+        found.push(harness);
+      }
     }
     return found;
   });

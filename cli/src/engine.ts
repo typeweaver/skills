@@ -1,4 +1,5 @@
-import { Effect, FileSystem, PlatformError } from "effect";
+import type { PlatformError } from "effect";
+import { Effect, FileSystem } from "effect";
 import { dirname } from "node:path";
 import type { DesiredFile, Env, Plan, PlannedAction } from "./domain.js";
 import { sha256 } from "./domain.js";
@@ -14,7 +15,6 @@ type Fx<A> = Effect.Effect<A, PlatformError.PlatformError, FileSystem.FileSystem
  */
 export const diskState = (targets: Iterable<string>): Fx<Map<string, string | undefined>> =>
   Effect.gen(function* () {
-    const fs = yield* FileSystem.FileSystem;
     const disk = new Map<string, string | undefined>();
     for (const target of targets) {
       disk.set(target, yield* hashOnDisk(target));
@@ -26,8 +26,12 @@ const hashOnDisk = (target: string): Fx<string | undefined> =>
   Effect.gen(function* () {
     const fs = yield* FileSystem.FileSystem;
     const link = yield* symlinkInPath(target);
-    if (link !== undefined) return `symlink:${link}`;
-    if (!(yield* fs.exists(target))) return undefined;
+    if (link !== undefined) {
+      return `symlink:${link}`;
+    }
+    if (!(yield* fs.exists(target))) {
+      return undefined;
+    }
     return sha256(yield* fs.readFile(target));
   });
 
@@ -44,7 +48,9 @@ const symlinkInPath = (
     let path = target;
     for (let depth = 0; depth < 4; depth += 1) {
       const link = yield* Effect.orElseSucceed(fs.readLink(path), () => undefined);
-      if (link !== undefined) return path;
+      if (link !== undefined) {
+        return path;
+      }
       path = dirname(path);
     }
     return undefined;
@@ -56,9 +62,13 @@ export const writePlannedFiles = (plan: Plan, files: ReadonlyArray<DesiredFile>)
     const fs = yield* FileSystem.FileSystem;
     const byTarget = new Map(files.map((file) => [file.target, file]));
     for (const action of plan.actions) {
-      if (action._tag !== "Create" && action._tag !== "Update") continue;
+      if (action._tag !== "Create" && action._tag !== "Update") {
+        continue;
+      }
       const file = byTarget.get(action.target);
-      if (file === undefined) continue;
+      if (file === undefined) {
+        continue;
+      }
       yield* fs.makeDirectory(dirname(file.target), { recursive: true });
       yield* fs.writeFile(file.target, file.content);
     }
@@ -87,7 +97,9 @@ const isEmptyDirectory = (dir: string): Effect.Effect<boolean, never, FileSystem
 const removeIfEmpty = (dir: string): Effect.Effect<boolean, never, FileSystem.FileSystem> =>
   Effect.gen(function* () {
     const fs = yield* FileSystem.FileSystem;
-    if (!(yield* isEmptyDirectory(dir))) return false;
+    if (!(yield* isEmptyDirectory(dir))) {
+      return false;
+    }
     yield* Effect.orElseSucceed(fs.remove(dir, { recursive: true }), () => undefined);
     return true;
   });
@@ -117,8 +129,12 @@ const climbAndRemove = (
   Effect.gen(function* () {
     let dir = start;
     for (let depth = 0; depth < 3; depth += 1) {
-      if (keep.has(dir)) return;
-      if (!(yield* removeIfEmpty(dir))) return;
+      if (keep.has(dir)) {
+        return;
+      }
+      if (!(yield* removeIfEmpty(dir))) {
+        return;
+      }
       dir = dirname(dir);
     }
   });

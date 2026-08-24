@@ -4,9 +4,8 @@
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
 import { Console, Effect, FileSystem } from "effect";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 
-const cliDir = dirname(dirname(dirname(fileURLToPath(import.meta.url))));
+const cliDir = dirname(dirname(import.meta.dirname));
 const repoDir = dirname(cliDir);
 const contentDir = join(cliDir, "content");
 

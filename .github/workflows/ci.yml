@@ -28,6 +28,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm format:check
+      - run: pnpm lint
 
   cli:
     runs-on: ubuntu-latest
@@ -39,6 +40,7 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
       - run: pnpm test
       - name: Generated adapters must match their sources
         run: pnpm generate:check

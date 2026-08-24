@@ -1,21 +1,20 @@
-import { Effect, FileSystem, PlatformError } from "effect";
+import type { PlatformError } from "effect";
+import { Effect, FileSystem } from "effect";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import type { DesiredFile, Env, Harness } from "./domain.js";
 import { sha256 } from "./domain.js";
 
 /** Root of the content bundled into the published package. */
-export const contentRoot = (): string =>
-  join(dirname(dirname(dirname(fileURLToPath(import.meta.url)))), "content");
+export const contentRoot = (): string => join(dirname(dirname(import.meta.dirname)), "content");
 
 type Fx<A> = Effect.Effect<A, PlatformError.PlatformError, FileSystem.FileSystem>;
 
-export interface ContentIndex {
+export type ContentIndex = {
   /** skill name -> file paths relative to the skill directory */
   readonly skills: ReadonlyMap<string, ReadonlyArray<string>>;
   /** agent name -> adapter file names present for it */
   readonly agents: ReadonlyMap<string, ReadonlyArray<string>>;
-}
+};
 
 const listFiles = (root: string): Fx<ReadonlyArray<string>> =>
   Effect.gen(function* () {
@@ -23,7 +22,9 @@ const listFiles = (root: string): Fx<ReadonlyArray<string>> =>
     const entries = yield* fs.readDirectory(root, { recursive: true });
     const files: Array<string> = [];
     for (const entry of entries) {
-      if ((yield* fs.stat(join(root, entry))).type === "File") files.push(entry);
+      if ((yield* fs.stat(join(root, entry))).type === "File") {
+        files.push(entry);
+      }
     }
     return files;
   });
@@ -33,7 +34,9 @@ const listDirectories = (root: string): Fx<ReadonlyArray<string>> =>
     const fs = yield* FileSystem.FileSystem;
     const dirs: Array<string> = [];
     for (const entry of yield* fs.readDirectory(root)) {
-      if ((yield* fs.stat(join(root, entry))).type === "Directory") dirs.push(entry);
+      if ((yield* fs.stat(join(root, entry))).type === "Directory") {
+        dirs.push(entry);
+      }
     }
     return dirs;
   });
@@ -58,9 +61,15 @@ export const indexContent = (root: string): Fx<ContentIndex> =>
 const skillRoots = (harnesses: ReadonlyArray<Harness>, env: Env): ReadonlyArray<string> => {
   const roots: Array<string> = [];
   const wantsShared = harnesses.includes("codex") || harnesses.includes("opencode");
-  if (wantsShared) roots.push(join(env.home, ".agents", "skills"));
-  if (harnesses.includes("claude-code")) roots.push(join(env.home, ".claude", "skills"));
-  if (harnesses.includes("kiro")) roots.push(join(env.home, ".kiro", "skills"));
+  if (wantsShared) {
+    roots.push(join(env.home, ".agents", "skills"));
+  }
+  if (harnesses.includes("claude-code")) {
+    roots.push(join(env.home, ".claude", "skills"));
+  }
+  if (harnesses.includes("kiro")) {
+    roots.push(join(env.home, ".kiro", "skills"));
+  }
   return roots;
 };
 
@@ -112,13 +121,21 @@ const skillFiles = (
     return out;
   });
 
-const agentFiles = (
-  root: string,
-  agent: string,
-  presentAdapters: ReadonlyArray<string>,
-  harnesses: ReadonlyArray<Harness>,
-  env: Env,
-): Fx<ReadonlyArray<DesiredFile>> =>
+type AgentFilesOptions = {
+  readonly root: string;
+  readonly agent: string;
+  readonly presentAdapters: ReadonlyArray<string>;
+  readonly harnesses: ReadonlyArray<Harness>;
+  readonly env: Env;
+};
+
+const agentFiles = ({
+  agent,
+  env,
+  harnesses,
+  presentAdapters,
+  root,
+}: AgentFilesOptions): Fx<ReadonlyArray<DesiredFile>> =>
   Effect.gen(function* () {
     const fs = yield* FileSystem.FileSystem;
     const wanted = adapterTargets(agent, env).filter(
@@ -136,22 +153,33 @@ const agentFiles = (
  * Maps the selected harnesses and content to the concrete files an
  * installation must create.
  */
-export const desiredFiles = (
-  root: string,
-  index: ContentIndex,
-  harnesses: ReadonlyArray<Harness>,
-  skillNames: ReadonlyArray<string>,
-  agentNames: ReadonlyArray<string>,
-  env: Env,
-): Fx<ReadonlyArray<DesiredFile>> =>
+export type DesiredFilesOptions = {
+  readonly root: string;
+  readonly index: ContentIndex;
+  readonly harnesses: ReadonlyArray<Harness>;
+  readonly skills: ReadonlyArray<string>;
+  readonly agents: ReadonlyArray<string>;
+  readonly env: Env;
+};
+
+export const desiredFiles = (options: DesiredFilesOptions): Fx<ReadonlyArray<DesiredFile>> =>
   Effect.gen(function* () {
+    const { agents, env, harnesses, index, root, skills } = options;
     const roots = skillRoots(harnesses, env);
     const out: Array<DesiredFile> = [];
-    for (const skill of skillNames) {
+    for (const skill of skills) {
       out.push(...(yield* skillFiles(root, skill, index.skills.get(skill) ?? [], roots)));
     }
-    for (const agent of agentNames) {
-      out.push(...(yield* agentFiles(root, agent, index.agents.get(agent) ?? [], harnesses, env)));
+    for (const agent of agents) {
+      out.push(
+        ...(yield* agentFiles({
+          agent,
+          env,
+          harnesses,
+          presentAdapters: index.agents.get(agent) ?? [],
+          root,
+        })),
+      );
     }
     return out;
   });

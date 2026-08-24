@@ -6,10 +6,19 @@
     "format:check": "oxfmt --check .",
     "generate": "pnpm --filter typeweaver-skills run build && node cli/dist/src/bin.js generate --repo .",
     "generate:check": "pnpm --filter typeweaver-skills run build && node cli/dist/src/bin.js generate --repo . --check",
-    "test": "pnpm --filter typeweaver-skills test"
+    "test": "pnpm --filter typeweaver-skills test",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "typecheck": "pnpm --filter typeweaver-skills typecheck",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm generate:check"
   },
   "devDependencies": {
-    "oxfmt": "^0.64.0"
+    "oxfmt": "^0.64.0",
+    "oxlint": "1.80.0",
+    "oxlint-tsgolint": "7.0.2001"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "packageManager": "pnpm@10.33.0"
 }

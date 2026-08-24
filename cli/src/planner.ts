@@ -41,9 +41,13 @@ export const planOrphans = (
 ): ReadonlyArray<PlannedAction> => {
   const actions: Array<PlannedAction> = [];
   for (const [target, managedHash] of Object.entries(receipt.files)) {
-    if (desired.has(target)) continue;
+    if (desired.has(target)) {
+      continue;
+    }
     const onDisk = disk.get(target);
-    if (onDisk === undefined) continue;
+    if (onDisk === undefined) {
+      continue;
+    }
     actions.push(
       onDisk === managedHash
         ? { _tag: "RemoveOrphan", target }
@@ -68,12 +72,18 @@ export const nextReceiptFiles = (
   for (const action of plan.actions) {
     const previousHash = previous.files[action.target];
     if (action._tag === "PreserveUserFile") {
-      if (previousHash !== undefined) files[action.target] = previousHash;
+      if (previousHash !== undefined) {
+        files[action.target] = previousHash;
+      }
       continue;
     }
-    if (action._tag === "Unchanged" && previousHash === undefined) continue;
+    if (action._tag === "Unchanged" && previousHash === undefined) {
+      continue;
+    }
     const hash = desired.get(action.target);
-    if (hash !== undefined) files[action.target] = hash;
+    if (hash !== undefined) {
+      files[action.target] = hash;
+    }
   }
   return files;
 };

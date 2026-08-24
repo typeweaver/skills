@@ -1,16 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2023",
+    "lib": ["ES2023"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
     "declaration": false,
     "sourceMap": false,
     "outDir": "dist",
     "rootDir": ".",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "plugins": [{ "name": "@effect/language-service" }]
   },
   "include": ["src", "test"]
 }

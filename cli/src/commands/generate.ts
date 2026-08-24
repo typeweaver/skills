@@ -1,8 +1,10 @@
-import { Console, Effect, FileSystem, PlatformError } from "effect";
+import type { PlatformError } from "effect";
+import { Console, Effect, FileSystem } from "effect";
 import { join } from "node:path";
 import YAML from "yaml";
-import type { AgentSpec } from "../agent-adapters.js";
+import type { AdapterSpec, AgentSpec } from "../agent-adapters.js";
 import { ADAPTER_FILES } from "../agent-adapters.js";
+import { isRecord } from "../domain.js";
 import { AgentSourceError, GeneratorDriftError } from "../errors.js";
 
 const loadAgentSpec = (
@@ -17,28 +19,54 @@ const loadAgentSpec = (
     const fs = yield* FileSystem.FileSystem;
     const raw = yield* fs.readFileString(join(agentDir, "agent.yaml"));
     const instructions = yield* fs.readFileString(join(agentDir, "instructions.md"));
-    const parsed = YAML.parse(raw) as Partial<AgentSpec> | null;
+    const value: unknown = YAML.parse(raw);
+    const declaredName = isRecord(value) ? value["name"] : undefined;
+    const description = isRecord(value) ? value["description"] : undefined;
+    const adapters = isRecord(value) ? value["adapters"] : undefined;
     if (
-      parsed === null ||
-      typeof parsed.name !== "string" ||
-      typeof parsed.description !== "string" ||
-      typeof parsed.adapters !== "object"
+      !isRecord(value) ||
+      typeof declaredName !== "string" ||
+      typeof description !== "string" ||
+      !isRecord(adapters)
     ) {
       return yield* new AgentSourceError({
         message: `agents/${name}/agent.yaml must declare name, description, and adapters`,
       });
     }
-    if (parsed.name !== name) {
+    if (declaredName !== name) {
       return yield* new AgentSourceError({
-        message: `agents/${name}/agent.yaml declares name '${parsed.name}'`,
+        message: `agents/${name}/agent.yaml declares name '${declaredName}'`,
       });
     }
     return {
-      name: parsed.name,
-      description: parsed.description,
+      name: declaredName,
+      description,
       instructions,
-      adapters: parsed.adapters ?? {},
+      adapters: yield* parseAdapters(adapters, name),
     };
+  });
+
+const parseAdapters = (
+  value: Record<string, unknown>,
+  agentName: string,
+): Effect.Effect<AgentSpec["adapters"], AgentSourceError> =>
+  Effect.gen(function* () {
+    const adapters: Record<string, AdapterSpec> = {};
+    for (const [key, entry] of Object.entries(value)) {
+      if (!isRecord(entry)) {
+        yield* new AgentSourceError({
+          message: `agents/${agentName}/agent.yaml: adapter '${key}' must be a mapping`,
+        });
+        continue;
+      }
+      const description = entry["description"];
+      const frontmatter = entry["frontmatter"];
+      adapters[key] = {
+        ...(typeof description === "string" ? { description } : {}),
+        ...(isRecord(frontmatter) ? { frontmatter } : {}),
+      };
+    }
+    return adapters;
   });
 
 const renderAgent = (
@@ -63,15 +91,21 @@ export const runGenerate = Effect.fn("commands.generate")(function* (
 
   for (const entry of yield* fs.readDirectory(agentsDir)) {
     const agentDir = join(agentsDir, entry);
-    if ((yield* fs.stat(agentDir)).type !== "Directory") continue;
-    if (!(yield* fs.exists(join(agentDir, "agent.yaml")))) continue;
+    if ((yield* fs.stat(agentDir)).type !== "Directory") {
+      continue;
+    }
+    if (!(yield* fs.exists(join(agentDir, "agent.yaml")))) {
+      continue;
+    }
     const spec = yield* loadAgentSpec(agentDir, entry);
 
     for (const rendered of renderAgent(agentDir, spec)) {
       const current = (yield* fs.exists(rendered.target))
         ? yield* fs.readFileString(rendered.target)
         : undefined;
-      if (current === rendered.content) continue;
+      if (current === rendered.content) {
+        continue;
+      }
       if (check) {
         drifted.push(rendered.label);
         continue;
@@ -83,7 +117,7 @@ export const runGenerate = Effect.fn("commands.generate")(function* (
   }
 
   if (check && drifted.length > 0) {
-    return yield* new GeneratorDriftError({
+    yield* new GeneratorDriftError({
       message: "Generated adapters are out of date. Run `typeweaver-skills generate`.",
       files: drifted,
     });

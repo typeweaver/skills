@@ -84,9 +84,7 @@ bash -n scripts/*.sh
 ./scripts/check-agents.sh
 ./scripts/link-skills.sh --dry-run
 ./scripts/link-agents.sh --dry-run
-npx oxfmt --check .
-(cd cli && npm test)
-(cd cli && node dist/src/bin.js generate --repo .. --check)
+pnpm check
 git diff --check
 ```
 
