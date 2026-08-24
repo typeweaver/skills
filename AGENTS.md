@@ -7,8 +7,12 @@ small, explicit, and portable across supported agent harnesses.
 
 - Put stable software-engineering skills under `skills/engineering/<name>/`.
 - Every skill directory requires `SKILL.md` and `agents/openai.yaml`.
-- Put reusable agent roles under `agents/<name>/` and keep harness adapters
-  named `codex.toml`, `codex-profile.toml`, `claude.md`, or `opencode.md`.
+- Define each agent once in `agents/<name>/agent.yaml` plus `instructions.md`.
+  The harness adapters (`claude.md`, `opencode.md`, `codex.toml`,
+  `codex-profile.toml`) are generated from that source with
+  `typeweaver-skills generate` and stay committed; never edit them by hand.
+- Keep the installer CLI in `cli/`; it bundles `skills/` and `agents/` into
+  the published package at pack time.
 - Keep optional scripts, references, and assets inside the skill that owns them.
 - Keep `CLAUDE.md` as a symlink to `AGENTS.md`; do not duplicate repository
   instructions by harness.
@@ -80,6 +84,9 @@ bash -n scripts/*.sh
 ./scripts/check-agents.sh
 ./scripts/link-skills.sh --dry-run
 ./scripts/link-agents.sh --dry-run
+npx oxfmt --check .
+(cd cli && npm test)
+(cd cli && node dist/src/bin.js generate --repo .. --check)
 git diff --check
 ```
 

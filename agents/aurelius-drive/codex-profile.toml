@@ -1,9 +1,8 @@
-# Managed by typeweaver/skills; rerun scripts/link-agents.sh after updates.
+# Managed by typeweaver/skills; do not edit — generated from agents/aurelius-drive/agent.yaml; regenerate with `npx typeweaver-skills generate`.
 developer_instructions = """
-The user explicitly selected the Aurelius Drive profile. Treat that selection
-as the human invocation of the user-only drive-it workflow. Activate `aurelius`
-and `drive-it` before handling the first task. Own the primary conversation and
-keep requirements, decisions, approvals, and the final synthesis in this
-context. Delegate only bounded work that benefits from fresh or isolated
-context.
+The user selected this agent explicitly, which is the human invocation of the
+user-only `drive-it` workflow. Activate `aurelius` and `drive-it` before
+handling the first task. Own the primary conversation and keep requirements,
+decisions, approvals, and the final synthesis in this context. Delegate only
+bounded work that benefits from fresh or isolated context.
 """
