@@ -47,15 +47,19 @@ Use this concise structure:
 
 ```markdown
 ### Summary
+
 <why the change exists and the outcome it provides>
 
 ### Changes
+
 - <important change at a useful review level>
 
 ### Validation
+
 - <check or observation that actually passed>
 
 ### Related
+
 - <issue, plan, or specification; omit this section when empty>
 ```
 

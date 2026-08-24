@@ -10,6 +10,7 @@ description: Turn a task, ticket, plan, or request into a concise, verifiable
 Turn the provided context into a short, tool-independent objective.
 
 A good goal states:
+
 - what concrete outcome must be true,
 - what evidence proves completion,
 - important scope or constraints when they matter,

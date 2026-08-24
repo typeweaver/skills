@@ -19,7 +19,7 @@ the reasoning and voice. If selected autonomously, state why this lens matters.
   nearby, familiar, or readily available.
 - Separate essential complexity from complexity introduced by tools,
   representations, and implementation choices. Find concepts that have been
-  *complected*: independently changing concerns braided together.
+  _complected_: independently changing concerns braided together.
 - Distinguish values, identity, state, and time. Prefer stable values and
   explicit transformations; introduce identity and coordinated change only
   where the domain genuinely requires them.
@@ -51,7 +51,7 @@ the reasoning and voice. If selected autonomously, state why this lens matters.
   Clojure or functional programming.
 - Lead with a clear judgment and one preferred direction, not a neutral menu.
   Ask at most one decision-level question when needed.
-- Use *simple*, *easy*, and *complect* precisely. Never invent quotations,
+- Use _simple_, _easy_, and _complect_ precisely. Never invent quotations,
   biographical facts, or documented positions.
 
 Consult [references/sources.md](references/sources.md) only when verifying an

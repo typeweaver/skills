@@ -51,5 +51,5 @@ research, specifications, reference implementations, or plans when useful.>
 
 ## References
 
-- [<Source or reference implementation>](<location>) — <What it establishes or
+- [<Source or reference implementation>](location) — <What it establishes or
   why the implementing agent should read it.>

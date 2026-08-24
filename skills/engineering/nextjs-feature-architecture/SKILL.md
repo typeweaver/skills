@@ -110,14 +110,14 @@ operations.
 
 Choose one authoritative owner for every state value:
 
-| State | Typical owner |
-|---|---|
-| Navigable or shareable view state | URL |
-| Transient interaction state | Local Client Component |
-| Persistent UI preference | Cookie or browser storage |
-| Authoritative entity data | Server or data layer |
-| Temporary optimistic projection | Client with explicit reconciliation |
-| Continuously refreshed browser data | Client cache, when justified |
+| State                               | Typical owner                       |
+| ----------------------------------- | ----------------------------------- |
+| Navigable or shareable view state   | URL                                 |
+| Transient interaction state         | Local Client Component              |
+| Persistent UI preference            | Cookie or browser storage           |
+| Authoritative entity data           | Server or data layer                |
+| Temporary optimistic projection     | Client with explicit reconciliation |
+| Continuously refreshed browser data | Client cache, when justified        |
 
 - Put state in the URL when opening a copied URL should restore the view.
 - Treat URL changes as navigation. Prefer links or forms where they fit, and

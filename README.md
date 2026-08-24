@@ -66,49 +66,23 @@ See the [agent catalog](agents/README.md) for harness adapters and usage.
 
 ## Workflow
 
-```text
-Aurelius: trusted senior engineering companion throughout
-drive-it: explicit orchestration of the workflow below
+`drive-it` orchestrates the flow below when explicitly invoked; `aurelius` is
+the companion mindset throughout. Hexagons are human checkpoints.
 
-New or underspecified problem
-            |
-            v
-      challenge-me
-            |
-            v
-         plan-it
-            |
-            v
- brief + implementation authorization
-            |
-            v
-       define-goal
-            |
-            v
-   branch and craft-it
-            |
-            +----------> to-issues (local follow-up records)
-            |
-            v
- review-it (pre-commit; fix findings)
-            |
-            v
-  conventional-commit
-            |
-            v
- create-pull-request
-            |
-            v
- review-it (complete PR, before ready)
-            |
-            v
- delivery brief + external choices
-            |
-            v
-    pr-review-loop
-            |
-            v
-   merged by a human
+```mermaid
+flowchart TD
+    idea([New or underspecified problem]) --> challenge[challenge-me]
+    challenge --> plan[plan-it]
+    plan --> approve{{brief-me: plan approval}}
+    approve --> build["define-goal · branch · craft-it"]
+    build --> review1["review-it before each commit"]
+    build -.-> issues["to-issues: local follow-ups"]
+    review1 --> commit[conventional-commit]
+    commit --> pr[create-pull-request]
+    pr --> review2["review-it over the complete diff"]
+    review2 --> deliver{{brief-me: delivery choices}}
+    deliver --> loop[pr-review-loop]
+    loop --> merged([merged by a human])
 ```
 
 The skills stay useful independently. The workflow only shows how they compose
