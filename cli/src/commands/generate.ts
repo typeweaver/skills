@@ -54,10 +54,9 @@ const parseAdapters = (
     const adapters: Record<string, AdapterSpec> = {};
     for (const [key, entry] of Object.entries(value)) {
       if (!isRecord(entry)) {
-        yield* new AgentSourceError({
+        return yield* new AgentSourceError({
           message: `agents/${agentName}/agent.yaml: adapter '${key}' must be a mapping`,
         });
-        continue;
       }
       const description = entry["description"];
       const frontmatter = entry["frontmatter"];
@@ -117,7 +116,7 @@ export const runGenerate = Effect.fn("commands.generate")(function* (
   }
 
   if (check && drifted.length > 0) {
-    yield* new GeneratorDriftError({
+    return yield* new GeneratorDriftError({
       message: "Generated adapters are out of date. Run `typeweaver-skills generate`.",
       files: drifted,
     });

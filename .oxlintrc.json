@@ -21,16 +21,55 @@
     "node": true
   },
   "rules": {
-    "max-lines": ["error", { "max": 400, "skipBlankLines": true, "skipComments": false }],
+    "max-lines": [
+      "error",
+      {
+        "max": 400,
+        "skipBlankLines": true,
+        "skipComments": false
+      }
+    ],
     "max-lines-per-function": [
       "error",
-      { "max": 60, "skipBlankLines": true, "skipComments": false, "IIFEs": true }
+      {
+        "max": 60,
+        "skipBlankLines": true,
+        "skipComments": false,
+        "IIFEs": true
+      }
     ],
-    "complexity": ["error", { "max": 12, "variant": "classic" }],
-    "max-depth": ["error", { "max": 3 }],
-    "max-params": ["error", { "max": 4, "countThis": "except-void" }],
-    "max-statements": ["error", { "max": 30 }],
-    "max-nested-callbacks": ["error", { "max": 3 }],
+    "complexity": [
+      "error",
+      {
+        "max": 12,
+        "variant": "classic"
+      }
+    ],
+    "max-depth": [
+      "error",
+      {
+        "max": 3
+      }
+    ],
+    "max-params": [
+      "error",
+      {
+        "max": 4,
+        "countThis": "except-void"
+      }
+    ],
+    "max-statements": [
+      "error",
+      {
+        "max": 30
+      }
+    ],
+    "max-nested-callbacks": [
+      "error",
+      {
+        "max": 3
+      }
+    ],
     "eqeqeq": ["error", "always"],
     "curly": ["error", "all"],
     "no-eval": "error",
@@ -80,13 +119,25 @@
     "typescript/switch-exhaustiveness-check": "error",
     "typescript/prefer-readonly-parameter-types": "off",
     "typescript/prefer-nullish-coalescing": "off",
-    "import/max-dependencies": ["error", { "max": 16, "ignoreTypeImports": false }],
+    "import/max-dependencies": [
+      "error",
+      {
+        "max": 16,
+        "ignoreTypeImports": false
+      }
+    ],
     "import/no-cycle": "error",
     "import/no-duplicates": "error",
     "import/no-self-import": "error",
     "import/no-unassigned-import": "error",
     "max-classes-per-file": "off",
-    "no-underscore-dangle": ["error", { "allow": ["_tag"] }]
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": ["_tag"]
+      }
+    ],
+    "typescript/consistent-return": "off"
   },
   "ignorePatterns": ["**/node_modules/**", "cli/dist/**", "cli/content/**", "docs/**"]
 }

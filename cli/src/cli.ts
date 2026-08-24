@@ -64,7 +64,7 @@ type InstallConfig = {
  * takes the detected ones, a TTY asks, and a non-TTY without flags fails with
  * guidance so automation never installs implicitly.
  */
-const resolveHarnesses = (config: InstallConfig) =>
+const selectHarnesses = (config: InstallConfig) =>
   Effect.gen(function* () {
     const flagged = HARNESSES.filter((harness) => config[harness]);
     if (flagged.length > 0) {
@@ -95,15 +95,21 @@ const resolveHarnesses = (config: InstallConfig) =>
     });
   });
 
-const install = Command.make("install", installFlags, (config) =>
+const resolveHarnesses = (config: InstallConfig) =>
   Effect.gen(function* () {
-    const harnesses = yield* resolveHarnesses(config);
+    const harnesses = yield* selectHarnesses(config);
     if (harnesses.length === 0) {
-      yield* new NoHarnessDetectedError({
+      return yield* new NoHarnessDetectedError({
         message:
           "No harness selected or detected (~/.claude, ~/.codex, ~/.config/opencode, ~/.kiro).",
       });
     }
+    return harnesses;
+  });
+
+const install = Command.make("install", installFlags, (config) =>
+  Effect.gen(function* () {
+    const harnesses = yield* resolveHarnesses(config);
     yield* runInstall(
       {
         harnesses,

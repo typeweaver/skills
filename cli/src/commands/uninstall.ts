@@ -10,7 +10,7 @@ export const runUninstall = Effect.fn("commands.uninstall")(function* () {
   const env = envFromProcess();
   const receipt = yield* readReceipt(env);
   if (Object.keys(receipt.files).length === 0) {
-    yield* new NoReceiptError({
+    return yield* new NoReceiptError({
       message: "No managed installation found; nothing to uninstall.",
     });
   }
