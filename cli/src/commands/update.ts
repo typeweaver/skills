@@ -1,20 +1,20 @@
 import { Effect } from "effect";
-import { NoReceiptError } from "../errors.js";
-import { envFromProcess } from "../env.js";
-import { readReceipt } from "../receipt.js";
-import { runInstall } from "./install.js";
+import { updateLifecycle } from "../update-lifecycle.js";
+import { commandError, renderActionReport } from "./report.js";
 
-/** Re-renders the previous installation from the current package version. */
-export const runUpdate = Effect.fn("commands.update")(function* (packageVersion: string) {
-  const env = envFromProcess();
-  const receipt = yield* readReceipt(env);
-  if (Object.keys(receipt.files).length === 0) {
-    return yield* new NoReceiptError({
-      message: "No managed installation found. Run `typeweaver-skills install` first.",
-    });
-  }
-  return yield* runInstall(
-    { harnesses: receipt.harnesses, skills: [], agents: [], dryRun: false },
-    packageVersion,
-  );
+export type UpdateOptions = {
+  readonly force: boolean;
+  readonly dryRun: boolean;
+};
+
+export const runUpdate = Effect.fn("commands.update")(function* (
+  packageVersion: string,
+  options: UpdateOptions,
+) {
+  const report = yield* Effect.try({
+    try: () => updateLifecycle(options, packageVersion),
+    catch: commandError,
+  });
+  yield* renderActionReport("Update", report);
+  return report;
 });

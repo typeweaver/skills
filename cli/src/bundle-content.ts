@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Copies the repository's skills and agents into the package so the published
-// artifact is self-contained and installs work offline. Runs via `prepack`.
+// Copies skills and agents into `cli/content` at pack time (`prepack`). The
+// published tarball then contains that snapshot, so `npx typeweaver-skills
+// install` does not clone GitHub or fetch the repository.
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
 import { Console, Effect, FileSystem } from "effect";
 import { dirname, join } from "node:path";
@@ -17,6 +18,7 @@ const bundle = Effect.gen(function* () {
   yield* fs.makeDirectory(contentDir, { recursive: true });
   yield* fs.copy(join(repoDir, "skills"), join(contentDir, "skills"));
   yield* fs.copy(join(repoDir, "agents"), join(contentDir, "agents"));
+  yield* fs.copyFile(join(repoDir, "LICENSE"), join(contentDir, "LICENSE"));
   yield* Console.log(`bundled content into ${contentDir}`);
 });
 

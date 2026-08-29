@@ -44,15 +44,24 @@ jobs:
       - run: pnpm test
       - name: Generated adapters must match their sources
         run: pnpm generate:check
-      - name: Non-interactive install round trip
-        working-directory: cli
-        run: |
-          node dist/src/bundle-content.js
-          export HOME="$RUNNER_TEMP/home"
-          # XDG_CONFIG_HOME is the XDG Base Directory config root
-          # (default ~/.config); OpenCode and our receipt live under it.
-          export XDG_CONFIG_HOME="$HOME/.config"
-          mkdir -p "$HOME/.claude" "$HOME/.codex" "$HOME/.config/opencode" "$HOME/.kiro"
-          node dist/src/bin.js install --claude-code --codex --opencode --kiro --yes < /dev/null
-          node dist/src/bin.js doctor < /dev/null
-          node dist/src/bin.js uninstall < /dev/null
+      - name: Packed package must complete the full lifecycle
+        run: node scripts/check-cli-package.mjs
+
+  cli-roundtrip:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter typeweaver-skills build
+      - run: node cli/dist/src/bundle-content.js
+      - name: Verify install, doctor, update, and uninstall
+        run: node scripts/check-cli-roundtrip.mjs

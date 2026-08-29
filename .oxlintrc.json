@@ -24,11 +24,13 @@
     "max-lines": [
       "error",
       {
-        "max": 400,
+        "max": 250,
         "skipBlankLines": true,
         "skipComments": false
       }
     ],
+    "no-nested-ternary": "error",
+    "unicorn/no-nested-ternary": "error",
     "max-lines-per-function": [
       "error",
       {
@@ -139,5 +141,20 @@
     ],
     "typescript/consistent-return": "off"
   },
-  "ignorePatterns": ["**/node_modules/**", "cli/dist/**", "cli/content/**", "docs/**"]
+  "ignorePatterns": ["**/node_modules/**", "cli/dist/**", "cli/content/**", "docs/**"],
+  "overrides": [
+    {
+      "files": ["cli/test/**"],
+      "rules": {
+        "max-lines": [
+          "error",
+          {
+            "max": 350,
+            "skipBlankLines": true,
+            "skipComments": false
+          }
+        ]
+      }
+    }
+  ]
 }

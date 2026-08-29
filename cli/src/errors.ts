@@ -20,3 +20,16 @@ export class GeneratorDriftError extends Data.TaggedError("GeneratorDriftError")
 export class AgentSourceError extends Data.TaggedError("AgentSourceError")<{
   readonly message: string;
 }> {}
+
+export class LifecycleError extends Data.TaggedError("LifecycleError")<{
+  readonly message: string;
+}> {}
+
+export class ConflictError extends Data.TaggedError("ConflictError")<{
+  readonly message: string;
+  readonly conflicts: ReadonlyArray<string>;
+}> {}
+
+export class DoctorUnhealthyError extends Data.TaggedError("DoctorUnhealthyError")<{
+  readonly message: string;
+}> {}

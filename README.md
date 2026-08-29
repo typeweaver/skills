@@ -6,14 +6,24 @@ tool boundaries, and context isolation for supported harnesses.
 
 ## Install
 
-Install selected skills with the Agent Skills CLI:
+Use the official Typeweaver installer for skills and native agent adapters:
+
+```bash
+npx typeweaver-skills install
+```
+
+It supports Claude Code, Codex, OpenCode, and Kiro. See the
+[CLI guide](cli/README.md) for flags, symlink and copy modes, updates, and
+uninstall.
+
+Install skills only with the Agent Skills CLI:
 
 ```bash
 npx skills@latest add typeweaver/skills
 ```
 
-The installer lets you choose individual skills and the supported agent
-harnesses that should receive them.
+Native Typeweaver agent adapters require the official installer or the
+repository linker below.
 
 For local development, preview or create symlinks from this checkout into the
 shared agent skills directory (`~/.agents/skills`, read by Codex and other
@@ -71,16 +81,18 @@ the companion mindset throughout. Hexagons are human checkpoints.
 
 ```mermaid
 flowchart TD
-    idea([New or underspecified problem]) --> challenge[challenge-me]
-    challenge --> plan[plan-it]
-    plan --> approve{{brief-me: plan approval}}
+    idea([Idea]) --> challenge[challenge-me]
+    challenge -.->|skip when outcome is already clear| plan[plan-it]
+    challenge --> plan
+    plan --> approve{{brief-me: approve the plan}}
     approve --> build["define-goal · branch · craft-it"]
-    build --> review1["review-it before each commit"]
-    build -.-> issues["to-issues: local follow-ups"]
-    review1 --> commit[conventional-commit]
-    commit --> pr[create-pull-request]
-    pr --> review2["review-it over the complete diff"]
-    review2 --> deliver{{brief-me: delivery choices}}
+    build --> reviewCommit["review-it then conventional-commit"]
+    reviewCommit --> followups[to-issues]
+    reviewCommit --> more{More commits or milestones?}
+    more -->|yes| build
+    more -->|no| pr[create-pull-request]
+    pr --> reviewPr["review-it on the complete diff"]
+    reviewPr --> deliver{{brief-me: delivery choices}}
     deliver --> loop[pr-review-loop]
     loop --> merged([merged by a human])
 ```

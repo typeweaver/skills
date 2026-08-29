@@ -1,185 +1,226 @@
-import type { PlatformError } from "effect";
-import { Effect, FileSystem } from "effect";
+import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import type { DesiredFile, Env, Harness } from "./domain.js";
-import { sha256 } from "./domain.js";
+import type {
+  AgentComponentReceipt,
+  ComponentReceipt,
+  ContentSelection,
+  DesiredComponent,
+  DesiredDirectoryNode,
+  DesiredFile,
+  DesiredFileNode,
+  DesiredNode,
+  DesiredSymlinkNode,
+  Harness,
+  ManagedArtifact,
+  SkillComponentReceipt,
+  SkillMode,
+} from "./domain.js";
+import { HARNESSES, componentKey, sha256 } from "./domain.js";
+import type { ContentIndex, SkillSource } from "./content-index.js";
 
-/** Root of the content bundled into the published package. */
+export { indexContent } from "./content-index.js";
+export type { AgentSource, ContentIndex, SkillSource } from "./content-index.js";
+
 export const contentRoot = (): string => join(dirname(dirname(import.meta.dirname)), "content");
 
-type Fx<A> = Effect.Effect<A, PlatformError.PlatformError, FileSystem.FileSystem>;
-
-export type ContentIndex = {
-  /** skill name -> file paths relative to the skill directory */
-  readonly skills: ReadonlyMap<string, ReadonlyArray<string>>;
-  /** agent name -> adapter file names present for it */
-  readonly agents: ReadonlyMap<string, ReadonlyArray<string>>;
+export const resolveSelection = (
+  selection: ContentSelection,
+  available: Iterable<string>,
+  label: string,
+): ReadonlyArray<string> => {
+  const known = new Set(available);
+  if (selection.kind === "all") {
+    return Array.from(known).toSorted();
+  }
+  if (selection.kind === "none") {
+    return [];
+  }
+  const names = Array.from(new Set(selection.names));
+  const unknown = names.filter((name) => !known.has(name));
+  if (unknown.length > 0) {
+    throw new Error(`Unknown ${label}: ${unknown.toSorted().join(", ")}`);
+  }
+  return names.toSorted();
 };
 
-const listFiles = (root: string): Fx<ReadonlyArray<string>> =>
-  Effect.gen(function* () {
-    const fs = yield* FileSystem.FileSystem;
-    const entries = yield* fs.readDirectory(root, { recursive: true });
-    const files: Array<string> = [];
-    for (const entry of entries) {
-      if ((yield* fs.stat(join(root, entry))).type === "File") {
-        files.push(entry);
-      }
-    }
-    return files;
+const selectedConsumers = (harnesses: ReadonlyArray<Harness>): ReadonlyArray<Harness> =>
+  HARNESSES.filter((harness) => harnesses.includes(harness));
+
+const loadSkillFiles = (source: SkillSource): ReadonlyArray<DesiredFile> =>
+  source.files.map((relativePath) => {
+    const content = readFileSync(join(source.directory, ...relativePath.split("/")));
+    return { relativePath, content, hash: sha256(content) };
   });
 
-const listDirectories = (root: string): Fx<ReadonlyArray<string>> =>
-  Effect.gen(function* () {
-    const fs = yield* FileSystem.FileSystem;
-    const dirs: Array<string> = [];
-    for (const entry of yield* fs.readDirectory(root)) {
-      if ((yield* fs.stat(join(root, entry))).type === "Directory") {
-        dirs.push(entry);
-      }
-    }
-    return dirs;
-  });
+const directoryNode = (
+  root: DesiredDirectoryNode["root"],
+  name: string,
+  files: ReadonlyArray<DesiredFile>,
+  actualMode: DesiredDirectoryNode["actualMode"],
+): DesiredDirectoryNode => ({ kind: "directory", root, relativePath: name, files, actualMode });
 
-export const indexContent = (root: string): Fx<ContentIndex> =>
-  Effect.gen(function* () {
-    const fs = yield* FileSystem.FileSystem;
-    const skills = new Map<string, ReadonlyArray<string>>();
-    for (const bucket of yield* listDirectories(join(root, "skills"))) {
-      for (const skill of yield* listDirectories(join(root, "skills", bucket))) {
-        skills.set(skill, yield* listFiles(join(root, "skills", bucket, skill)));
-      }
-    }
-    const agents = new Map<string, ReadonlyArray<string>>();
-    for (const agent of yield* listDirectories(join(root, "agents"))) {
-      agents.set(agent, yield* fs.readDirectory(join(root, "agents", agent)));
-    }
-    return { skills, agents };
-  });
-
-/** Directories that receive skill copies for the selected harnesses. */
-const skillRoots = (harnesses: ReadonlyArray<Harness>, env: Env): ReadonlyArray<string> => {
-  const roots: Array<string> = [];
-  const wantsShared = harnesses.includes("codex") || harnesses.includes("opencode");
-  if (wantsShared) {
-    roots.push(join(env.home, ".agents", "skills"));
-  }
-  if (harnesses.includes("claude-code")) {
-    roots.push(join(env.home, ".claude", "skills"));
-  }
-  if (harnesses.includes("kiro")) {
-    roots.push(join(env.home, ".kiro", "skills"));
-  }
-  return roots;
+const skillProjection = (
+  harness: "claude-code" | "kiro",
+  name: string,
+  files: ReadonlyArray<DesiredFile>,
+  mode: SkillMode,
+): DesiredDirectoryNode | DesiredSymlinkNode => {
+  const root = harness === "claude-code" ? "claude-skills" : "kiro-skills";
+  return mode === "copy"
+    ? directoryNode(root, name, files, "copy")
+    : {
+        kind: "symlink",
+        root,
+        relativePath: name,
+        targetRoot: "canonical-skills",
+        targetRelativePath: name,
+      };
 };
 
-/** Where each adapter file of an agent belongs, per harness. */
-const adapterTargets = (
-  agent: string,
-  env: Env,
-): ReadonlyArray<{
+export const buildSkillComponent = (
+  index: ContentIndex,
+  name: string,
+  consumers: ReadonlyArray<Harness>,
+  mode: SkillMode,
+): DesiredComponent | undefined => {
+  const source = index.skills.get(name);
+  if (source === undefined) {
+    return undefined;
+  }
+  const orderedConsumers = selectedConsumers(consumers);
+  const files = loadSkillFiles(source);
+  const nodes: Array<DesiredNode> = [directoryNode("canonical-skills", name, files, "canonical")];
+  if (orderedConsumers.includes("claude-code")) {
+    nodes.push(skillProjection("claude-code", name, files, mode));
+  }
+  if (orderedConsumers.includes("kiro")) {
+    nodes.push(skillProjection("kiro", name, files, mode));
+  }
+  return {
+    key: componentKey("skill", name),
+    kind: "skill",
+    name,
+    consumers: orderedConsumers,
+    requestedMode: mode,
+    nodes,
+  };
+};
+
+const ADAPTER_TARGETS: ReadonlyArray<{
   readonly adapter: string;
   readonly harness: Harness;
-  readonly target: string;
-}> => [
+  readonly root: DesiredFileNode["root"];
+  readonly relativePath: (name: string) => string;
+}> = [
   {
     adapter: "claude.md",
     harness: "claude-code",
-    target: join(env.home, ".claude", "agents", `${agent}.md`),
+    root: "claude-agents",
+    relativePath: (name) => `${name}.md`,
   },
   {
     adapter: "opencode.md",
     harness: "opencode",
-    target: join(env.configHome, "opencode", "agents", `${agent}.md`),
+    root: "opencode-agents",
+    relativePath: (name) => `${name}.md`,
   },
   {
     adapter: "codex.toml",
     harness: "codex",
-    target: join(env.codexHome, "agents", `${agent}.toml`),
+    root: "codex-agents",
+    relativePath: (name) => `${name}.toml`,
   },
   {
     adapter: "codex-profile.toml",
     harness: "codex",
-    target: join(env.codexHome, `${agent}.config.toml`),
+    root: "codex-profiles",
+    relativePath: (name) => `${name}.config.toml`,
   },
 ];
 
-const skillFiles = (
-  root: string,
-  skill: string,
-  relativeFiles: ReadonlyArray<string>,
-  roots: ReadonlyArray<string>,
-): Fx<ReadonlyArray<DesiredFile>> =>
-  Effect.gen(function* () {
-    const fs = yield* FileSystem.FileSystem;
-    const out: Array<DesiredFile> = [];
-    for (const rel of relativeFiles) {
-      const content = yield* fs.readFile(join(root, "skills", "engineering", skill, rel));
-      const hash = sha256(content);
-      out.push(...roots.map((dir) => ({ target: join(dir, skill, rel), content, hash })));
-    }
-    return out;
+export const buildAgentComponent = (
+  index: ContentIndex,
+  name: string,
+  consumers: ReadonlyArray<Harness>,
+): DesiredComponent | undefined => {
+  const source = index.agents.get(name);
+  if (source === undefined) {
+    return undefined;
+  }
+  const orderedConsumers = selectedConsumers(consumers);
+  const nodes = ADAPTER_TARGETS.filter(
+    ({ adapter, harness }) => source.adapters.has(adapter) && orderedConsumers.includes(harness),
+  ).map(({ adapter, root, relativePath }): DesiredFileNode => {
+    const content = readFileSync(join(source.directory, adapter));
+    return {
+      kind: "file",
+      root,
+      relativePath: relativePath(name),
+      content,
+      hash: sha256(content),
+      actualMode: "copy",
+    };
   });
-
-type AgentFilesOptions = {
-  readonly root: string;
-  readonly agent: string;
-  readonly presentAdapters: ReadonlyArray<string>;
-  readonly harnesses: ReadonlyArray<Harness>;
-  readonly env: Env;
+  if (nodes.length === 0) {
+    return undefined;
+  }
+  return {
+    key: componentKey("agent", name),
+    kind: "agent",
+    name,
+    consumers: orderedConsumers.filter((harness) => harness !== "kiro"),
+    nodes,
+  };
 };
 
-const agentFiles = ({
-  agent,
-  env,
-  harnesses,
-  presentAdapters,
-  root,
-}: AgentFilesOptions): Fx<ReadonlyArray<DesiredFile>> =>
-  Effect.gen(function* () {
-    const fs = yield* FileSystem.FileSystem;
-    const wanted = adapterTargets(agent, env).filter(
-      (entry) => presentAdapters.includes(entry.adapter) && harnesses.includes(entry.harness),
-    );
-    const out: Array<DesiredFile> = [];
-    for (const entry of wanted) {
-      const content = yield* fs.readFile(join(root, "agents", agent, entry.adapter));
-      out.push({ target: entry.target, content, hash: sha256(content) });
-    }
-    return out;
-  });
-
-/**
- * Maps the selected harnesses and content to the concrete files an
- * installation must create.
- */
-export type DesiredFilesOptions = {
-  readonly root: string;
-  readonly index: ContentIndex;
-  readonly harnesses: ReadonlyArray<Harness>;
-  readonly skills: ReadonlyArray<string>;
-  readonly agents: ReadonlyArray<string>;
-  readonly env: Env;
+const artifactFromNode = (node: DesiredNode): ReadonlyArray<ManagedArtifact> => {
+  if (node.kind === "directory") {
+    return node.files.map((file) => ({
+      kind: "file",
+      root: node.root,
+      relativePath: `${node.relativePath}/${file.relativePath}`,
+      installedHash: file.hash,
+      actualMode: node.actualMode,
+    }));
+  }
+  if (node.kind === "file") {
+    return [
+      {
+        kind: "file",
+        root: node.root,
+        relativePath: node.relativePath,
+        installedHash: node.hash,
+        actualMode: node.actualMode,
+      },
+    ];
+  }
+  return [
+    {
+      kind: "symlink",
+      root: node.root,
+      relativePath: node.relativePath,
+      targetRoot: node.targetRoot,
+      targetRelativePath: node.targetRelativePath,
+      actualMode: "symlink",
+    },
+  ];
 };
 
-export const desiredFiles = (options: DesiredFilesOptions): Fx<ReadonlyArray<DesiredFile>> =>
-  Effect.gen(function* () {
-    const { agents, env, harnesses, index, root, skills } = options;
-    const roots = skillRoots(harnesses, env);
-    const out: Array<DesiredFile> = [];
-    for (const skill of skills) {
-      out.push(...(yield* skillFiles(root, skill, index.skills.get(skill) ?? [], roots)));
-    }
-    for (const agent of agents) {
-      out.push(
-        ...(yield* agentFiles({
-          agent,
-          env,
-          harnesses,
-          presentAdapters: index.agents.get(agent) ?? [],
-          root,
-        })),
-      );
-    }
-    return out;
-  });
+export const componentToReceipt = (component: DesiredComponent): ComponentReceipt => {
+  const base = {
+    key: component.key,
+    name: component.name,
+    consumers: component.consumers,
+    artifacts: component.nodes.flatMap(artifactFromNode),
+  };
+  if (component.kind === "skill") {
+    const receipt: SkillComponentReceipt = {
+      ...base,
+      kind: "skill",
+      requestedMode: component.requestedMode ?? "symlink",
+    };
+    return receipt;
+  }
+  const receipt: AgentComponentReceipt = { ...base, kind: "agent" };
+  return receipt;
+};

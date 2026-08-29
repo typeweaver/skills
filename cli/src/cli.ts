@@ -1,142 +1,53 @@
-import { Console, Effect, FileSystem } from "effect";
-import { Command, Flag, Prompt } from "effect/unstable/cli";
-import { dirname, join } from "node:path";
-import type { Harness } from "./domain.js";
-import { HARNESSES, isRecord } from "./domain.js";
-import { detectHarnesses, envFromProcess } from "./env.js";
-import { NoHarnessDetectedError, NonInteractiveWithoutFlagsError } from "./errors.js";
+import { Effect } from "effect";
+import { Command, Flag } from "effect/unstable/cli";
+import { HARNESSES } from "./domain.js";
 import { runDoctor } from "./commands/doctor.js";
 import { runGenerate } from "./commands/generate.js";
-import { runInstall } from "./commands/install.js";
 import { runUninstall } from "./commands/uninstall.js";
 import { runUpdate } from "./commands/update.js";
+import { installCommand } from "./cli-install.js";
+import { harnessFlag, mutationFlags, packageVersion, parseSelection } from "./cli-shared.js";
 
-/** Splits a comma-separated flag value ("a,b,c") into its entries. */
-const parseCommaList = (value: string): ReadonlyArray<string> =>
-  value
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 0);
-
-const packageVersion: Effect.Effect<string, never, FileSystem.FileSystem> = Effect.gen(
-  function* () {
-    const fs = yield* FileSystem.FileSystem;
-    const pkgPath = join(dirname(dirname(import.meta.dirname)), "package.json");
-    const raw = yield* fs.readFileString(pkgPath);
-    const value: unknown = JSON.parse(raw);
-    return isRecord(value) && typeof value["version"] === "string" ? value["version"] : "0.0.0";
-  },
-).pipe(Effect.orElseSucceed(() => "0.0.0"));
-
-const harnessFlag = (name: Harness, description: string) =>
-  Flag.boolean(name).pipe(Flag.withDefault(false), Flag.withDescription(description));
-
-const installFlags = {
-  "claude-code": harnessFlag("claude-code", "Install for Claude Code"),
-  codex: harnessFlag("codex", "Install for Codex"),
-  opencode: harnessFlag("opencode", "Install for OpenCode"),
-  kiro: harnessFlag("kiro", "Install for Kiro (skills only)"),
-  skills: Flag.string("skills").pipe(
-    Flag.withDefault("all"),
-    Flag.withDescription("Comma-separated skill names, or 'all'"),
-  ),
-  agents: Flag.string("agents").pipe(
-    Flag.withDefault("all"),
-    Flag.withDescription("Comma-separated agent names, or 'all'"),
-  ),
-  yes: Flag.boolean("yes").pipe(
-    Flag.withDefault(false),
-    Flag.withAlias("y"),
-    Flag.withDescription("Skip prompts; use detected harnesses"),
-  ),
-  dryRun: Flag.boolean("dry-run").pipe(
-    Flag.withDefault(false),
-    Flag.withDescription("Show the plan without changing anything"),
-  ),
-};
-
-type InstallConfig = {
-  readonly [K in keyof typeof installFlags]: K extends "skills" | "agents" ? string : boolean;
-};
-
-/**
- * Resolves which harnesses to target: explicit flags win; otherwise `--yes`
- * takes the detected ones, a TTY asks, and a non-TTY without flags fails with
- * guidance so automation never installs implicitly.
- */
-const selectHarnesses = (config: InstallConfig) =>
+const update = Command.make("update", mutationFlags, (config) =>
   Effect.gen(function* () {
-    const flagged = HARNESSES.filter((harness) => config[harness]);
-    if (flagged.length > 0) {
-      return flagged;
-    }
-
-    const detected = yield* detectHarnesses(envFromProcess());
-    if (config.yes) {
-      return detected;
-    }
-
-    if (!process.stdout.isTTY) {
-      return yield* new NonInteractiveWithoutFlagsError({
-        message:
-          "No TTY and no harness flags. Pass explicit flags, e.g. " +
-          "`typeweaver-skills install --claude-code --codex --skills all --agents all --yes`.",
-      });
-    }
-
-    yield* Console.log(`Detected: ${detected.length > 0 ? detected.join(", ") : "none"}`);
-    return yield* Prompt.multiSelect({
-      message: "Which harnesses should receive the setup?",
-      choices: HARNESSES.map((harness) => ({
-        title: harness,
-        value: harness,
-        selected: detected.includes(harness),
-      })),
-    });
-  });
-
-const resolveHarnesses = (config: InstallConfig) =>
-  Effect.gen(function* () {
-    const harnesses = yield* selectHarnesses(config);
-    if (harnesses.length === 0) {
-      return yield* new NoHarnessDetectedError({
-        message:
-          "No harness selected or detected (~/.claude, ~/.codex, ~/.config/opencode, ~/.kiro).",
-      });
-    }
-    return harnesses;
-  });
-
-const install = Command.make("install", installFlags, (config) =>
-  Effect.gen(function* () {
-    const harnesses = yield* resolveHarnesses(config);
-    yield* runInstall(
-      {
-        harnesses,
-        skills: config.skills === "all" ? [] : parseCommaList(config.skills),
-        agents: config.agents === "all" ? [] : parseCommaList(config.agents),
-        dryRun: config.dryRun,
-      },
-      yield* packageVersion,
-    );
+    yield* runUpdate(yield* packageVersion, config);
   }),
-).pipe(Command.withDescription("Install skills and agents into the selected harnesses"));
-
-const update = Command.make("update", {}, () =>
-  Effect.gen(function* () {
-    yield* runUpdate(yield* packageVersion);
-  }),
-).pipe(Command.withDescription("Refresh every managed file from this package version"));
+).pipe(Command.withDescription("Update only the components recorded in Receipt v2"));
 
 const doctor = Command.make("doctor", {}, () =>
   Effect.gen(function* () {
     yield* runDoctor(yield* packageVersion);
   }),
-).pipe(Command.withDescription("Verify the managed installation"));
+).pipe(Command.withDescription("Read-only verification of roots, receipt, and artifacts"));
 
-const uninstall = Command.make("uninstall", {}, () => runUninstall()).pipe(
-  Command.withDescription("Remove every managed file"),
-);
+const uninstallFlags = {
+  "claude-code": harnessFlag("claude-code", "Remove selected consumers from Claude Code"),
+  codex: harnessFlag("codex", "Remove selected consumers from Codex"),
+  opencode: harnessFlag("opencode", "Remove selected consumers from OpenCode"),
+  kiro: harnessFlag("kiro", "Remove selected consumers from Kiro"),
+  skills: Flag.string("skills").pipe(
+    Flag.withDefault(""),
+    Flag.withDescription("Limit removal to skill names, 'all', or 'none'"),
+  ),
+  agents: Flag.string("agents").pipe(
+    Flag.withDefault(""),
+    Flag.withDescription("Limit removal to agent names, 'all', or 'none'"),
+  ),
+  ...mutationFlags,
+};
+
+const uninstall = Command.make("uninstall", uninstallFlags, (config) =>
+  Effect.gen(function* () {
+    const harnesses = HARNESSES.filter((harness) => config[harness]);
+    yield* runUninstall(yield* packageVersion, {
+      force: config.force,
+      dryRun: config.dryRun,
+      ...(harnesses.length === 0 ? {} : { harnesses }),
+      ...(config.skills === "" ? {} : { skills: parseSelection(config.skills) }),
+      ...(config.agents === "" ? {} : { agents: parseSelection(config.agents) }),
+    });
+  }),
+).pipe(Command.withDescription("Remove the full installation or selected components/consumers"));
 
 const generate = Command.make(
   "generate",
@@ -154,10 +65,16 @@ const generate = Command.make(
 ).pipe(Command.withDescription("Generate harness adapter files from each agent's source of truth"));
 
 export const root = Command.make("typeweaver-skills").pipe(
-  Command.withDescription("Skills and agents for Claude Code, Codex, OpenCode, and Kiro"),
-  Command.withSubcommands([install, update, doctor, uninstall, generate]),
+  Command.withDescription("Filesystem-safe Typeweaver skills and agent adapter installer"),
+  Command.withSubcommands([installCommand, update, doctor, uninstall, generate]),
 );
 
+/**
+ * Runs the public `typeweaver-skills` CLI.
+ *
+ * @param argv - Arguments after the node executable and script path, as in
+ *   `process.argv.slice(2)`.
+ */
 export const runCli = (argv: ReadonlyArray<string>) =>
   Effect.gen(function* () {
     const version = yield* packageVersion;

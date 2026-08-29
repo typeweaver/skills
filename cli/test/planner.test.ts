@@ -1,90 +1,157 @@
 import { assert, it } from "@effect/vitest";
-import type { Receipt } from "../src/domain.js";
-import { nextReceiptFiles, planInstall, planOrphans } from "../src/planner.js";
+import type {
+  AgentComponentReceipt,
+  DesiredComponent,
+  DesiredFileNode,
+  DiskEntry,
+  NodeSnapshot,
+  ReceiptV2,
+  RootPaths,
+} from "../src/domain.js";
+import { fingerprintDisk } from "../src/filesystem.js";
+import { planComponents, snapshotIdentity } from "../src/planner.js";
 
-const receipt = (files: Record<string, string>): Receipt => ({
-  packageVersion: "1.0.0",
-  harnesses: ["claude-code"],
-  files,
+const roots: RootPaths = {
+  "canonical-skills": "/home/u/.agents/skills",
+  "claude-skills": "/home/u/.claude/skills",
+  "kiro-skills": "/home/u/.kiro/skills",
+  "claude-agents": "/home/u/.claude/agents",
+  "opencode-agents": "/home/u/.config/opencode/agents",
+  "codex-agents": "/home/u/.codex/agents",
+  "codex-profiles": "/home/u/.codex",
+  state: "/home/u/.config/typeweaver-skills",
+};
+
+const node = (hash: string): DesiredFileNode => ({
+  kind: "file",
+  root: "claude-agents",
+  relativePath: "review-it.md",
+  content: new Uint8Array(),
+  hash,
+  actualMode: "copy",
 });
 
-it("creates missing files", () => {
-  const plan = planInstall(new Map([["/t/a", "h1"]]), new Map([["/t/a", undefined]]), receipt({}));
-  assert.deepEqual(plan.actions, [{ _tag: "Create", target: "/t/a" }]);
+const component = (hash: string): DesiredComponent => ({
+  key: "agent:review-it",
+  kind: "agent",
+  name: "review-it",
+  consumers: ["claude-code"],
+  nodes: [node(hash)],
 });
 
-it("leaves identical files unchanged (idempotent re-run)", () => {
-  const plan = planInstall(new Map([["/t/a", "h1"]]), new Map([["/t/a", "h1"]]), receipt({}));
-  assert.deepEqual(plan.actions, [{ _tag: "Unchanged", target: "/t/a" }]);
+const receiptComponent = (hash: string): AgentComponentReceipt => ({
+  key: "agent:review-it",
+  kind: "agent",
+  name: "review-it",
+  consumers: ["claude-code"],
+  artifacts: [
+    {
+      kind: "file",
+      root: "claude-agents",
+      relativePath: "review-it.md",
+      installedHash: hash,
+      actualMode: "copy",
+    },
+  ],
 });
 
-it("updates files we manage when the package content changed", () => {
-  const plan = planInstall(
-    new Map([["/t/a", "h2"]]),
-    new Map([["/t/a", "h1"]]),
-    receipt({ "/t/a": "h1" }),
-  );
-  assert.deepEqual(plan.actions, [{ _tag: "Update", target: "/t/a" }]);
-});
-
-it("preserves files the user modified after we installed them", () => {
-  const plan = planInstall(
-    new Map([["/t/a", "h2"]]),
-    new Map([["/t/a", "user-edit"]]),
-    receipt({ "/t/a": "h1" }),
-  );
-  assert.deepEqual(plan.actions, [{ _tag: "PreserveUserFile", target: "/t/a" }]);
-});
-
-it("preserves pre-existing files we never managed", () => {
-  const plan = planInstall(new Map([["/t/a", "h1x"]]), new Map([["/t/a", "foreign"]]), receipt({}));
-  assert.deepEqual(plan.actions, [{ _tag: "PreserveUserFile", target: "/t/a" }]);
-});
-
-it("removes unmodified orphans and keeps modified ones", () => {
-  const actions = planOrphans(
-    new Map(),
-    new Map([
-      ["/t/gone", "h1"],
-      ["/t/edited", "user-edit"],
-      ["/t/missing", undefined],
-    ]),
-    receipt({ "/t/gone": "h1", "/t/edited": "h1", "/t/missing": "h1" }),
-  );
-  assert.deepEqual(actions, [
-    { _tag: "RemoveOrphan", target: "/t/gone" },
-    { _tag: "PreserveUserFile", target: "/t/edited" },
+const snapshots = (desired: DesiredFileNode, disk: DiskEntry): ReadonlyMap<string, NodeSnapshot> =>
+  new Map([
+    [snapshotIdentity(desired), { node: desired, disk, fingerprint: fingerprintDisk(disk) }],
   ]);
-});
 
-it("receipt keeps managed hashes and drops user files it never owned", () => {
-  const desired = new Map([
-    ["/t/new", "h1"],
-    ["/t/user", "h2"],
-  ]);
-  const plan = planInstall(
-    desired,
-    new Map([
-      ["/t/new", undefined],
-      ["/t/user", "foreign"],
-    ]),
-    receipt({}),
-  );
-  const files = nextReceiptFiles(desired, plan, receipt({}));
-  assert.deepEqual(files, { "/t/new": "h1" });
-});
+const nextReceipt: ReceiptV2 = {
+  schemaVersion: 2,
+  packageVersion: "2.0.0",
+  components: [receiptComponent("new")],
+};
 
-it("does not adopt pre-existing identical files it never installed", () => {
-  const desired = new Map([["/t/foreign", "h1"]]);
-  const plan = planInstall(desired, new Map([["/t/foreign", "h1"]]), receipt({}));
-  assert.deepEqual(plan.actions, [{ _tag: "Unchanged", target: "/t/foreign" }]);
-  assert.deepEqual(nextReceiptFiles(desired, plan, receipt({})), {});
-});
-
-it("keeps ownership of unchanged files it installed earlier", () => {
-  const desired = new Map([["/t/ours", "h1"]]);
-  const plan = planInstall(desired, new Map([["/t/ours", "h1"]]), receipt({ "/t/ours": "h1" }));
-  assert.deepEqual(nextReceiptFiles(desired, plan, receipt({ "/t/ours": "h1" })), {
-    "/t/ours": "h1",
+it("creates a missing component", () => {
+  const desired = component("new");
+  const plan = planComponents({
+    desired: [desired],
+    previous: [],
+    snapshots: snapshots(node("new"), { kind: "missing" }),
+    roots,
+    force: false,
+    allowAdoption: true,
+    nextReceipt,
   });
+  assert.equal(plan.conflicts.length, 0);
+  assert.equal(plan.actions[0]?.kind, "Create");
+});
+
+it("adopts exact content only during explicit install", () => {
+  const desired = component("same");
+  const disk: DiskEntry = { kind: "file", hash: "same" };
+  const install = planComponents({
+    desired: [desired],
+    previous: [],
+    snapshots: snapshots(node("same"), disk),
+    roots,
+    force: false,
+    allowAdoption: true,
+  });
+  const update = planComponents({
+    desired: [desired],
+    previous: [],
+    snapshots: snapshots(node("same"), disk),
+    roots,
+    force: false,
+    allowAdoption: false,
+  });
+  assert.equal(install.actions[0]?.kind, "Adopt");
+  assert.equal(update.conflicts.length, 1);
+});
+
+it("updates content that still matches its recorded old hash", () => {
+  const desired = component("new");
+  const plan = planComponents({
+    desired: [desired],
+    previous: [receiptComponent("old")],
+    snapshots: snapshots(node("new"), { kind: "file", hash: "old" }),
+    roots,
+    force: false,
+    allowAdoption: false,
+  });
+  assert.equal(plan.conflicts.length, 0);
+  assert.equal(plan.actions[0]?.kind, "Replace");
+});
+
+it("fails the complete preflight on modified content unless forced", () => {
+  const desired = component("new");
+  const disk: DiskEntry = { kind: "file", hash: "user-edit" };
+  const safe = planComponents({
+    desired: [desired],
+    previous: [receiptComponent("old")],
+    snapshots: snapshots(node("new"), disk),
+    roots,
+    force: false,
+    allowAdoption: false,
+  });
+  const forced = planComponents({
+    desired: [desired],
+    previous: [receiptComponent("old")],
+    snapshots: snapshots(node("new"), disk),
+    roots,
+    force: true,
+    allowAdoption: false,
+  });
+  assert.equal(safe.actions.length, 0);
+  assert.equal(safe.conflicts.length, 1);
+  assert.equal(forced.actions[0]?.kind, "Replace");
+});
+
+it("removes only obsolete content that still matches the receipt", () => {
+  const old = receiptComponent("old");
+  const oldNode = node("old");
+  const plan = planComponents({
+    desired: [],
+    previous: [old],
+    snapshots: snapshots(oldNode, { kind: "file", hash: "old" }),
+    roots,
+    force: false,
+    allowAdoption: false,
+  });
+  assert.equal(plan.actions[0]?.kind, "Remove");
 });
