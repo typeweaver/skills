@@ -138,8 +138,8 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[craft-it](skills/engineering/craft-it/SKILL.md)** — Implement maintainable,
   repository-native software with durable contracts and tests.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
-  — Design scalable Next.js App Router features with explicit ownership and
-  runtime boundaries.
+  — Design feature-oriented Next.js App Router systems with explicit ownership
+  across runtime boundaries and coordinated state.
 - **[brief-me](skills/engineering/brief-me/SKILL.md)** — Summarize a discussion,
   plan, implementation, or reviewed delivery at the right level of detail.
 - **[review-it](skills/engineering/review-it/SKILL.md)** — Independently review
