@@ -1,5 +1,5 @@
 ---
-"typeweaver-skills": minor
+"skill-it": minor
 ---
 
 Add `comment-it`, a compact source-comment skill that preserves durable
