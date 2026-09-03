@@ -1,4 +1,4 @@
-# Managed by typeweaver/skills; do not edit — generated from agents/review-it/agent.yaml; regenerate with `npx typeweaver-skills generate`.
+# Managed by typeweaver/skills; do not edit — generated from agents/review-it/agent.yaml; regenerate with `npx skill-it generate`.
 name = "review-it"
 description = "Independently review a completed change or pull request in a fresh, read-only context."
 sandbox_mode = "read-only"

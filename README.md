@@ -9,7 +9,7 @@ tool boundaries, and context isolation for supported harnesses.
 Use the official Typeweaver installer for skills and native agent adapters:
 
 ```bash
-npx typeweaver-skills install
+npx skill-it install
 ```
 
 It supports Claude Code, Codex, OpenCode, and Kiro. See the

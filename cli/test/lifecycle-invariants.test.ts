@@ -37,7 +37,7 @@ afterEach(() => {
 });
 
 const temporaryEnv = (): Env => {
-  const home = temporaryDirectory("typeweaver-skills-test-");
+  const home = temporaryDirectory("skill-it-test-");
   return {
     home,
     codexHome: join(home, ".codex"),
@@ -59,7 +59,7 @@ const installRequest = (env: Env, contentDirectory = repository) => ({
 
 const leftoverBackups = (directory: string): ReadonlyArray<string> =>
   existsSync(directory)
-    ? readdirSync(directory).filter((entry) => entry.startsWith(".typeweaver-skills-"))
+    ? readdirSync(directory).filter((entry) => entry.startsWith(".skill-it-"))
     : [];
 
 it("surfaces conflict paths and reasons in the thrown error message", () => {

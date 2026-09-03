@@ -141,7 +141,7 @@ export const runGenerate = Effect.fn("commands.generate")(function* (
 
   if (check && drifted.length > 0) {
     return yield* new GeneratorDriftError({
-      message: "Generated adapters are out of date. Run `typeweaver-skills generate`.",
+      message: "Generated adapters are out of date. Run `skill-it generate`.",
       files: drifted,
     });
   }
