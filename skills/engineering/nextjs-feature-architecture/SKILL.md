@@ -40,8 +40,8 @@ task authorizes architectural change.
 
 ## Read conditional guidance
 
-- When a feature grows beyond one composition root or gains a second
-  consumer, read
+- When a feature grows beyond one composition root or gains a named external
+  compositor, read
   [references/example-structure.md](references/example-structure.md). Adapt
   it; never reproduce trees mechanically.
 - When several widgets coordinate URL, server, query-cache, local, persisted,
@@ -75,6 +75,9 @@ Add structure only when it protects one of these boundaries.
   behavior or authoritative product state.
 - A **shared product component** composes shared UI for several features but
   owns neither application behavior nor authoritative state.
+- A **domain or platform module** owns reusable headless policy, data access, or
+  infrastructure capability below feature use cases. It exposes narrow
+  contracts and does not depend on route-facing features.
 
 Use this heuristic:
 
@@ -82,9 +85,17 @@ Use this heuristic:
 Application behavior or user capability? -> feature
 Independently composable feature region?  -> widget
 Reusable visual or interaction primitive? -> shared UI
-Reusable product composition, no owner?   -> shared product component
+Reusable product composition, no natural feature owner? -> shared product component
+Reusable headless policy or capability?   -> domain or platform module
 Feature-specific behavior or composition? -> keep it in that feature
 ```
+
+Choose feature boundaries by the knowledge and changes they contain, not by
+screen rectangles. Keep behavior together when policy, state, failure, and
+lifecycle change together. Split when product policy, authorization, freshness,
+or consumers evolve independently and the resulting interface hides meaningful
+complexity. Treat team or deployment boundaries as additional evidence, not the
+sole reason for a feature.
 
 ## Run the decision loop
 
@@ -95,7 +106,8 @@ Feature-specific behavior or composition? -> keep it in that feature
 4. Who is the authoritative owner of each state value?
 5. Can this stay on the server?
 6. What can render, fail, or refresh independently?
-7. Which feature operation owns the data access?
+7. Which feature operation owns the use case, and which lower module owns any
+   reused policy or data access?
 8. What is the cache and freshness contract?
 9. Do dependencies cross only public, runtime-safe boundaries?
 10. Is the feature inventing visual or interaction behavior that belongs to
@@ -116,29 +128,45 @@ Feature-specific behavior or composition? -> keep it in that feature
 - Keep layouts focused on the document or segment-wide shell, shared providers,
   navigation, and presentation that truly persists across child routes. Do not
   move one page's widget composition or feature behavior into a layout.
-- Keep pages as composition roots: parse the route contract, render a feature
-  composition root, own route-level layout, and place loading and error
-  boundaries. Hide widget decomposition, data access, and internal layout
-  inside the feature. Export individual widgets only when a second route
-  composes a subset.
+- Keep pages as route composition roots: parse the route contract, compose
+  public feature surfaces, own route-level layout, and place loading and error
+  boundaries. Prefer one feature root for a page that presents one capability;
+  let that root hide its widget decomposition, data access, and internal layout.
+  Export an individual widget only when a named external compositor needs it,
+  such as a page interleaving independent features, a layout or parallel route,
+  or another route that consumes a subset.
 - Keep feature UI, contracts, operations, and actions together. Create
   subdirectories only as responsibilities emerge.
 - Keep feature-specific components, hooks, operations, and utilities inside
   their owner; do not turn global technical folders into dumping grounds.
 - Give a workflow that genuinely spans multiple features an explicit
-  orchestration owner. Do not hide cross-feature behavior in one participant or
-  in a generic shared folder.
+  orchestration owner. The orchestrator depends on public participant
+  operations or injected ports; participants do not import one another. Pass a
+  workflow command into participant UI when it must emit an intent, rather than
+  creating a reverse import. Do not hide cross-feature behavior in a participant
+  or generic shared folder.
 - Move product-aware code to a shared product component only when it has
   multiple real consumers and no feature is its natural owner.
+- Let a feature operation own its use-case contract and orchestration. Reuse
+  central authorization, domain policy, data access, telemetry, and vendor
+  adapters through headless domain or platform modules when those concerns span
+  features. Recheck authorization at every trusted entry point; centralizing
+  policy does not make callers trusted.
 
 ## Protect module and runtime boundaries
 
 Prefer UI dependencies that flow from `app` to `features` to shared product
-components to shared UI. Hide storage, transport, credentials, and vendor
-details behind meaningful feature operations.
+components to shared UI. Let server dependencies flow from feature operations
+through domain or platform contracts to infrastructure. These are ownership
+directions, not required folders. Hide storage, transport, credentials, and
+vendor details behind the narrowest meaningful contract.
 
 - Expose intentional feature entry points; reject deep imports into another
   feature's internals.
+- Compose peer features in `app` or an explicit workflow instead of importing
+  one feature's UI or internals into another. When several features reuse a
+  headless capability, move that capability below them rather than choosing one
+  feature as the accidental owner.
 - Keep server-only, client-only, and environment-neutral exports distinct. Do
   not re-export them through one ambiguous barrel.
 - Use entry points such as `feature`, `feature/server`, and `feature/client`
@@ -150,9 +178,14 @@ details behind meaningful feature operations.
   server-only feature operation; let a Route Handler or the repository's
   established client transport delegate to that operation.
 - Pass only the data a Client Component needs across the server/client
-  boundary, using serializable values.
+  boundary, using an explicit serializable DTO or view model rather than raw
+  storage or vendor objects.
 - Prefer route-level composition when two features only need to appear or react
   to the same route state together.
+- When the repository's scale makes boundary drift costly, enforce public
+  entry points and forbidden import directions with its package, lint, or
+  dependency checks. Do not introduce enforcement tooling merely because this
+  skill was invoked.
 
 ## Assign state deliberately
 
@@ -220,10 +253,13 @@ Choose one authoritative owner for every state value:
 - Treat a server-render cache and a browser query cache as separate
   representations. `queryClient.invalidateQueries` cannot refresh a Server
   Component.
-- Detect whether the repository uses Cache Components. With Cache Components,
-  a Server Action's `updateTag`, `revalidatePath`, or `refresh()` already
-  re-renders the current route; `revalidateTag` is stale-while-revalidate and
-  does not. Without them, `fetch` is uncached by default; use the repo's
+- Detect whether the repository uses Cache Components. Separate invalidating
+  cached data from making the current UI observe it. With Cache Components, use
+  `updateTag` in a Server Action for immediate read-your-own-writes,
+  `revalidateTag(tag, "max")` for stale-while-revalidate, and `revalidatePath`
+  when the path is the intended invalidation scope. `refresh()` refreshes the
+  client router from a Server Action but does not invalidate cached data.
+  Without Cache Components, `fetch` is uncached by default; use the repo's
   `unstable_cache` / `revalidateTag` / `revalidatePath` primitives. Never
   assume historical `fetch` cache defaults still apply.
 - Cookie `.set` / `.delete` are illegal during RSC render. Persist preferences
@@ -247,11 +283,13 @@ Confirm that:
 - shared product components exist only with multiple real consumers and no
   natural feature owner;
 - infrastructure details remain below feature operations;
+- reused domain and platform policy has a clear lower owner and does not create
+  peer-feature dependencies;
 - independent work is not accidentally serialized;
 - loading and failure boundaries match meaningful user experiences;
 - mutations validate, authorize, and invalidate deliberately;
 - caching has explicit identity, freshness, invalidation ownership, and
-  isolation semantics;
+  isolation semantics, and UI refresh is not mistaken for invalidation;
 - abstractions and shared code represent real boundaries rather than ceremony.
 
 Correct unclear ownership or dependency direction before adding another layer.

@@ -117,18 +117,21 @@ is a product requirement. Browser storage is not a substitute for that system.
 
 ```text
 DocumentPage(documentId)
-└── DocumentEditorProvider(initialDocument, baseRevision)
-    └── page-owned workspace
-        ├── DocumentOutline
-        ├── EditorCanvas
-        ├── SelectionInspector
-        └── SaveStatus
+└── DocumentEditor(documentId)
+    └── DocumentEditorProvider(initialDocument, baseRevision)
+        └── feature-owned workspace
+            ├── DocumentOutline
+            ├── EditorCanvas
+            ├── SelectionInspector
+            └── SaveStatus
 ```
 
-The page loads and authorizes the initial document, owns the workspace layout,
-and passes one serializable initialization contract. Each widget selects only
-the editor state it needs. Server Components outside the provider may render
-stable surrounding content but cannot read the client store.
+The page validates the route identity and renders `DocumentEditor`.
+`DocumentEditor` loads and authorizes the initial document, owns the workspace
+layout, and passes one serializable initialization contract to its provider.
+Each widget selects only the editor state it needs. Server Components outside
+the provider may render stable surrounding content but cannot read the client
+store.
 
 Use URL state for an editor mode, selected section, or side panel only when a
 copied URL and browser history should restore it. Otherwise selection stays in
@@ -161,7 +164,8 @@ Zustand store.
 - Marking all changes saved when an older autosave response completes.
 - Letting recovery storage silently overwrite a newer server revision.
 - Exposing raw store mutation across the feature boundary.
-- Putting document behavior in the page because it composes the panels.
+- Putting document behavior or panel composition in the page because it owns
+  the route boundary.
 
 ## Verify
 

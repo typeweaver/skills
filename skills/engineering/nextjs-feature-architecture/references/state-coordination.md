@@ -9,18 +9,18 @@ they do not decide which lifecycle the product needs.
 
 ## Classify each value
 
-| State or representation                | Typical owner                                  |
-| -------------------------------------- | ---------------------------------------------- |
-| Route identity                         | Route params                                   |
-| Confirmed, shareable view              | Normalized URL search params                   |
-| Widget-local draft or interaction      | Local Client Component                         |
-| Authoritative entity                   | Server or data layer                           |
+| State or representation                | Typical owner                                      |
+| -------------------------------------- | -------------------------------------------------- |
+| Route identity                         | Route params                                       |
+| Confirmed, shareable view              | Normalized URL search params                       |
+| Widget-local draft or interaction      | Local Client Component                             |
+| Authoritative entity                   | Server or data layer                               |
 | Browser cache of server data           | Client query cache, when browser freshness matters |
 | Temporary optimistic projection        | Mutation lifecycle or client query cache           |
 | Shared transient client workflow       | Scoped feature store, when justified               |
-| Persistent user preference             | Cookie or browser storage                      |
-| Unsaved multi-widget working copy      | Scoped feature store with explicit base state  |
-| Behavior spanning independent features | Explicit workflow feature                      |
+| Persistent user preference             | Cookie or browser storage                          |
+| Unsaved multi-widget working copy      | Scoped feature store with explicit base state      |
+| Behavior spanning independent features | Explicit workflow feature                          |
 
 Distinguish the authoritative source from a useful representation. A TanStack
 Query cache may own the browser's current server-data projection while the
@@ -83,7 +83,8 @@ owners.
 
 The route owns the request contract semantically. A feature may provide the
 parser and navigation operations when it owns the view vocabulary, but the
-page remains the boundary that receives request inputs and composes widgets.
+page remains the boundary that receives request inputs and composes public
+feature surfaces. A feature root normally keeps its widget topology private.
 
 ## Keep local interaction local
 
@@ -193,9 +194,12 @@ owning an orchestration feature. Add an explicit workflow owner when a product
 command coordinates participants, state transitions, retries, or compensation
 across feature boundaries.
 
-Expose semantic workflow operations. Do not let participant features import
-one another, and do not put cross-feature behavior in the page, a shared utility
-folder, or a global store.
+Expose semantic workflow operations. Let the workflow depend on public
+participant operations or injected ports. Participant features do not import
+one another; when their UI must emit workflow intent, inject a callback or
+command at the composition boundary instead of adding a reverse import. Do not
+put cross-feature behavior in the page, a shared utility folder, or a global
+store.
 
 ## Escalate specialized synchronization
 

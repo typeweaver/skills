@@ -29,7 +29,7 @@ Prefer UI dependencies that flow from `app` to `features` to `components` to
 
 ```text
 Reusable visual or interaction primitive? -> components/ui
-Reusable product composition, no owner?   -> components
+Reusable product composition, no natural feature owner? -> components
 Feature-specific behavior or composition? -> keep it in the feature
 ```
 

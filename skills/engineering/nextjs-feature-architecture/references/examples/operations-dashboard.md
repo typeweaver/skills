@@ -70,7 +70,7 @@ ProjectPage
 ```
 
 - The page renders `ProjectDashboard` and does not assemble widgets.
-- Pass any client provider from the Server page with Server widgets as
+- Within `ProjectDashboard`, pass Server widgets to any client provider as
   `children` so they stay in the server graph.
 - `DashboardMetrics` remains a Server Component and calls its operation
   directly when it needs no browser cache lifecycle.
@@ -138,11 +138,17 @@ operation:
 
 1. Validate authorization and expected revision.
 2. Persist the mutation before invalidating anything.
-3. Expire the tagged server cache with the API that matches freshness: with
-   Cache Components, `updateTag` (or `revalidatePath` / `refresh()`) already
-   re-renders the current route; `revalidateTag` is stale-while-revalidate.
-   Without Cache Components, use the repo's `revalidateTag` / `revalidatePath`.
-4. Return the confirmed status and any activity projection the browser can
+3. Invalidate data through its actual owner. With Cache Components, use
+   `updateTag` for immediate read-your-own-writes, `revalidateTag(tag, "max")`
+   for stale-while-revalidate, or `revalidatePath` when the route path is the
+   intended invalidation scope. Without Cache Components, use the repository's
+   established `revalidateTag` / `revalidatePath` contract.
+4. Decide how the current UI observes the invalidation. `updateTag` or a
+   relevant `revalidatePath` in a Server Action can update the current UI in the
+   same round trip; `revalidateTag(tag, "max")` deliberately permits stale UI.
+   `refresh()` only refreshes the client router and never invalidates cached
+   data. A Route Handler does not update the current UI by itself.
+5. Return the confirmed status and any activity projection the browser can
    reconcile.
 
 In the client mutation lifecycle, update or invalidate only TanStack keys that
@@ -174,14 +180,15 @@ the store.
 
 ## Split only when ownership really differs
 
-If the page instead composes widgets from unrelated features, route filters
-may still coordinate them passively: normalize one URL contract and pass the
-relevant values to each feature.
+If the page instead composes public surfaces from unrelated features, route
+filters may still coordinate them passively: normalize one URL contract and
+pass the relevant values to each feature.
 
 Introduce a workflow feature only when a command actively coordinates those
 features, such as selecting incidents and deploying a shared remediation. The
-workflow owns commands and transient state; participant features depend on its
-public client contract and never import one another.
+workflow owns commands and transient state and depends on public participant
+operations or injected ports. Participants never import one another; the page
+or workflow provider injects commands into participant UI when needed.
 
 ## Handle hard cases
 
