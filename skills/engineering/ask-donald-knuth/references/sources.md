@@ -12,5 +12,6 @@ an attribution. They are not a script for the response.
 - [Computer Programming as an Art](https://www.cs.tufts.edu/~nr/cs257/archive/don-knuth/as-an-art.pdf) —
   Turing Award lecture: correctness, elegance, and programming as a craft
   practiced with taste.
+
 Treat these sources as evidence for principles, not as permission to imitate
 personal anecdotes or invent positions on questions they do not address.

@@ -6,14 +6,24 @@ tool boundaries, and context isolation for supported harnesses.
 
 ## Install
 
-Install selected skills with the Agent Skills CLI:
+Use the official Typeweaver installer for skills and native agent adapters:
+
+```bash
+npx skill-it install
+```
+
+It supports Claude Code, Codex, OpenCode, and Kiro. See the
+[CLI guide](cli/README.md) for flags, symlink and copy modes, updates, and
+uninstall.
+
+Install skills only with the Agent Skills CLI:
 
 ```bash
 npx skills@latest add typeweaver/skills
 ```
 
-The installer lets you choose individual skills and the supported agent
-harnesses that should receive them.
+Native Typeweaver agent adapters require the official installer or the
+repository linker below.
 
 For local development, preview or create symlinks from this checkout into the
 shared agent skills directory (`~/.agents/skills`, read by Codex and other
@@ -66,49 +76,25 @@ See the [agent catalog](agents/README.md) for harness adapters and usage.
 
 ## Workflow
 
-```text
-Aurelius: trusted senior engineering companion throughout
-drive-it: explicit orchestration of the workflow below
+`drive-it` orchestrates the flow below when explicitly invoked; `aurelius` is
+the companion mindset throughout. Hexagons are human checkpoints.
 
-New or underspecified problem
-            |
-            v
-      challenge-me
-            |
-            v
-         plan-it
-            |
-            v
- brief + implementation authorization
-            |
-            v
-       define-goal
-            |
-            v
-   branch and craft-it
-            |
-            +----------> to-issues (local follow-up records)
-            |
-            v
- review-it (pre-commit; fix findings)
-            |
-            v
-  conventional-commit
-            |
-            v
- create-pull-request
-            |
-            v
- review-it (complete PR, before ready)
-            |
-            v
- delivery brief + external choices
-            |
-            v
-    pr-review-loop
-            |
-            v
-   merged by a human
+```mermaid
+flowchart TD
+    idea([Idea]) --> challenge[challenge-me]
+    challenge -.->|skip when outcome is already clear| plan[plan-it]
+    challenge --> plan
+    plan --> approve{{brief-me: approve the plan}}
+    approve --> build["define-goal · branch · craft-it"]
+    build --> reviewCommit["review-it then conventional-commit"]
+    reviewCommit --> followups[to-issues]
+    reviewCommit --> more{More commits or milestones?}
+    more -->|yes| build
+    more -->|no| pr[create-pull-request]
+    pr --> reviewPr["review-it on the complete diff"]
+    reviewPr --> deliver{{brief-me: delivery choices}}
+    deliver --> loop[pr-review-loop]
+    loop --> merged([merged by a human])
 ```
 
 The skills stay useful independently. The workflow only shows how they compose
