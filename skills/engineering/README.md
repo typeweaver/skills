@@ -28,6 +28,8 @@ from task context; user-invoked skills start only by explicit human command.
   handoff-ready engineering plan.
 - **[craft-it](./craft-it/SKILL.md)** — Implement maintainable,
   repository-native software with durable contracts and tests.
+- **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
+  without narrating what the code already says.
 - **[nextjs-feature-architecture](./nextjs-feature-architecture/SKILL.md)** —
   Design scalable Next.js App Router features with explicit ownership and
   runtime boundaries.
