@@ -66,7 +66,7 @@ const acquireLock = (roots: RootPaths): string => {
       ? `PID ${pid}`
       : "a leftover lock file";
   throw new Error(
-    `Another typeweaver-skills command holds ${path} (${owner}). If nothing is running, delete that file and retry.`,
+    `Another skill-it command holds ${path} (${owner}). If nothing is running, delete that file and retry.`,
   );
 };
 
@@ -87,7 +87,7 @@ const releaseLock = (roots: RootPaths, token: string): void => {
 const siblingRelativePath = (node: DesiredNode, id: string, index: number, kind: string): string =>
   join(
     dirname(node.relativePath),
-    `.typeweaver-skills-${id}-${index}-${kind}-${basename(node.relativePath)}`,
+    `.skill-it-${id}-${index}-${kind}-${basename(node.relativePath)}`,
   )
     .split("\\")
     .join("/");

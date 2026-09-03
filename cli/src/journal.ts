@@ -42,7 +42,7 @@ const parseJournalEntry = (value: unknown, id: string): JournalEntry | undefined
     !isSafeRelativePath(backupRelativePath) ||
     typeof value["hadOriginal"] !== "boolean" ||
     (temporaryRelativePath !== undefined && !isSafeRelativePath(temporaryRelativePath)) ||
-    !basename(backupRelativePath).startsWith(`.typeweaver-skills-${id}-`)
+    !basename(backupRelativePath).startsWith(`.skill-it-${id}-`)
   ) {
     return undefined;
   }

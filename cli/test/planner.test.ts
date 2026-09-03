@@ -19,7 +19,7 @@ const roots: RootPaths = {
   "opencode-agents": "/home/u/.config/opencode/agents",
   "codex-agents": "/home/u/.codex/agents",
   "codex-profiles": "/home/u/.codex",
-  state: "/home/u/.config/typeweaver-skills",
+  state: "/home/u/.config/skill-it",
 };
 
 const node = (hash: string): DesiredFileNode => ({

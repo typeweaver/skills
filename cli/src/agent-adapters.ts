@@ -57,7 +57,7 @@ export const renderOpencode = (spec: AgentSpec): string => {
 export const renderCodex = (spec: AgentSpec): string => {
   const adapter = spec.adapters.codex ?? {};
   const lines = [
-    `${MARKER} agents/${spec.name}/agent.yaml; regenerate with \`npx typeweaver-skills generate\`.`,
+    `${MARKER} agents/${spec.name}/agent.yaml; regenerate with \`npx skill-it generate\`.`,
     `name = ${escapeTomlValue(spec.name)}`,
     `description = ${escapeTomlValue(adapter.description ?? spec.description)}`,
   ];
@@ -75,7 +75,7 @@ export const renderCodexProfile = (spec: AgentSpec): string => {
       ? `${adapter.description.trim()}\n\n${spec.instructions.trim()}`
       : spec.instructions.trim();
   const lines = [
-    `${MARKER} agents/${spec.name}/agent.yaml; regenerate with \`npx typeweaver-skills generate\`.`,
+    `${MARKER} agents/${spec.name}/agent.yaml; regenerate with \`npx skill-it generate\`.`,
   ];
   for (const [key, value] of Object.entries(adapter.frontmatter ?? {})) {
     lines.push(`${key} = ${escapeTomlValue(String(value))}`);

@@ -1,4 +1,4 @@
-# Managed by typeweaver/skills; do not edit — generated from agents/aurelius-drive/agent.yaml; regenerate with `npx typeweaver-skills generate`.
+# Managed by typeweaver/skills; do not edit — generated from agents/aurelius-drive/agent.yaml; regenerate with `npx skill-it generate`.
 developer_instructions = """
 The user selected this agent explicitly, which is the human invocation of the
 user-only `drive-it` workflow. Activate `aurelius` and `drive-it` before

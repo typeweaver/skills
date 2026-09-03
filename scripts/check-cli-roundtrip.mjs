@@ -8,7 +8,7 @@ const executable =
   process.argv[2] === undefined
     ? join(repository, "cli", "dist", "src", "bin.js")
     : resolve(process.argv[2]);
-const temporary = mkdtempSync(join(tmpdir(), "typeweaver-skills-roundtrip-"));
+const temporary = mkdtempSync(join(tmpdir(), "skill-it-roundtrip-"));
 const home = join(temporary, "home");
 const configHome = join(home, ".config");
 const env = {
@@ -72,7 +72,7 @@ try {
   const canonical = join(home, ".agents", "skills", "aurelius", "SKILL.md");
   const claudeSkill = join(home, ".claude", "skills", "aurelius");
   const kiroSkill = join(home, ".kiro", "skills", "aurelius");
-  const receipt = join(configHome, "typeweaver-skills", "receipt.json");
+  const receipt = join(configHome, "skill-it", "receipt.json");
   assert(existsSync(canonical), "canonical skill was not installed");
   assert(existsSync(join(home, ".claude", "agents", "review-it.md")), "Claude agent missing");
   assert(
@@ -110,7 +110,7 @@ try {
     "OpenCode agent remains",
   );
   assert(!existsSync(join(home, ".codex", "agents", "review-it.toml")), "Codex agent remains");
-  assert(!existsSync(join(configHome, "typeweaver-skills")), "installer state remains");
+  assert(!existsSync(join(configHome, "skill-it")), "installer state remains");
 } finally {
   rmSync(temporary, { recursive: true, force: true });
 }
