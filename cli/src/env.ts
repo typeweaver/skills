@@ -30,7 +30,7 @@ export const rootPaths = (env: Env): RootPaths => ({
   "opencode-agents": join(env.configHome, "opencode", "agents"),
   "codex-agents": join(env.codexHome, "agents"),
   "codex-profiles": env.codexHome,
-  state: join(env.configHome, "typeweaver-skills"),
+  state: join(env.configHome, "skill-it"),
 });
 
 /** A harness counts as present when its user configuration directory exists. */

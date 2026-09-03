@@ -1,5 +1,5 @@
 {
-  "name": "typeweaver-skills",
+  "name": "skill-it",
   "version": "0.0.0",
   "description": "Guided installer for Typeweaver Skills: software-engineering skills and agents for Claude Code, Codex, OpenCode, and Kiro",
   "keywords": [
@@ -18,7 +18,7 @@
     "directory": "cli"
   },
   "bin": {
-    "typeweaver-skills": "dist/src/bin.js"
+    "skill-it": "dist/src/bin.js"
   },
   "files": [
     "dist/src",

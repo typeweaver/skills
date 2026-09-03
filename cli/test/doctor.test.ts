@@ -25,7 +25,7 @@ afterEach(() => {
 });
 
 const temporaryEnv = (): Env => {
-  const home = temporaryDirectory("typeweaver-skills-test-");
+  const home = temporaryDirectory("skill-it-test-");
   return {
     home,
     codexHome: join(home, ".codex"),

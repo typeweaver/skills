@@ -40,7 +40,7 @@ afterEach(() => {
 });
 
 const temporaryEnv = (): Env => {
-  const home = temporaryDirectory("typeweaver-skills-test-");
+  const home = temporaryDirectory("skill-it-test-");
   return {
     home,
     codexHome: join(home, ".codex"),
@@ -152,7 +152,7 @@ it("fails closed on foreign content and --force replaces only the selected compo
 
 it("never follows a symlinked harness root, including with --force", () => {
   const env = temporaryEnv();
-  const outside = temporaryDirectory("typeweaver-skills-outside-");
+  const outside = temporaryDirectory("skill-it-outside-");
   writeFileSync(join(outside, "sentinel"), "unchanged");
   symlinkSync(outside, join(env.home, ".agents"), "dir");
 

@@ -64,13 +64,13 @@ const generate = Command.make(
   (config) => runGenerate(config.repo, config.check),
 ).pipe(Command.withDescription("Generate harness adapter files from each agent's source of truth"));
 
-export const root = Command.make("typeweaver-skills").pipe(
+export const root = Command.make("skill-it").pipe(
   Command.withDescription("Filesystem-safe Typeweaver skills and agent adapter installer"),
   Command.withSubcommands([installCommand, update, doctor, uninstall, generate]),
 );
 
 /**
- * Runs the public `typeweaver-skills` CLI.
+ * Runs the public `skill-it` CLI.
  *
  * @param argv - Arguments after the node executable and script path, as in
  *   `process.argv.slice(2)`.

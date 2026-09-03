@@ -6,33 +6,87 @@ on:
 
 concurrency: release-${{ github.ref }}
 
-permissions:
-  contents: write
-  pull-requests: write
-  # Required for npm trusted publishing (OIDC) and provenance.
-  id-token: write
+permissions: {}
 
 jobs:
-  release:
+  select-mode:
+    name: Select release mode
     runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.select-mode.outputs.mode }}
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: pnpm
+          node-version: 24
+          package-manager-cache: false
       - run: pnpm install --frozen-lockfile
-      - name: Create the version PR or publish to npm
-        # With open changesets this opens/updates a "Version Packages" PR.
-        # Merging that PR re-runs this job with no open changesets, which
-        # publishes typeweaver-skills to npm via trusted publishing.
-        # Precondition (one-time): the package exists on npm under the rexeus
-        # org with this repository and workflow configured as its trusted
-        # publisher; the first release is published manually by a logged-in
-        # owner.
-        uses: changesets/action@v1
+      - name: Select version, publish, or no-op
+        id: select-mode
+        uses: changesets/action/select-mode@v2.1.1
+
+  version:
+    name: Create or update version PR
+    if: needs.select-mode.outputs.mode == 'version'
+    needs: select-mode
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
         with:
-          publish: pnpm release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 24
+          package-manager-cache: false
+      - run: pnpm install --frozen-lockfile
+      - uses: changesets/action/version@v2.1.1
+
+  await-bootstrap:
+    name: Await npm bootstrap
+    if: >-
+      needs.select-mode.outputs.mode == 'publish' &&
+      vars.NPM_TRUSTED_PUBLISHING != 'enabled'
+    needs: select-mode
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Keep automated publishing disabled
+        run: >-
+          echo "::notice::Publish is ready, but NPM_TRUSTED_PUBLISHING is not
+          enabled. Complete the documented initial publish and trusted
+          publisher setup first."
+
+  publish:
+    name: Publish to npm
+    if: >-
+      needs.select-mode.outputs.mode == 'publish' &&
+      vars.NPM_TRUSTED_PUBLISHING == 'enabled'
+    needs: select-mode
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Install a trusted-publishing-compatible npm CLI
+        run: npm install --global npm@11.19.1
+      - run: pnpm install --frozen-lockfile
+      - name: Verify repository and packed package
+        run: |
+          pnpm check
+          node scripts/check-cli-package.mjs
+      - name: Publish packages and create releases
+        uses: changesets/action/publish@v2.1.1
+        with:
+          script: pnpm release

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copies skills and agents into `cli/content` at pack time (`prepack`). The
-// published tarball then contains that snapshot, so `npx typeweaver-skills
+// published tarball then contains that snapshot, so `npx skill-it
 // install` does not clone GitHub or fetch the repository.
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
 import { Console, Effect, FileSystem } from "effect";

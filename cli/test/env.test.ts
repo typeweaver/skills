@@ -17,6 +17,6 @@ it("maps every harness and installer state to its allowlisted user root", () => 
     "opencode-agents": "/users/example/config/opencode/agents",
     "codex-agents": "/users/example/codex/agents",
     "codex-profiles": "/users/example/codex",
-    state: "/users/example/config/typeweaver-skills",
+    state: "/users/example/config/skill-it",
   });
 });

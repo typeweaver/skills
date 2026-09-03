@@ -36,7 +36,7 @@ export const renderActionReport = (verb: string, report: ActionReport) =>
 
 export const renderDoctorReport = (report: DoctorReport) =>
   Effect.gen(function* () {
-    yield* Console.log(`typeweaver-skills ${report.packageVersion}`);
+    yield* Console.log(`skill-it ${report.packageVersion}`);
     yield* Console.log(`Receipt: ${report.receiptState}`);
     if (report.installedVersion !== undefined) {
       yield* Console.log(`Installed package version: ${report.installedVersion}`);

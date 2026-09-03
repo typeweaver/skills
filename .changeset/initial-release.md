@@ -1,5 +1,5 @@
 ---
-"typeweaver-skills": minor
+"skill-it": minor
 ---
 
 Initial release: guided installer for Typeweaver Skills. Detects Claude Code,
