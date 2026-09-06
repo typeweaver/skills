@@ -1,6 +1,6 @@
 {
   "name": "skill-it",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Guided installer for Typeweaver Skills: software-engineering skills and agents for Claude Code, Codex, OpenCode, and Kiro",
   "keywords": [
     "agent-skills",
