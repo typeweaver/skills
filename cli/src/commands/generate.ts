@@ -141,7 +141,7 @@ export const runGenerate = Effect.fn("commands.generate")(function* (
 
   if (check && drifted.length > 0) {
     return yield* new GeneratorDriftError({
-      message: "Generated adapters are out of date. Run `skill-it generate`.",
+      message: "Generated adapters are out of date. Run `equip-it generate`.",
       files: drifted,
     });
   }

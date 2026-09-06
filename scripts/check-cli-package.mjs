@@ -13,7 +13,7 @@ const expectedVersion =
 if (typeof expectedVersion !== "string") {
   throw new TypeError("cli/package.json does not declare a version.");
 }
-const temporary = mkdtempSync(join(tmpdir(), "skill-it-package-"));
+const temporary = mkdtempSync(join(tmpdir(), "equip-it-package-"));
 const packageDirectory = join(temporary, "package");
 const applicationDirectory = join(temporary, "application");
 const pnpm = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
@@ -36,7 +36,7 @@ const run = (command, ...args) => {
 try {
   mkdirSync(packageDirectory);
   mkdirSync(applicationDirectory);
-  run(pnpm, "--filter", "skill-it", "pack", "--pack-destination", packageDirectory);
+  run(pnpm, "--filter", "equip-it", "pack", "--pack-destination", packageDirectory);
   const tarballs = readdirSync(packageDirectory).filter((name) => name.endsWith(".tgz"));
   if (tarballs.length !== 1 || tarballs[0] === undefined) {
     throw new Error(`Expected one package tarball, found ${tarballs.length}.`);
@@ -65,22 +65,22 @@ try {
     applicationDirectory,
     "node_modules",
     ".bin",
-    process.platform === "win32" ? "skill-it.cmd" : "skill-it",
+    process.platform === "win32" ? "equip-it.cmd" : "equip-it",
   );
   if (!existsSync(bin)) {
-    throw new Error("Installed package does not expose the skill-it executable.");
+    throw new Error("Installed package does not expose the equip-it executable.");
   }
   const version = spawnSync(bin, ["--version"], {
     cwd: applicationDirectory,
     encoding: "utf8",
   });
-  if (version.status !== 0 || version.stdout.trim() !== `skill-it v${expectedVersion}`) {
-    throw new Error("Installed skill-it executable does not report its package identity.");
+  if (version.status !== 0 || version.stdout.trim() !== `equip-it v${expectedVersion}`) {
+    throw new Error("Installed equip-it executable does not report its package identity.");
   }
   run(
     process.execPath,
     join(repository, "scripts", "check-cli-roundtrip.mjs"),
-    join(applicationDirectory, "node_modules", "skill-it", "dist", "src", "bin.js"),
+    join(applicationDirectory, "node_modules", "equip-it", "dist", "src", "bin.js"),
   );
 } finally {
   rmSync(temporary, { recursive: true, force: true });

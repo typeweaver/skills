@@ -1,4 +1,4 @@
-# skill-it
+# equip-it
 
 Filesystem-safe installer for Typeweaver's reusable engineering skills and
 native agent adapters.
@@ -8,7 +8,7 @@ native agent adapters.
 Run the guided installer:
 
 ```bash
-npx skill-it install
+npx equip-it install
 ```
 
 It detects harnesses, lets you select skills and agents, and asks whether
@@ -17,7 +17,7 @@ harness-specific skill projections should be symlinks or copies when relevant.
 For automation, select every consumer explicitly and skip prompts:
 
 ```bash
-npx skill-it install \
+npx equip-it install \
   --claude-code --codex --opencode --kiro \
   --skills all --agents all --yes
 ```
@@ -33,7 +33,7 @@ the canonical location directly.
 Use `--copy` when every harness should receive an independent skill directory:
 
 ```bash
-npx skill-it install --claude-code --kiro --skills all --agents none --copy
+npx equip-it install --claude-code --kiro --skills all --agents none --copy
 ```
 
 If the operating system does not permit directory symlinks, the command rolls
@@ -79,8 +79,8 @@ the installer unlinks only that symlink and never changes its target.
 Preview a takeover before accepting that boundary:
 
 ```bash
-npx skill-it install --claude-code --skills all --agents none --force --dry-run
-npx skill-it install --claude-code --skills all --agents none --force
+npx equip-it install --claude-code --skills all --agents none --force --dry-run
+npx equip-it install --claude-code --skills all --agents none --force
 ```
 
 ## Updates
@@ -99,15 +99,15 @@ With no selection flags, `uninstall` removes the complete recorded
 installation:
 
 ```bash
-npx skill-it uninstall --dry-run
-npx skill-it uninstall
+npx equip-it uninstall --dry-run
+npx equip-it uninstall
 ```
 
 A scoped uninstall can remove selected components or only selected harness
 consumers. It requires a valid receipt so that remaining consumers stay intact:
 
 ```bash
-npx skill-it uninstall --claude-code --skills aurelius
+npx equip-it uninstall --claude-code --skills aurelius
 ```
 
 Modified managed files stop uninstall unless `--force` is supplied. If the
