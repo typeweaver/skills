@@ -1,5 +1,5 @@
 {
-  "name": "skill-it",
+  "name": "equip-it",
   "version": "0.1.0",
   "description": "Guided installer for Typeweaver Skills: software-engineering skills and agents for Claude Code, Codex, OpenCode, and Kiro",
   "keywords": [
@@ -18,7 +18,7 @@
     "directory": "cli"
   },
   "bin": {
-    "skill-it": "dist/src/bin.js"
+    "equip-it": "dist/src/bin.js"
   },
   "files": [
     "dist/src",
@@ -26,8 +26,7 @@
   ],
   "type": "module",
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "scripts": {
     "build": "pnpm clean && tsc -p tsconfig.json",

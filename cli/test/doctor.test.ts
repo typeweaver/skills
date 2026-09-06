@@ -25,7 +25,7 @@ afterEach(() => {
 });
 
 const temporaryEnv = (): Env => {
-  const home = temporaryDirectory("skill-it-test-");
+  const home = temporaryDirectory("equip-it-test-");
   return {
     home,
     codexHome: join(home, ".codex"),

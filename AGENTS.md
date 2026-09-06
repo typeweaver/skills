@@ -10,7 +10,7 @@ small, explicit, and portable across supported agent harnesses.
 - Define each agent once in `agents/<name>/agent.yaml` plus `instructions.md`.
   The harness adapters (`claude.md`, `opencode.md`, `codex.toml`,
   `codex-profile.toml`) are generated from that source with
-  `skill-it generate` and stay committed; never edit them by hand.
+  `equip-it generate` and stay committed; never edit them by hand.
 - Keep the installer CLI in `cli/`; it bundles `skills/` and `agents/` into
   the published package at pack time.
 - Keep optional scripts, references, and assets inside the skill that owns them.
@@ -67,7 +67,7 @@ small, explicit, and portable across supported agent harnesses.
 
 ## Releases
 
-- The npm package `skill-it` is versioned with Changesets: add a
+- The npm package `equip-it` is versioned with Changesets: add a
   changeset (`pnpm changeset`) to every release-worthy change. The release
   workflow opens a version PR on `main`; merging it publishes to npm.
 - Before the initial publish, leave the repository variable

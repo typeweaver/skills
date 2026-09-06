@@ -1,4 +1,4 @@
-# skill-it
+# equip-it
 
 ## 0.1.0
 
