@@ -88,5 +88,7 @@ jobs:
           node scripts/check-cli-package.mjs
       - name: Publish packages and create releases
         uses: changesets/action/publish@v2.1.1
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
         with:
           script: pnpm release
