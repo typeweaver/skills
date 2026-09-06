@@ -1,0 +1,43 @@
+name: review-it
+description: Independently review a completed change or pull request in a fresh,
+  read-only context. Use before commit and for the complete pull-request diff.
+adapters:
+  claude-code:
+    frontmatter:
+      tools:
+        - Read
+        - Glob
+        - Grep
+        - Bash
+      skills:
+        - review-it
+      permissionMode: plan
+  opencode:
+    frontmatter:
+      mode: subagent
+      hidden: true
+      tools:
+        write: false
+        edit: false
+        task: false
+        skill: true
+      permission:
+        skill:
+          "*": deny
+          review-it: allow
+        bash:
+          "*": deny
+          "git diff*": allow
+          "git status*": allow
+          "git log*": allow
+          "git show*": allow
+          "git blame*": allow
+          "rg *": allow
+          "find *": allow
+          "ls *": allow
+          "wc *": allow
+  codex:
+    description: Independently review a completed change or pull request in a fresh,
+      read-only context.
+    frontmatter:
+      sandbox_mode: read-only

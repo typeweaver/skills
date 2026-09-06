@@ -14,16 +14,17 @@ permission:
     review-it: allow
   bash:
     "*": deny
-    "git diff*": allow
-    "git status*": allow
-    "git log*": allow
-    "git show*": allow
-    "git blame*": allow
-    "rg *": allow
-    "find *": allow
-    "ls *": allow
-    "wc *": allow
+    git diff*: allow
+    git status*: allow
+    git log*: allow
+    git show*: allow
+    git blame*: allow
+    rg *: allow
+    find *: allow
+    ls *: allow
+    wc *: allow
 ---
 
-Load `review-it`. Review the full delegated scope and return the skill's
-prioritized, evidence-backed findings. Do not modify the repository.
+Activate the `review-it` skill and follow its review contract. Review the full
+delegated scope and return its prioritized, evidence-backed findings. Do not
+modify the repository.

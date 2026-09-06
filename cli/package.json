@@ -1,0 +1,55 @@
+{
+  "name": "skill-it",
+  "version": "0.0.0",
+  "description": "Guided installer for Typeweaver Skills: software-engineering skills and agents for Claude Code, Codex, OpenCode, and Kiro",
+  "keywords": [
+    "agent-skills",
+    "claude-code",
+    "codex",
+    "installer",
+    "kiro",
+    "opencode"
+  ],
+  "homepage": "https://github.com/typeweaver/skills",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typeweaver/skills.git",
+    "directory": "cli"
+  },
+  "bin": {
+    "skill-it": "dist/src/bin.js"
+  },
+  "files": [
+    "dist/src",
+    "content"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "pnpm clean && tsc -p tsconfig.json",
+    "bundle-content": "node dist/src/bundle-content.js",
+    "clean": "node scripts/clean.mjs",
+    "test": "vitest run",
+    "prepack": "pnpm build && node dist/src/bundle-content.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@effect/platform-node": "catalog:",
+    "effect": "catalog:",
+    "yaml": "catalog:"
+  },
+  "devDependencies": {
+    "@effect/language-service": "catalog:",
+    "@effect/vitest": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
