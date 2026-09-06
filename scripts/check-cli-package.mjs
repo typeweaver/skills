@@ -1,9 +1,18 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const repository = resolve(import.meta.dirname, "..");
+/** @type {unknown} */
+const manifest = JSON.parse(readFileSync(join(repository, "cli", "package.json"), "utf8"));
+const expectedVersion =
+  typeof manifest === "object" && manifest !== null && "version" in manifest
+    ? manifest.version
+    : undefined;
+if (typeof expectedVersion !== "string") {
+  throw new TypeError("cli/package.json does not declare a version.");
+}
 const temporary = mkdtempSync(join(tmpdir(), "skill-it-package-"));
 const packageDirectory = join(temporary, "package");
 const applicationDirectory = join(temporary, "application");
@@ -65,7 +74,7 @@ try {
     cwd: applicationDirectory,
     encoding: "utf8",
   });
-  if (version.status !== 0 || version.stdout.trim() !== "skill-it v0.0.0") {
+  if (version.status !== 0 || version.stdout.trim() !== `skill-it v${expectedVersion}`) {
     throw new Error("Installed skill-it executable does not report its package identity.");
   }
   run(
