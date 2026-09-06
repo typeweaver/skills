@@ -1,0 +1,4 @@
+interface:
+  display_name: "Comment It"
+  short_description: "Write durable source-code comments"
+  default_prompt: "Use $comment-it to review and improve the comments in this change."

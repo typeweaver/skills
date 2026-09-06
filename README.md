@@ -137,6 +137,8 @@ are created only after separate user authorization at the delivery checkpoint.
   into a durable, handoff-ready engineering plan.
 - **[craft-it](skills/engineering/craft-it/SKILL.md)** — Implement maintainable,
   repository-native software with durable contracts and tests.
+- **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
+  source-code comments without narrating what the code already says.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
