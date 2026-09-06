@@ -1,5 +1,13 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -16,7 +24,10 @@ if (typeof expectedVersion !== "string") {
 const temporary = mkdtempSync(join(tmpdir(), "equip-it-package-"));
 const packageDirectory = join(temporary, "package");
 const applicationDirectory = join(temporary, "application");
+const npmApplicationDirectory = join(temporary, "application-npm");
 const pnpm = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
+const npm = process.platform === "win32" ? "npm.cmd" : "npm";
+const binName = process.platform === "win32" ? "equip-it.cmd" : "equip-it";
 
 /**
  * @param {string} command
@@ -33,9 +44,59 @@ const run = (command, ...args) => {
   }
 };
 
+/**
+ * Collects every installed copy of a package below a node_modules tree.
+ * @param {string} root
+ * @param {string} name
+ * @returns {string[]}
+ */
+const installedCopies = (root, name) => {
+  /** @type {string[]} */
+  const copies = [];
+  /** @param {string} directory */
+  const visit = (directory) => {
+    if (!existsSync(directory)) {
+      return;
+    }
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      if (!entry.isDirectory()) {
+        continue;
+      }
+      const path = join(directory, entry.name);
+      if (entry.name === name) {
+        copies.push(path);
+      } else if (entry.name.startsWith("@")) {
+        visit(path);
+      }
+      visit(join(path, "node_modules"));
+    }
+  };
+  visit(root);
+  return copies;
+};
+
+/**
+ * Runs the installed executable and checks that it reports the packed version.
+ * @param {string} applicationRoot
+ * @param {string} installer
+ */
+const expectIdentity = (applicationRoot, installer) => {
+  const bin = join(applicationRoot, "node_modules", ".bin", binName);
+  if (!existsSync(bin)) {
+    throw new Error(`Package installed with ${installer} does not expose the equip-it executable.`);
+  }
+  const version = spawnSync(bin, ["--version"], { cwd: applicationRoot, encoding: "utf8" });
+  if (version.status !== 0 || version.stdout.trim() !== `equip-it v${expectedVersion}`) {
+    throw new Error(
+      `equip-it installed with ${installer} does not report its package identity:\n${version.stdout}${version.stderr}`,
+    );
+  }
+};
+
 try {
   mkdirSync(packageDirectory);
   mkdirSync(applicationDirectory);
+  mkdirSync(npmApplicationDirectory);
   run(pnpm, "--filter", "equip-it", "pack", "--pack-destination", packageDirectory);
   const tarballs = readdirSync(packageDirectory).filter((name) => name.endsWith(".tgz"));
   if (tarballs.length !== 1 || tarballs[0] === undefined) {
@@ -61,22 +122,32 @@ try {
     throw new Error("Package artifact contains the deleted legacy engine.");
   }
   run(pnpm, "add", "--dir", applicationDirectory, "--ignore-scripts", tarball);
-  const bin = join(
-    applicationDirectory,
-    "node_modules",
-    ".bin",
-    process.platform === "win32" ? "equip-it.cmd" : "equip-it",
+  expectIdentity(applicationDirectory, "pnpm");
+
+  // npm (and therefore npx) installs peer dependencies itself. A version skew
+  // between our pins and the transitive peer ranges nests a second copy of
+  // effect, and two runtimes cannot share fibers or scopes.
+  writeFileSync(
+    join(npmApplicationDirectory, "package.json"),
+    JSON.stringify({ name: "equip-it-consumer", private: true }),
   );
-  if (!existsSync(bin)) {
-    throw new Error("Installed package does not expose the equip-it executable.");
+  run(
+    npm,
+    "install",
+    "--prefix",
+    npmApplicationDirectory,
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    tarball,
+  );
+  const effectCopies = installedCopies(join(npmApplicationDirectory, "node_modules"), "effect");
+  if (effectCopies.length !== 1) {
+    throw new Error(
+      `npm installed ${effectCopies.length} copies of effect; expected exactly one:\n${effectCopies.join("\n")}`,
+    );
   }
-  const version = spawnSync(bin, ["--version"], {
-    cwd: applicationDirectory,
-    encoding: "utf8",
-  });
-  if (version.status !== 0 || version.stdout.trim() !== `equip-it v${expectedVersion}`) {
-    throw new Error("Installed equip-it executable does not report its package identity.");
-  }
+  expectIdentity(npmApplicationDirectory, "npm");
   run(
     process.execPath,
     join(repository, "scripts", "check-cli-roundtrip.mjs"),
