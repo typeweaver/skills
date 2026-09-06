@@ -10,7 +10,7 @@ export default defineConfig({
   format: "esm",
   platform: "node",
   target: "node22",
-  noExternal: /.*/,
+  deps: { alwaysBundle: [/.*/u] },
   dts: false,
   clean: false,
   fixedExtension: false,

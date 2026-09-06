@@ -121,12 +121,12 @@ try {
   if (inventory.has("package/dist/src/bin.js")) {
     throw new Error("Package artifact ships the unbundled compiler output.");
   }
-  const manifest = spawnSync("tar", ["-xOzf", tarball, "package/package.json"], {
+  const packedManifest = spawnSync("tar", ["-xOzf", tarball, "package/package.json"], {
     cwd: repository,
     encoding: "utf8",
   });
   /** @type {unknown} */
-  const packed = JSON.parse(manifest.stdout);
+  const packed = JSON.parse(packedManifest.stdout);
   if (typeof packed === "object" && packed !== null && "dependencies" in packed) {
     throw new Error("Packed manifest declares runtime dependencies; the CLI must stay bundled.");
   }
@@ -150,7 +150,7 @@ try {
     tarball,
   );
   const effectCopies = installedCopies(join(npmApplicationDirectory, "node_modules"), "effect");
-  if (effectCopies.length !== 0) {
+  if (effectCopies.length > 0) {
     throw new Error(
       `npm installed ${effectCopies.length} copies of effect; the bundle must not need any:\n${effectCopies.join("\n")}`,
     );
