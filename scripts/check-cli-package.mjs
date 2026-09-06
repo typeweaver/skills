@@ -112,21 +112,29 @@ try {
     "package/content/LICENSE",
     "package/content/skills/engineering/aurelius/SKILL.md",
     "package/content/agents/review-it/codex.toml",
-    "package/dist/src/bin.js",
+    "package/dist/bin/equip-it.js",
   ]) {
     if (!inventory.has(required)) {
       throw new Error(`Package artifact is missing ${required}.`);
     }
   }
-  if (inventory.has("package/dist/src/engine.js")) {
-    throw new Error("Package artifact contains the deleted legacy engine.");
+  if (inventory.has("package/dist/src/bin.js")) {
+    throw new Error("Package artifact ships the unbundled compiler output.");
+  }
+  const manifest = spawnSync("tar", ["-xOzf", tarball, "package/package.json"], {
+    cwd: repository,
+    encoding: "utf8",
+  });
+  /** @type {unknown} */
+  const packed = JSON.parse(manifest.stdout);
+  if (typeof packed === "object" && packed !== null && "dependencies" in packed) {
+    throw new Error("Packed manifest declares runtime dependencies; the CLI must stay bundled.");
   }
   run(pnpm, "add", "--dir", applicationDirectory, "--ignore-scripts", tarball);
   expectIdentity(applicationDirectory, "pnpm");
 
-  // npm (and therefore npx) installs peer dependencies itself. A version skew
-  // between our pins and the transitive peer ranges nests a second copy of
-  // effect, and two runtimes cannot share fibers or scopes.
+  // npm (and therefore npx) resolves dependencies differently from pnpm. The
+  // bundled CLI must not pull effect into the consumer's tree at all.
   writeFileSync(
     join(npmApplicationDirectory, "package.json"),
     JSON.stringify({ name: "equip-it-consumer", private: true }),
@@ -142,16 +150,16 @@ try {
     tarball,
   );
   const effectCopies = installedCopies(join(npmApplicationDirectory, "node_modules"), "effect");
-  if (effectCopies.length !== 1) {
+  if (effectCopies.length !== 0) {
     throw new Error(
-      `npm installed ${effectCopies.length} copies of effect; expected exactly one:\n${effectCopies.join("\n")}`,
+      `npm installed ${effectCopies.length} copies of effect; the bundle must not need any:\n${effectCopies.join("\n")}`,
     );
   }
   expectIdentity(npmApplicationDirectory, "npm");
   run(
     process.execPath,
     join(repository, "scripts", "check-cli-roundtrip.mjs"),
-    join(applicationDirectory, "node_modules", "equip-it", "dist", "src", "bin.js"),
+    join(npmApplicationDirectory, "node_modules", "equip-it", "dist", "bin", "equip-it.js"),
   );
 } finally {
   rmSync(temporary, { recursive: true, force: true });
