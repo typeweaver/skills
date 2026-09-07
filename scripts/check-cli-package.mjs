@@ -125,6 +125,9 @@ try {
     cwd: repository,
     encoding: "utf8",
   });
+  if (packedManifest.status !== 0 || typeof packedManifest.stdout !== "string") {
+    throw new Error("Could not read the packed manifest from the tarball.");
+  }
   /** @type {unknown} */
   const packed = JSON.parse(packedManifest.stdout);
   if (typeof packed === "object" && packed !== null && "dependencies" in packed) {
