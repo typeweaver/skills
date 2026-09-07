@@ -13,7 +13,7 @@
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm generate:check",
     "postinstall": "effect-tsgo patch --typescript --oxlint",
     "changeset": "changeset",
-    "release": "changeset publish"
+    "release": "node scripts/release.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",

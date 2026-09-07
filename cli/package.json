@@ -26,7 +26,8 @@
   ],
   "type": "module",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "pnpm clean && tsc -p tsconfig.json",
