@@ -5,7 +5,8 @@ import { spawnSync } from "node:child_process";
 // and the checks that gate the workflow, so refuse anything that is not the
 // release workflow running on GitHub Actions with an OIDC token available.
 const env = process.env;
-const present = (/** @type {string | undefined} */ value) => value !== undefined && value !== "";
+/** @param {string | undefined} value */
+const present = (value) => value !== undefined && value !== "";
 const workflowRef = env["GITHUB_WORKFLOW_REF"] ?? "";
 const isReleaseWorkflow = workflowRef.includes("/.github/workflows/release.yml@");
 const hasOidcToken =
