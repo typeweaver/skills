@@ -18,35 +18,36 @@
     "directory": "cli"
   },
   "bin": {
-    "equip-it": "dist/src/bin.js"
+    "equip-it": "dist/bin/equip-it.js"
   },
   "files": [
-    "dist/src",
+    "dist/bin",
     "content"
   ],
   "type": "module",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "build": "pnpm clean && tsc -p tsconfig.json",
+    "bundle": "tsdown",
     "bundle-content": "node dist/src/bundle-content.js",
     "clean": "node scripts/clean.mjs",
+    "prepack": "pnpm build && pnpm bundle && node dist/src/bundle-content.js",
     "test": "vitest run",
-    "prepack": "pnpm build && node dist/src/bundle-content.js",
     "typecheck": "tsc -p tsconfig.json --noEmit"
-  },
-  "dependencies": {
-    "@effect/platform-node": "catalog:",
-    "effect": "catalog:",
-    "yaml": "catalog:"
   },
   "devDependencies": {
     "@effect/language-service": "catalog:",
+    "@effect/platform-node": "catalog:",
     "@effect/vitest": "catalog:",
     "@types/node": "catalog:",
+    "effect": "catalog:",
+    "tsdown": "catalog:",
     "typescript": "catalog:",
-    "vitest": "catalog:"
+    "vitest": "catalog:",
+    "yaml": "catalog:"
   },
   "engines": {
     "node": ">=22"

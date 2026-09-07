@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2023",
     "lib": ["ES2023"],
+    "types": ["node"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,
@@ -18,7 +19,11 @@
     "outDir": "dist",
     "rootDir": ".",
     "skipLibCheck": true,
-    "plugins": [{ "name": "@effect/language-service" }]
+    "plugins": [
+      {
+        "name": "@effect/language-service"
+      }
+    ]
   },
   "include": ["src", "test"]
 }

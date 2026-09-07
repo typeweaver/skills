@@ -70,11 +70,10 @@ small, explicit, and portable across supported agent harnesses.
 - The npm package `equip-it` is versioned with Changesets: add a
   changeset (`pnpm changeset`) to every release-worthy change. The release
   workflow opens a version PR on `main`; merging it publishes to npm.
-- Before the initial publish, leave the repository variable
-  `NPM_TRUSTED_PUBLISHING` unset. Merge the version PR, publish once as the
-  npm owner with `NPM_CONFIG_PROVENANCE=false pnpm release`, push the
-  generated tag, configure `release.yml` as the package's trusted publisher,
-  and only then set the variable to `enabled`.
+- Publishing happens only from `release.yml` through npm trusted publishing
+  (OIDC). Never publish manually: `publishConfig.provenance` rejects
+  publishes outside a supported CI, and `pnpm release` refuses to run
+  outside GitHub Actions. Keep both guards in place.
 
 ## Safety
 

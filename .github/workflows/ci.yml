@@ -62,6 +62,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter equip-it build
+      - run: pnpm --filter equip-it bundle
       - run: node cli/dist/src/bundle-content.js
       - name: Verify install, doctor, update, and uninstall
-        run: node scripts/check-cli-roundtrip.mjs
+        run: node scripts/check-cli-roundtrip.mjs cli/dist/bin/equip-it.js

@@ -2,7 +2,8 @@
 // Copies skills and agents into `cli/content` at pack time (`prepack`). The
 // published tarball then contains that snapshot, so `npx equip-it
 // install` does not clone GitHub or fetch the repository.
-import { NodeRuntime, NodeServices } from "@effect/platform-node";
+import * as NodeRuntime from "@effect/platform-node/NodeRuntime";
+import * as NodeServices from "@effect/platform-node/NodeServices";
 import { Console, Effect, FileSystem } from "effect";
 import { dirname, join } from "node:path";
 

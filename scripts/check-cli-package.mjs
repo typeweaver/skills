@@ -1,5 +1,13 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -16,7 +24,10 @@ if (typeof expectedVersion !== "string") {
 const temporary = mkdtempSync(join(tmpdir(), "equip-it-package-"));
 const packageDirectory = join(temporary, "package");
 const applicationDirectory = join(temporary, "application");
+const npmApplicationDirectory = join(temporary, "application-npm");
 const pnpm = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
+const npm = process.platform === "win32" ? "npm.cmd" : "npm";
+const binName = process.platform === "win32" ? "equip-it.cmd" : "equip-it";
 
 /**
  * @param {string} command
@@ -33,9 +44,59 @@ const run = (command, ...args) => {
   }
 };
 
+/**
+ * Collects every installed copy of a package below a node_modules tree.
+ * @param {string} root
+ * @param {string} name
+ * @returns {string[]}
+ */
+const installedCopies = (root, name) => {
+  /** @type {string[]} */
+  const copies = [];
+  /** @param {string} directory */
+  const visit = (directory) => {
+    if (!existsSync(directory)) {
+      return;
+    }
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      if (!entry.isDirectory()) {
+        continue;
+      }
+      const path = join(directory, entry.name);
+      if (entry.name === name) {
+        copies.push(path);
+      } else if (entry.name.startsWith("@")) {
+        visit(path);
+      }
+      visit(join(path, "node_modules"));
+    }
+  };
+  visit(root);
+  return copies;
+};
+
+/**
+ * Runs the installed executable and checks that it reports the packed version.
+ * @param {string} applicationRoot
+ * @param {string} installer
+ */
+const expectIdentity = (applicationRoot, installer) => {
+  const bin = join(applicationRoot, "node_modules", ".bin", binName);
+  if (!existsSync(bin)) {
+    throw new Error(`Package installed with ${installer} does not expose the equip-it executable.`);
+  }
+  const version = spawnSync(bin, ["--version"], { cwd: applicationRoot, encoding: "utf8" });
+  if (version.status !== 0 || version.stdout.trim() !== `equip-it v${expectedVersion}`) {
+    throw new Error(
+      `equip-it installed with ${installer} does not report its package identity:\n${version.stdout}${version.stderr}`,
+    );
+  }
+};
+
 try {
   mkdirSync(packageDirectory);
   mkdirSync(applicationDirectory);
+  mkdirSync(npmApplicationDirectory);
   run(pnpm, "--filter", "equip-it", "pack", "--pack-destination", packageDirectory);
   const tarballs = readdirSync(packageDirectory).filter((name) => name.endsWith(".tgz"));
   if (tarballs.length !== 1 || tarballs[0] === undefined) {
@@ -51,36 +112,57 @@ try {
     "package/content/LICENSE",
     "package/content/skills/engineering/aurelius/SKILL.md",
     "package/content/agents/review-it/codex.toml",
-    "package/dist/src/bin.js",
+    "package/dist/bin/equip-it.js",
   ]) {
     if (!inventory.has(required)) {
       throw new Error(`Package artifact is missing ${required}.`);
     }
   }
-  if (inventory.has("package/dist/src/engine.js")) {
-    throw new Error("Package artifact contains the deleted legacy engine.");
+  if (inventory.has("package/dist/src/bin.js")) {
+    throw new Error("Package artifact ships the unbundled compiler output.");
   }
-  run(pnpm, "add", "--dir", applicationDirectory, "--ignore-scripts", tarball);
-  const bin = join(
-    applicationDirectory,
-    "node_modules",
-    ".bin",
-    process.platform === "win32" ? "equip-it.cmd" : "equip-it",
-  );
-  if (!existsSync(bin)) {
-    throw new Error("Installed package does not expose the equip-it executable.");
-  }
-  const version = spawnSync(bin, ["--version"], {
-    cwd: applicationDirectory,
+  const packedManifest = spawnSync("tar", ["-xOzf", tarball, "package/package.json"], {
+    cwd: repository,
     encoding: "utf8",
   });
-  if (version.status !== 0 || version.stdout.trim() !== `equip-it v${expectedVersion}`) {
-    throw new Error("Installed equip-it executable does not report its package identity.");
+  if (packedManifest.status !== 0 || typeof packedManifest.stdout !== "string") {
+    throw new Error("Could not read the packed manifest from the tarball.");
   }
+  /** @type {unknown} */
+  const packed = JSON.parse(packedManifest.stdout);
+  if (typeof packed === "object" && packed !== null && "dependencies" in packed) {
+    throw new Error("Packed manifest declares runtime dependencies; the CLI must stay bundled.");
+  }
+  run(pnpm, "add", "--dir", applicationDirectory, "--ignore-scripts", tarball);
+  expectIdentity(applicationDirectory, "pnpm");
+
+  // npm (and therefore npx) resolves dependencies differently from pnpm. The
+  // bundled CLI must not pull effect into the consumer's tree at all.
+  writeFileSync(
+    join(npmApplicationDirectory, "package.json"),
+    JSON.stringify({ name: "equip-it-consumer", private: true }),
+  );
+  run(
+    npm,
+    "install",
+    "--prefix",
+    npmApplicationDirectory,
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    tarball,
+  );
+  const effectCopies = installedCopies(join(npmApplicationDirectory, "node_modules"), "effect");
+  if (effectCopies.length > 0) {
+    throw new Error(
+      `npm installed ${effectCopies.length} copies of effect; the bundle must not need any:\n${effectCopies.join("\n")}`,
+    );
+  }
+  expectIdentity(npmApplicationDirectory, "npm");
   run(
     process.execPath,
     join(repository, "scripts", "check-cli-roundtrip.mjs"),
-    join(applicationDirectory, "node_modules", "equip-it", "dist", "src", "bin.js"),
+    join(npmApplicationDirectory, "node_modules", "equip-it", "dist", "bin", "equip-it.js"),
   );
 } finally {
   rmSync(temporary, { recursive: true, force: true });
