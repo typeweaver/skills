@@ -1,5 +1,18 @@
 # equip-it
 
+## 0.1.1
+
+### Patch Changes
+
+- d1957a5: Ship the CLI as a single bundled file with no runtime dependencies, so
+  `npx equip-it` no longer depends on how the consumer's package manager
+  resolves the effect packages.
+- 658a04d: Fix the crash on startup when installed with npm or npx. The exact `effect`
+  pin conflicted with the peer ranges of `@effect/platform-node`'s transitive
+  packages, so npm nested a second `effect` copy and the two runtimes could not
+  share scopes. The effect packages now use compatible ranges, and the package
+  smoke test installs with npm and asserts a single `effect` copy.
+
 ## 0.1.0
 
 ### Minor Changes
