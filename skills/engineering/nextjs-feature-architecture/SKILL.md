@@ -37,20 +37,19 @@ task authorizes architectural change.
   reference tree.
 - Invoking this skill selects an architectural lens; it does not expand the
   requested scope.
+- When the task is a review or assessment, report per invariant: the finding
+  with file evidence, the owner that should exist, and the trigger that would
+  justify repaying the debt. Propose; do not restructure.
 
 ## Read conditional guidance
 
-- When a feature grows beyond one composition root or gains a named external
-  compositor, read
-  [references/example-structure.md](references/example-structure.md). Adapt
-  it; never reproduce trees mechanically.
-- When several widgets coordinate URL, server, query-cache, local, persisted,
-  optimistic, or shared transient state, read
-  [references/state-coordination.md](references/state-coordination.md).
-- When the repository uses shadcn and Tailwind and shared UI boundaries affect
-  the task, read [references/shadcn.md](references/shadcn.md).
+Read only what applies, and at most one scenario from `references/examples/`:
 
-Read only the references that apply. Load at most one matching scenario.
+- [example-structure.md](references/example-structure.md) when a feature grows
+  beyond one composition root or gains a named external compositor.
+- [state-coordination.md](references/state-coordination.md) when several
+  widgets coordinate URL, server, query-cache, local, or transient state.
+- [shadcn.md](references/shadcn.md) when shadcn and Tailwind boundaries matter.
 
 ## Preserve six invariants
 
@@ -62,11 +61,14 @@ Read only the references that apply. Load at most one matching scenario.
 6. Dependencies cross explicit, environment-safe boundaries.
 
 When the product has a shared visual language, Shared UI owns that language.
-Add structure only when it protects one of these boundaries.
+Add structure only when it protects one of these boundaries. Walk the sections
+below in order for every feature: ownership, boundaries, state, server
+composition, then loading, failure, and caching.
 
 ## Use ownership vocabulary
 
-- A **feature** owns application behavior or a user capability.
+- A **feature** owns application behavior or a user capability. It may be
+  behavior-only, exposing operations or hooks and no widget.
 - A **widget** is an independently composable UI region exposed by a feature,
   with its own data requirements and UX lifecycle. It is not another
   architecture layer: a feature may expose several widgets, and a widget does
@@ -74,7 +76,10 @@ Add structure only when it protects one of these boundaries.
 - **Shared UI** owns reusable visual and interaction primitives without feature
   behavior or authoritative product state.
 - A **shared product component** composes shared UI for several features but
-  owns neither application behavior nor authoritative state.
+  owns neither application behavior nor authoritative state. It may read
+  product context; it never owns or mutates it.
+- **Shell regions** such as header, navigation, and footer belong to `app` or a
+  layout, not to a feature.
 - A **domain or platform module** owns reusable headless policy, data access, or
   infrastructure capability below feature use cases. It exposes narrow
   contracts and does not depend on route-facing features.
@@ -97,22 +102,6 @@ or consumers evolve independently and the resulting interface hides meaningful
 complexity. Treat team or deployment boundaries as additional evidence, not the
 sole reason for a feature.
 
-## Run the decision loop
-
-1. Which route owns the request contract?
-2. Which feature owns the behavior?
-3. Which independently composable regions should that feature expose as
-   widgets?
-4. Who is the authoritative owner of each state value?
-5. Can this stay on the server?
-6. What can render, fail, or refresh independently?
-7. Which feature operation owns the use case, and which lower module owns any
-   reused policy or data access?
-8. What is the cache and freshness contract?
-9. Do dependencies cross only public, runtime-safe boundaries?
-10. Is the feature inventing visual or interaction behavior that belongs to
-    shared UI?
-
 ## Establish ownership
 
 - Treat `params`, `searchParams`, cookies, headers, locale, and other request
@@ -120,8 +109,10 @@ sole reason for a feature.
   not resolve every value eagerly at the top of the tree.
 - Resolve request-time values at the narrowest boundary that needs them. Parse,
   validate, normalize, and default each value there before feature behavior
-  uses it. Do not await `params` or `searchParams` at the page top when that
-  would block a static shell or make a Suspense boundary theatrical.
+  uses it. Do not await `params`, `searchParams`, `cookies()`, or `headers()`
+  at the page top when that would block a static shell. A Suspense fallback
+  that can never render on first load is theatrical: move the await below the
+  boundary or remove the boundary.
 - Verify identity and authorization on the server; never trust client-provided
   claims merely because route inputs were parsed.
 - Pass normalized request values into cached or otherwise reusable work.
@@ -185,7 +176,9 @@ vendor details behind the narrowest meaningful contract.
 - When the repository's scale makes boundary drift costly, enforce public
   entry points and forbidden import directions with its package, lint, or
   dependency checks. Do not introduce enforcement tooling merely because this
-  skill was invoked.
+  skill was invoked. Read an existing import allowlist as evidence: each
+  approved edge is a boundary decision, and edges that service a cycle are
+  debt.
 
 ## Assign state deliberately
 
@@ -203,8 +196,17 @@ Choose one authoritative owner for every state value:
 - Put state in the URL when opening a copied URL should restore the view.
 - Treat URL changes as navigation. Prefer links or forms where they fit, and
   centralize parameter semantics and dependent resets such as pagination.
+- Know which URL changes reach the server. A shallow update (`history.*`, and
+  the default of libraries such as nuqs) changes the URL and client hooks only;
+  Server Components and page `searchParams` do not re-render. When URL state
+  drives several peer features, a page-owned Client compositor composes them,
+  or the update must opt into notifying the server.
 - Do not introduce Context, a global store, or a client query cache merely to
   avoid deciding ownership.
+- Scope a client store to a provider at the smallest common boundary. A
+  module-global store is shared across requests in a server-rendered app.
+- Give a browser query cache a non-zero default freshness so hydrated data is
+  not refetched immediately, and declare freshness per query where it differs.
 - Allow derived or optimistic copies only when their source and reconciliation
   behavior are explicit.
 
@@ -219,9 +221,13 @@ Choose one authoritative owner for every state value:
   own how that data is obtained.
 - Start independent work independently. Keep sequential work only when one
   result truly depends on another.
-- Use Server Functions or Actions for mutations initiated by the application.
-  Use Route Handlers when an HTTP boundary is itself required. Do not use
-  Server Actions as general read APIs.
+- Mutate through Server Functions by default; they run on the server, return
+  updated UI in one round trip, and are dispatched one at a time. Keep an
+  existing Route Handler transport for mutations when a client query cache
+  owns reconciliation and the repository has one HTTP error contract. Use Route
+  Handlers for webhooks, callbacks, non-HTML responses, and external
+  consumers. Never read through Server Actions, and never fetch from a Route
+  Handler inside a Server Component.
 - Validate and authorize inside every trusted mutation boundary, then make
   invalidation or refresh behavior explicit.
 - Prefer links and forms for navigation and form-like interactions when they
@@ -262,34 +268,17 @@ Choose one authoritative owner for every state value:
   Without Cache Components, `fetch` is uncached by default; use the repo's
   `unstable_cache` / `revalidateTag` / `revalidatePath` primitives. Never
   assume historical `fetch` cache defaults still apply.
-- Cookie `.set` / `.delete` are illegal during RSC render. Persist preferences
-  only in a Server Function or Route Handler.
+- Never set or delete cookies during render; HTTP forbids it once streaming
+  starts. Persist server-trusted preferences in a Server Function or Route
+  Handler. A browser-side cookie is acceptable for a non-sensitive preference
+  that the server treats as untrusted input.
+- Version-sensitive APIs (`error.tsx` props, cache primitives, request APIs)
+  change between releases. Verify against the installed version; when you
+  cannot, say so instead of asserting.
 
-## Verify the result
+## Finish
 
-Implement the smallest complete slice. Test pure route parsing and feature
-operations directly; test navigation, rendering, mutation, and cache wiring at
-their integration boundaries.
-
-Confirm that:
-
-- external inputs become typed state before reaching feature logic;
-- pages compose rather than implement features;
-- every behavior and state value has a clear authoritative owner;
-- Server Components remain the default and client boundaries stay narrow;
-- server-only code cannot enter the client graph;
-- consumers use small, earned public feature APIs rather than internals;
-- features compose shared UI rather than introducing competing primitives;
-- shared product components exist only with multiple real consumers and no
-  natural feature owner;
-- infrastructure details remain below feature operations;
-- reused domain and platform policy has a clear lower owner and does not create
-  peer-feature dependencies;
-- independent work is not accidentally serialized;
-- loading and failure boundaries match meaningful user experiences;
-- mutations validate, authorize, and invalidate deliberately;
-- caching has explicit identity, freshness, invalidation ownership, and
-  isolation semantics, and UI refresh is not mistaken for invalidation;
-- abstractions and shared code represent real boundaries rather than ceremony.
-
-Correct unclear ownership or dependency direction before adding another layer.
+Implement the smallest complete slice. Test route parsing and feature
+operations directly; test navigation, mutation, and cache wiring at their
+integration boundaries. Correct unclear ownership or dependency direction
+before adding another layer.

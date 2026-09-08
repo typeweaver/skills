@@ -26,7 +26,10 @@ features/project-overview/get-project-overview.server.ts
 
 Do not add a barrel, `widgets/` folder, provider, store, Route Handler, or
 `server.ts` / `client.ts` before another responsibility requires it. Adapt
-paths to the repository (`app/` + `lib/` is fine).
+paths to the repository (`app/` + `lib/` is fine). File suffixes such as
+`.server.ts` and `.action.ts` are illustrative; the contract is the runtime
+marker (`server-only`, `'use server'`, `"use client"`), so follow the
+repository's naming.
 
 ## Grow one pressure at a time
 
