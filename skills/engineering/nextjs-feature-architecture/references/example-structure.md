@@ -33,18 +33,18 @@ repository's naming.
 
 ## Grow one pressure at a time
 
-| Pressure                                        | Add only then                       |
-| ----------------------------------------------- | ----------------------------------- |
-| One feature, one route consumer                 | Direct imports                      |
-| Page should not know internal layout            | One composition root export         |
-| Named external compositor needs a feature part  | Public widget + optional `index.ts` |
-| External server consumer (Route Handler)        | `server.ts` with `server-only`      |
-| External client consumer (provider/commands)    | `client.ts` with `"use client"`     |
-| Browser read of server data                     | HTTP transport, not a Server Action |
-| Mutation from a Client Component                | `'use server'` adapter file         |
-| Shared transient workflow across client islands | Scoped feature provider and store   |
-| Behavior spanning independent features          | Explicit workflow feature           |
-| Headless capability reused across features      | Lower domain or platform contract   |
+| Pressure                                        | Add only then                                                                                  |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| One feature, one route consumer                 | Direct imports                                                                                 |
+| Page should not know internal layout            | One composition root export                                                                    |
+| Named external compositor needs a feature part  | Public widget + optional `index.ts`                                                            |
+| External server consumer (Route Handler)        | `server.ts` with `server-only`                                                                 |
+| External client consumer (provider/commands)    | `client.ts` with `"use client"`                                                                |
+| Browser read of server data                     | HTTP transport, not a Server Action                                                            |
+| Mutation from a Client Component                | `'use server'` adapter, or the existing HTTP transport when a client cache owns reconciliation |
+| Shared transient workflow across client islands | Scoped feature provider and store                                                              |
+| Behavior spanning independent features          | Explicit workflow feature                                                                      |
+| Headless capability reused across features      | Lower domain or platform contract                                                              |
 
 Avoid `ui/model/server/actions` directories, repository layers, and symmetric
 barrels that exist only because a diagram contained them. Collapse query-key,

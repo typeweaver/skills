@@ -37,9 +37,11 @@ task authorizes architectural change.
   reference tree.
 - Invoking this skill selects an architectural lens; it does not expand the
   requested scope.
-- When the task is a review or assessment, report per invariant: the finding
-  with file evidence, the owner that should exist, and the trigger that would
-  justify repaying the debt. Propose; do not restructure.
+- When the task is a review or assessment, report per invariant with one
+  entry per finding: **Finding** (what violates which invariant), **Evidence**
+  (files and import lines), **Owner** (who should own it), **Repay when** (the
+  trigger that justifies the change). Order by the cost of leaving it. Propose;
+  do not restructure.
 
 ## Read conditional guidance
 
@@ -110,9 +112,10 @@ sole reason for a feature.
 - Resolve request-time values at the narrowest boundary that needs them. Parse,
   validate, normalize, and default each value there before feature behavior
   uses it. Do not await `params`, `searchParams`, `cookies()`, or `headers()`
-  at the page top when that would block a static shell. A Suspense fallback
-  that can never render on first load is theatrical: move the await below the
-  boundary or remove the boundary.
+  at the page top when the route has a static shell to protect; a fully
+  dynamic route may resolve them at the top. A Suspense fallback that can
+  never render on first load is theatrical: move the await below the boundary
+  or remove the boundary.
 - Verify identity and authorization on the server; never trust client-provided
   claims merely because route inputs were parsed.
 - Pass normalized request values into cached or otherwise reusable work.
@@ -198,13 +201,17 @@ Choose one authoritative owner for every state value:
   centralize parameter semantics and dependent resets such as pagination.
 - Know which URL changes reach the server. A shallow update (`history.*`, and
   the default of libraries such as nuqs) changes the URL and client hooks only;
-  Server Components and page `searchParams` do not re-render. When URL state
-  drives several peer features, a page-owned Client compositor composes them,
-  or the update must opt into notifying the server.
+  Server Components and page `searchParams` do not re-render.
+- Overlays, sheets, and dialogs selected by URL on one route are page
+  composition: a page-owned Client compositor reads the URL and mounts the
+  peer features. Do not let one feature mount its peers, and do not make the
+  update notify the server unless a Server Component must observe it.
 - Do not introduce Context, a global store, or a client query cache merely to
   avoid deciding ownership.
-- Scope a client store to a provider at the smallest common boundary. A
-  module-global store is shared across requests in a server-rendered app.
+- Scope a client store to a provider at the smallest common boundary when it
+  is initialized from server data or holds per-user state; a module-global
+  store is shared across requests during server rendering. A browser-only
+  store for transient UI state may stay module-global.
 - Give a browser query cache a non-zero default freshness so hydrated data is
   not refetched immediately, and declare freshness per query where it differs.
 - Allow derived or optimistic copies only when their source and reconciliation
