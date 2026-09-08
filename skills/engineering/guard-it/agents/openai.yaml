@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guard It"
+  short_description: "Set up machine-enforced guardrails for a TypeScript project"
+  default_prompt: "Use $guard-it to harden this project with strict compiler, lint, dead-code, boundary, and supply-chain checks in CI."
