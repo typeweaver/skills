@@ -44,18 +44,22 @@ name what it prevents. Skip a layer only with a stated reason.
   `any` flows, strict boolean expressions, exhaustive switches, unused
   declarations and directives, consistent type imports, `max-lines` and
   complexity limits, no inline disables without a reason.
-- **Format.** One formatter, run in check mode in CI. Prefer the formatter that
-  matches the linter family already in use.
+- **Format.** One formatter in check mode in CI: oxfmt with oxlint, prettier
+  with the typescript-eslint family.
 - **Dead code and dependencies.** knip for unused files, exports, and
-  dependencies, in `--production --strict` mode where the project allows.
+  dependencies. Use `--production --strict` for published libraries; use the
+  default mode for applications, because production mode skips
+  devDependencies and weakens the gate.
 - **Module boundaries.** dependency-cruiser or the project's equivalent for
   cycles, orphans, and forbidden import directions between layers or
   features. Encode the boundaries the repository already intends; do not
   invent an architecture.
-- **Supply chain.** pnpm `minimumReleaseAge` (or the package manager's
-  equivalent), lockfile-only installs in CI, scripts disabled unless
-  allowlisted, and SHA-pinned CI actions audited by zizmor when GitHub Actions
-  workflows exist.
+- **Supply chain.** pnpm `minimumReleaseAge` (minutes) and `strictDepBuilds`
+  with an explicit built-dependency allowlist in `pnpm-workspace.yaml`, or the
+  package manager's equivalent; lockfile-only installs in CI; SHA-pinned CI
+  actions audited by zizmor when GitHub Actions workflows exist. zizmor is not
+  an npm package: run it as a CI step (`pipx run zizmor` or its action) and
+  exempt the binary in knip.
 - **Published packages.** publint and a packed-tarball smoke test that
   installs with npm, not only the workspace package manager.
 
@@ -66,12 +70,15 @@ name what it prevents. Skip a layer only with a stated reason.
   behavior.
 - Run the fast checks in a pre-commit hook only when the repository already
   uses hooks; never make hooks the only gate.
-- Ratchet where needed: enable a rule, allowlist the existing violations with a
-  count or a baseline file, and fail on growth.
-- Record the guardrails in the repository's agent instructions: what runs,
-  how to run it locally, and that disabling a rule requires a stated reason in
-  the same change. Protect the lint and compiler configuration from casual
-  edits when the harness supports it.
+- Decide what to do with existing violations: fix them in the same change when
+  they are few, otherwise enable the rule, record the current violations in a
+  baseline, and fail on growth. Hand back with the gate green, or list every
+  violation that keeps it red.
+- Record the guardrails in the repository's agent instructions, creating
+  `AGENTS.md` when none exists: what runs, how to run it locally, and that
+  disabling a rule requires a stated reason in the same change. Where the
+  repository supports it, protect the compiler and lint configuration with a
+  CODEOWNERS entry or a harness deny rule.
 
 ## Report
 
