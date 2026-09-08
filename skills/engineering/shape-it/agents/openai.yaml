@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape It"
+  short_description: "Move code to where its responsibilities live"
+  default_prompt: "Use $shape-it to clean up the structure of this folder without changing behavior."
