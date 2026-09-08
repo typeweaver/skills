@@ -1,7 +1,7 @@
 # equip-it
 
-Filesystem-safe installer for Typeweaver's reusable engineering skills and
-native agent adapters.
+Skill your agents: a filesystem-safe installer for the opinionated engineering
+skills and native agent adapters in this repository.
 
 ## Install
 
