@@ -1,114 +1,94 @@
 ---
 name: guard-it
-description: Set up or tighten machine-enforced compiler, analysis,
-  architecture, and supply-chain constraints in a TypeScript project so
-  detectable defects and complexity drift fail fast. Use when asked to harden a
-  project, add or strengthen strictness, linting, dead code detection, module
-  boundaries, or supply-chain checks, or when a project has no such gates yet.
-  Not for JavaScript-only projects or everyday implementation.
+description: Set up or tighten machine-enforced quality gates in a TypeScript
+  project, from compiler strictness, type-aware lint, complexity limits,
+  dead-code and dependency checks, module boundaries, and supply-chain and
+  packaging checks to custom repository invariants, and prove each gate fails
+  CI on a real violation. Use when asked to harden a repository, add or
+  strengthen any of those checks, make a rule block merges instead of warn, or
+  confirm that a configured check actually fires. Not for JavaScript-only
+  projects, routine implementation, or merely running existing checks.
 ---
 
 # Guard It
 
-Everything a machine enforces, nobody has to remember. Turn the project's
-quality expectations into checks that fail in CI, prove that each check
-fires, then record them where agents read instructions. Static analysis
-catches defined defect shapes and limits complexity drift; it does not judge
-ownership or abstractions. Propose with reasons, discover before prescribing,
-and never copy another repository's configuration.
+Turn the repository's quality expectations into checks that fail CI, prove
+each one fires, then record them where agents read instructions. Static
+analysis catches defined defect shapes and limits complexity drift; it does not
+judge ownership or abstractions. Discover the toolchain and the repository's
+own policy before prescribing anything; never copy another repository's
+configuration. Read [references/guardrails.md](references/guardrails.md)
+before proposing settings: it holds the per-layer flags, rule priorities, tool
+choices, and version caveats.
 
 ## Discover first
 
-1. Inventory the toolchain: package manager and lockfile, TypeScript version,
-   existing linter, formatter, test runner, CI provider, monorepo layout,
-   framework, and any `AGENTS.md`, `CLAUDE.md`, or equivalent instructions.
-2. Read every existing check and its current results. Count violations before
-   proposing a rule; a rule that fails on thousands of lines needs a ratchet
-   plan, not a switch.
-3. Detect the strictness baseline. TypeScript 7 defaults to `strict: true`,
-   `types: []`, and `rootDir: "./"` and removes `baseUrl`; older versions do not.
-   Read the installed version instead of assuming.
-4. Respect organization and team policy found in the repository. Discover it;
-   do not invent it.
+1. Inventory package manager and lockfile, TypeScript version, linter,
+   formatter, test runner, CI provider, monorepo layout, framework, existing
+   verification scripts, and any `AGENTS.md`, `CLAUDE.md`, or equivalent agent
+   instructions.
+2. Read every existing check and its current results. Read installed versions
+   instead of assuming defaults; strictness baselines move between major
+   versions.
+3. Count violations before proposing a rule. A rule that fails on thousands of
+   lines needs a ratchet plan, not a switch.
 
 ## Propose the guardrail set
 
 For each layer, propose the strictest setting the codebase can adopt now and
 name what it prevents. Skip a layer only with a stated reason.
 
-- **Compiler.** `strict` plus `exactOptionalPropertyTypes`,
-  `noUncheckedIndexedAccess`, `noPropertyAccessFromIndexSignature`,
-  `noImplicitOverride`, `noFallthroughCasesInSwitch`, `verbatimModuleSyntax`,
-  `isolatedModules`, and an explicit `types` list. Prefer the project
-  references or `include` scope that keeps type-aware tools fast.
-- **Type-aware lint.** Prefer oxlint with `oxlint-tsgolint` when its typed and
-  ecosystem rule coverage satisfies the repository's existing policy;
-  otherwise keep and strengthen the established linter, typically
-  typescript-eslint `strict-type-checked`. Turn on the rules that catch
-  agent-written defects first: floating and misused promises, unsafe `any`
-  flows, strict boolean expressions, exhaustive switches, unused declarations
-  and directives, consistent type imports, `max-lines`, and no inline disables
-  without a reason.
-- **Complexity.** Limit cognitive complexity (nesting and readability), not
-  only cyclomatic complexity (control paths). Set thresholds from the tool's
-  default and the codebase's current distribution, and reject extractions that
-  exist only to lower a score.
-- **Framework analyzers.** Detect library-specific static analyzers and
-  language-service plugins, use their official presets, pin mutually
-  compatible versions, and give every diagnostic exactly one owner, compiler
-  or linter, never both.
-- **Format.** One formatter in check mode in CI: oxfmt with oxlint, prettier
-  with the typescript-eslint family.
-- **Dead code and dependencies.** knip for unused files, exports, and
-  dependencies. Use `--production --strict` for published libraries; use the
-  default mode for applications, because production mode skips
-  devDependencies and weakens the gate.
-- **Module boundaries.** dependency-cruiser or the project's equivalent for
-  cycles, orphans, and forbidden import directions between layers or
-  features. Encode the boundaries the repository already intends; do not
-  invent an architecture.
-- **Supply chain.** pnpm `minimumReleaseAge` (minutes) and `strictDepBuilds`
-  with `allowBuilds` entries written by `pnpm approve-builds`, checked against
-  the installed pnpm version (older releases use `onlyBuiltDependencies`), or
-  the package manager's equivalent; lockfile-only installs in CI; SHA-pinned
-  CI actions audited by zizmor when GitHub Actions workflows exist. zizmor is
-  not an npm package: run it through its pinned action or `pipx`.
-- **Published packages.** publint and a packed-tarball smoke test that
-  installs with npm, not only the workspace package manager.
+- **Compiler.** Strict-family flags and an explicit `types` list.
+- **Type-aware lint.** One linter in typed mode, prioritizing the rules that
+  catch agent-written defects. Make the linter fail on inline disable
+  directives, or ignore them, rather than trusting a reason comment.
+- **Complexity.** Cognitive complexity, not only cyclomatic. Set thresholds
+  from the tool default and the codebase's current distribution, and reject
+  extractions that exist only to lower a score.
+- **Framework analyzers.** Official presets, pinned compatible versions, and
+  exactly one owner per diagnostic: compiler or linter, never both.
+- **Format.** One formatter in check mode in CI, matched to the linter family.
+- **Dead code and dependencies.** Unused files, exports, and dependencies, in
+  the mode that does not silently skip devDependencies.
+- **Module boundaries.** Cycles, orphans, and forbidden import directions.
+  Use the restricted-import rules of the linter already in place before adding
+  a dependency tool. Encode the boundaries the repository already intends; do
+  not invent an architecture.
+- **Repository invariants.** When no tool encodes an invariant the repository
+  relies on, write the guard: a small script over the source graph, an
+  ownership ledger, or the emitted bundle, run by the same root check.
+- **Supply chain.** Install-delay and dependency-build restrictions,
+  lockfile-only installs in CI, and pinned, audited CI workflow actions.
+- **Published packages.** Packaging validation and a packed-tarball smoke test
+  installed with npm, not only the workspace package manager.
 
 ## Prove enforcement
 
 A green check is not proof. For every compiler profile and every new or
 tightened rule:
 
-1. Print the effective configuration (`tsc --showConfig`, the linter's
-   resolved config) and confirm the intended files, profile, and type-aware
-   mode are loaded.
-2. Run a positive probe that must pass and a negative probe that must fail
-   with the expected diagnostic code or rule id, in a throwaway fixture.
-3. Keep those probes as a test in the repository so a later configuration
+1. Run a positive probe that must pass and a negative probe that must fail with
+   the expected diagnostic code or rule id, in a throwaway fixture. Probes are
+   the proof; printed configuration shows only explicit options, not the
+   effective baseline.
+2. Keep those probes as a test in the repository, so a later configuration
    change that silences a rule fails CI.
-4. Confirm CI runs exactly the root check that contains the probes.
 
 ## Wire it in
 
-- Add every check to one root script that CI runs, so the definition of "the
-  check" has one owner. Make CI fail on violations; warnings do not change
-  behavior.
-- Run the fast checks in a pre-commit hook only when the repository already
-  uses hooks; never make hooks the only gate.
-- Decide what to do with existing violations: fix them in the same change when
-  they are few, otherwise enable the rule, record the current violations in a
-  baseline, and fail on growth. Hand back with the gate green, or list every
-  violation that keeps it red.
+- Add every check, including the probes, to one root script that CI runs, so
+  "the check" has one owner. Confirm CI runs exactly that script and fails on
+  violations; warnings do not change behavior.
+- Fix existing violations in the same change when they are few; otherwise
+  enable the rule, baseline the current violations, and fail on growth.
 - Record the guardrails in the repository's agent instructions, creating
-  `AGENTS.md` when none exists: what runs, how to run it locally, and that
-  disabling a rule requires a stated reason in the same change. Where the
-  repository supports it, protect the compiler and lint configuration with a
-  CODEOWNERS entry or a harness deny rule.
+  `AGENTS.md` when none exists: what runs, how to run it locally, that
+  disabling a rule requires a stated reason in the same change, and a register
+  of accepted exceptions with their rationale.
 
 ## Report
 
-State the toolchain found, each guardrail added or tightened with the reason
-and the violation count it started from, what was deliberately skipped and
-why, and the single command that reproduces CI locally.
+State the toolchain found, each guardrail added or tightened with its reason
+and starting violation count, what was skipped and why, the proof that each
+new rule fires, and the one command that reproduces CI locally. Hand back with
+the gate green or list every violation that keeps it red.
