@@ -45,13 +45,16 @@ task authorizes architectural change.
 
 ## Read conditional guidance
 
-Read only what applies, and at most one scenario from `references/examples/`:
+Read only the references that apply:
 
 - [example-structure.md](references/example-structure.md) when a feature grows
   beyond one composition root or gains a named external compositor.
 - [state-coordination.md](references/state-coordination.md) when several
   widgets coordinate URL, server, query-cache, local, or transient state.
 - [shadcn.md](references/shadcn.md) when shadcn and Tailwind boundaries matter.
+
+Worked scenarios live in `references/examples/`; load at most one, and only
+when its situation matches the task.
 
 ## Preserve six invariants
 
