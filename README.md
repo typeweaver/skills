@@ -1,7 +1,7 @@
 # Skill your Agents
 
 Opinionated software-engineering skills and thin agent adapters for coding
-agents, installed with `equip-it`. The skills encode one way of working:
+agents. Install them with `equip-it`. The skills encode one way of working:
 challenge the idea, plan, craft, review, commit, deliver. They are deliberately
 specific rather than neutral. Reusable behavior lives in skills; agents add
 execution context, tool boundaries, and context isolation for supported
