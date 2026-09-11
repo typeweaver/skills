@@ -141,6 +141,9 @@ are created only after separate user authorization at the delivery checkpoint.
   repository-native software with durable contracts and tests.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
+- **[guard-it](skills/engineering/guard-it/SKILL.md)** — Set up machine-enforced
+  constraints in a TypeScript project that fail fast on detectable defects and
+  complexity drift, and prove that each one fires.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
