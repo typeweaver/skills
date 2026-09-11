@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@changesets/cli':
+      specifier: 3.0.2
+      version: 3.0.2
     '@effect/language-service':
       specifier: 0.87.2
       version: 0.87.2
@@ -42,7 +45,7 @@ importers:
   .:
     devDependencies:
       '@changesets/cli':
-        specifier: 3.0.2
+        specifier: 'catalog:'
         version: 3.0.2
       '@effect/tsgo':
         specifier: 'catalog:'
