@@ -1,17 +1,20 @@
 ---
 name: guard-it
-description: Set up or tighten machine-enforced guardrails in a TypeScript or
-  JavaScript project so agents and humans are forced to write clean code. Use
-  when asked to harden a project, add or strengthen strictness, linting, dead
-  code detection, module boundaries, or supply-chain checks, or when a project
-  has no such gates yet. Do not use for everyday implementation.
+description: Set up or tighten machine-enforced compiler, analysis,
+  architecture, and supply-chain constraints in a TypeScript project so
+  detectable defects and complexity drift fail fast. Use when asked to harden a
+  project, add or strengthen strictness, linting, dead code detection, module
+  boundaries, or supply-chain checks, or when a project has no such gates yet.
+  Not for JavaScript-only projects or everyday implementation.
 ---
 
 # Guard It
 
 Everything a machine enforces, nobody has to remember. Turn the project's
-quality expectations into checks that fail in CI, then record them where
-agents read instructions. Propose with reasons, discover before prescribing,
+quality expectations into checks that fail in CI, prove that each check
+fires, then record them where agents read instructions. Static analysis
+catches defined defect shapes and limits complexity drift; it does not judge
+ownership or abstractions. Propose with reasons, discover before prescribing,
 and never copy another repository's configuration.
 
 ## Discover first
@@ -38,12 +41,22 @@ name what it prevents. Skip a layer only with a stated reason.
   `noImplicitOverride`, `noFallthroughCasesInSwitch`, `verbatimModuleSyntax`,
   `isolatedModules`, and an explicit `types` list. Prefer the project
   references or `include` scope that keeps type-aware tools fast.
-- **Type-aware lint.** On TypeScript 7 prefer oxlint with `oxlint-tsgolint`;
-  otherwise typescript-eslint `strict-type-checked`. Turn on the rules that
-  catch agent-written defects first: floating and misused promises, unsafe
-  `any` flows, strict boolean expressions, exhaustive switches, unused
-  declarations and directives, consistent type imports, `max-lines` and
-  complexity limits, no inline disables without a reason.
+- **Type-aware lint.** Prefer oxlint with `oxlint-tsgolint` when its typed and
+  ecosystem rule coverage satisfies the repository's existing policy;
+  otherwise keep and strengthen the established linter, typically
+  typescript-eslint `strict-type-checked`. Turn on the rules that catch
+  agent-written defects first: floating and misused promises, unsafe `any`
+  flows, strict boolean expressions, exhaustive switches, unused declarations
+  and directives, consistent type imports, `max-lines`, and no inline disables
+  without a reason.
+- **Complexity.** Limit cognitive complexity (nesting and readability), not
+  only cyclomatic complexity (control paths). Set thresholds from the tool's
+  default and the codebase's current distribution, and reject extractions that
+  exist only to lower a score.
+- **Framework analyzers.** Detect library-specific static analyzers and
+  language-service plugins, use their official presets, pin mutually
+  compatible versions, and give every diagnostic exactly one owner, compiler
+  or linter, never both.
 - **Format.** One formatter in check mode in CI: oxfmt with oxlint, prettier
   with the typescript-eslint family.
 - **Dead code and dependencies.** knip for unused files, exports, and
@@ -55,13 +68,27 @@ name what it prevents. Skip a layer only with a stated reason.
   features. Encode the boundaries the repository already intends; do not
   invent an architecture.
 - **Supply chain.** pnpm `minimumReleaseAge` (minutes) and `strictDepBuilds`
-  with an explicit built-dependency allowlist in `pnpm-workspace.yaml`, or the
-  package manager's equivalent; lockfile-only installs in CI; SHA-pinned CI
-  actions audited by zizmor when GitHub Actions workflows exist. zizmor is not
-  an npm package: run it as a CI step (`pipx run zizmor` or its action) and
-  exempt the binary in knip.
+  with `allowBuilds` entries written by `pnpm approve-builds`, checked against
+  the installed pnpm version (older releases use `onlyBuiltDependencies`), or
+  the package manager's equivalent; lockfile-only installs in CI; SHA-pinned
+  CI actions audited by zizmor when GitHub Actions workflows exist. zizmor is
+  not an npm package: run it through its pinned action or `pipx`.
 - **Published packages.** publint and a packed-tarball smoke test that
   installs with npm, not only the workspace package manager.
+
+## Prove enforcement
+
+A green check is not proof. For every compiler profile and every new or
+tightened rule:
+
+1. Print the effective configuration (`tsc --showConfig`, the linter's
+   resolved config) and confirm the intended files, profile, and type-aware
+   mode are loaded.
+2. Run a positive probe that must pass and a negative probe that must fail
+   with the expected diagnostic code or rule id, in a throwaway fixture.
+3. Keep those probes as a test in the repository so a later configuration
+   change that silences a rule fails CI.
+4. Confirm CI runs exactly the root check that contains the probes.
 
 ## Wire it in
 
