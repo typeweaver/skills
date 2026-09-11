@@ -108,8 +108,8 @@ widgets, client navigation reuse, or offline-aware caching.
 - Define feature-owned query option or key factories. Include every normalized
   variable that changes the result, including entity, filters, pagination,
   locale, authorization scope, user, or tenant as appropriate.
-- Keep freshness policy with the query contract. Avoid one broad application
-  `staleTime` that silently assigns the same lifecycle to unrelated data.
+- Keep freshness policy with the query contract (see `SKILL.md`, "Assign
+  state deliberately"); a global default only prevents immediate refetch.
 - Give the browser query a browser-safe fetcher. It may call a Route Handler
   that delegates to the feature's server operation; it must not import a
   `server-only` operation into the client graph.
@@ -133,9 +133,8 @@ Use Zustand when several client islands need high-frequency or independently
 selected access to one transient workflow that does not belong in the URL or
 server cache.
 
-- Create a vanilla store per provider instance and place the provider at the
-  smallest common feature boundary. Do not create a module-global store in a
-  server-rendered Next.js application.
+- Create a vanilla store per provider instance at the smallest common feature
+  boundary (see `SKILL.md`, "Assign state deliberately").
 - Keep React Server Components outside the store lifecycle. They may provide
   serializable initialization data to a Client Component provider but must not
   read or mutate the client store.
