@@ -22,7 +22,8 @@ npx equip-it install \
   --skills all --agents all --yes
 ```
 
-`--yes` only skips prompts. It never enables `--force`.
+`--yes` only skips prompts. It never enables `--force`. Only `install` prompts;
+`update` and `uninstall` accept `--yes` for consistency and ignore it.
 
 ## Skill layout
 

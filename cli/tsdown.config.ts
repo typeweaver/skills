@@ -15,4 +15,5 @@ export default defineConfig({
   clean: false,
   fixedExtension: false,
   shims: true,
+  minify: true,
 });
