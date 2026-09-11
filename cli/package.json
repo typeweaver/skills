@@ -1,6 +1,6 @@
 {
   "name": "equip-it",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Skill your agents: install opinionated software-engineering skills and agent adapters for Claude Code, Codex, OpenCode, and Kiro",
   "keywords": [
     "agent-skills",

@@ -1,5 +1,14 @@
 # equip-it
 
+## 0.1.2
+
+### Patch Changes
+
+- efbb0a9: Print expected outcomes such as conflicts, missing receipts, and adapter drift
+  as plain messages without a stack trace, accept `--yes` on `update` and
+  `uninstall` for consistency, and ship a minified bundle.
+- 9ee40af: Revise `nextjs-feature-architecture`: shallow-routing and mutation-transport rules, sharper cookie and static-shell guidance, a review output contract, and a shorter body.
+
 ## 0.1.1
 
 ### Patch Changes
