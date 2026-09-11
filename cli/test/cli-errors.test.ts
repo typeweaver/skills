@@ -1,5 +1,6 @@
 import { assert, it } from "@effect/vitest";
 import { Runtime } from "effect";
+import { CliError } from "effect/unstable/cli";
 import { formatExpectedError, isExpectedError } from "../src/cli.js";
 import { ConflictError, GeneratorDriftError, LifecycleError } from "../src/errors.js";
 
@@ -8,6 +9,13 @@ it("marks expected outcomes so the runtime does not log them", () => {
   assert.strictEqual(Runtime.getErrorReported(conflict), false);
   assert.isTrue(isExpectedError(conflict));
   assert.isTrue(isExpectedError(new LifecycleError({ message: "boom" })));
+});
+
+it("leaves the parser's own errors to the command runner", () => {
+  const help = new CliError.ShowHelp({ commandPath: ["equip-it"], errors: [] });
+  const unknownFlag = new CliError.UnrecognizedOption({ option: "--bogus", suggestions: [] });
+  assert.isFalse(isExpectedError(help));
+  assert.isFalse(isExpectedError(unknownFlag));
 });
 
 it("does not treat defects as expected", () => {

@@ -1,5 +1,5 @@
 import { Console, Effect, Runtime } from "effect";
-import { Command, Flag } from "effect/unstable/cli";
+import { CliError, Command, Flag } from "effect/unstable/cli";
 import { HARNESSES } from "./domain.js";
 import { runDoctor } from "./commands/doctor.js";
 import { runGenerate } from "./commands/generate.js";
@@ -96,11 +96,13 @@ export const runCli = (argv: ReadonlyArray<string>) =>
  * Expected outcomes (conflicts, missing receipts, drift) are user-facing
  * results, not defects. They carry `Runtime.errorReported = false`, so the
  * runtime does not log them; the CLI prints their message instead and still
- * exits with code 1.
+ * exits with code 1. The parser's own errors (help, unknown flags) are
+ * rendered by `Command.runWith` and are excluded here.
  */
 export const isExpectedError = (error: unknown): error is { readonly message: string } =>
   typeof error === "object" &&
   error !== null &&
+  !CliError.isCliError(error) &&
   !Runtime.getErrorReported(error) &&
   "message" in error &&
   typeof error.message === "string";
