@@ -1,12 +1,15 @@
-# Typeweaver Skills
+# Skill your Agents
 
-A small collection of composable software-engineering skills and thin agent
-adapters. The reusable behavior lives in skills; agents add execution context,
-tool boundaries, and context isolation for supported harnesses.
+Opinionated software-engineering skills and thin agent adapters for coding
+agents. Install them with `equip-it`. The skills encode one way of working:
+challenge the idea, plan, craft, review, commit, deliver. They are deliberately
+specific rather than neutral. Reusable behavior lives in skills; agents add
+execution context, tool boundaries, and context isolation for supported
+harnesses.
 
 ## Install
 
-Use the official Typeweaver installer for skills and native agent adapters:
+Install the skills and native agent adapters with `equip-it`:
 
 ```bash
 npx equip-it install
@@ -22,8 +25,7 @@ Install skills only with the Agent Skills CLI:
 npx skills@latest add typeweaver/skills
 ```
 
-Native Typeweaver agent adapters require the official installer or the
-repository linker below.
+Native agent adapters require `equip-it` or the repository linker below.
 
 For local development, preview or create symlinks from this checkout into the
 shared agent skills directory (`~/.agents/skills`, read by Codex and other
