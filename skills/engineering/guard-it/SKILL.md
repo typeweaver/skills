@@ -68,17 +68,23 @@ A green check is not proof. For every compiler profile and every new or
 tightened rule:
 
 1. Run a positive probe that must pass and a negative probe that must fail with
-   the expected diagnostic code or rule id, in a throwaway fixture. Probes are
-   the proof; printed configuration shows only explicit options, not the
-   effective baseline.
-2. Keep those probes as a test in the repository, so a later configuration
-   change that silences a rule fails CI.
+   the expected diagnostic code or rule id. Write fixtures inside the
+   repository in an ignored directory so type roots, plugins, and the project
+   service resolve as they do for `src/`, and lint them with ignores disabled.
+   Probes are the proof; printed configuration shows only explicit options.
+2. Keep those probes as a test in the repository, then silence one rule,
+   confirm the probe fails, and restore it.
+3. For install-time and CI-layer guards that cannot fire offline, assert the
+   configuration in the same test, label it as a configuration assertion, and
+   record the one observed firing in the report.
 
 ## Wire it in
 
 - Add every check, including the probes, to one root script that CI runs, so
   "the check" has one owner. Confirm CI runs exactly that script and fails on
-  violations; warnings do not change behavior.
+  violations; warnings do not change behavior. Tools outside the package
+  manager run as a separate CI job, with the local equivalent documented next
+  to the root command.
 - Fix existing violations in the same change when they are few; otherwise
   enable the rule, baseline the current violations, and fail on growth.
 - Record the guardrails in the repository's agent instructions, creating

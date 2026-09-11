@@ -17,9 +17,10 @@ versions before proposing; the skill body owns the procedure.
 ## Type-aware lint
 
 - oxlint with `oxlint-tsgolint` covers most typescript-eslint type-aware rules
-  and requires TypeScript 7; prefer it when its typed and ecosystem coverage
-  satisfies the repository's policy, otherwise keep and strengthen
-  typescript-eslint `strict-type-checked`.
+  and runs on the TypeScript 7 (tsgo) engine; verify the installed TypeScript
+  against the tool's current compatibility note. Prefer it when its typed and
+  ecosystem coverage satisfies the repository's policy, otherwise keep and
+  strengthen typescript-eslint `strict-type-checked`.
 - Rules with the highest payoff against agent-written defects: floating and
   misused promises, unsafe `any` flows, strict boolean expressions, exhaustive
   switches, unused declarations and directives, consistent type imports,
@@ -27,7 +28,8 @@ versions before proposing; the skill body owns the procedure.
 - oxlint: `respectEslintDisableDirectives: false` and
   `reportUnusedDisableDirectives: "error"` remove the inline escape hatch.
 - Boundaries: scoped `no-restricted-imports` overrides per folder enforce
-  import direction without a second tool.
+  import direction without a second tool, and also catch type-only edges that
+  `import-x/no-cycle` does not count.
 
 ## Framework analyzers
 
@@ -56,8 +58,10 @@ versions before proposing; the skill body owns the procedure.
 ## Supply chain
 
 - pnpm: `minimumReleaseAge` (minutes); `strictDepBuilds` with `allowBuilds`
-  entries written by `pnpm approve-builds` (pnpm 10.26+; earlier releases use
-  `onlyBuiltDependencies`, removed in v11). CI installs with
+  entries `name: true|false` written by hand (`pnpm approve-builds` is
+  interactive and cannot deny; pnpm 10.26+, earlier releases use
+  `onlyBuiltDependencies`, removed in v11). A denial added after install keeps
+  failing until `node_modules` is reinstalled. CI installs with
   `--frozen-lockfile`.
 - GitHub Actions: pin every action to a commit SHA with a version comment,
   least-privilege `permissions`, `persist-credentials: false` where nothing
