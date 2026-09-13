@@ -12,7 +12,8 @@ description: Set up or tighten the automated checks that fail CI in a
 # Guard It
 
 A guardrail is a check that CI runs and that has been shown to fail on a real
-violation; anything else is configuration. Turn the repository's quality
+violation; a check that cannot fire offline is labeled a configuration
+assertion; anything else is configuration. Turn the repository's quality
 expectations into guardrails, then record them where agents read instructions.
 Static analysis catches defined defect shapes and complexity drift; leave
 ownership and abstraction judgments to review. Discover the toolchain and the
@@ -28,8 +29,8 @@ repository's configuration.
 2. Run every existing check and read its results. Read installed versions
    instead of assuming defaults; strictness baselines move between major
    versions.
-3. Count violations before proposing a rule. A rule that fails on thousands of
-   lines gets a baseline, not a switch.
+3. Count violations before proposing a rule; Wire it in decides whether to fix
+   them now or baseline the count.
 
 ## Propose the guardrail set
 
@@ -91,10 +92,9 @@ tightened rule:
   violations; a warning changes nothing. Tools outside the package manager run
   as a separate CI job, with the local equivalent documented next to the root
   command.
-- Fix existing violations in the same change only when the fix is the same edit
-  at every site and changes no runtime behavior (type-only imports, `override`
-  keywords, unused exports). Otherwise enable the rule, baseline the current
-  count, and fail on growth.
+- Fix existing violations in the same change only when the tool's autofix
+  produces the whole change and it changes no runtime behavior; otherwise
+  enable the rule, baseline the current count, and fail on growth.
 - Record the guardrails in the repository's agent instructions: what runs and
   how to run it locally. When no such file exists, propose creating `AGENTS.md`
   with that content and wait for the answer before creating it. Recommend, and
