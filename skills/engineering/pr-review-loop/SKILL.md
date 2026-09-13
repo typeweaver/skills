@@ -35,9 +35,11 @@ After every change, check again for new feedback.
 
 ## Keep the branch healthy
 
-- Keep the branch current with the remote default branch: merge its updates in
-  and resolve merge conflicts autonomously, preserving the intent of both
-  sides.
+- Keep the branch current with the pull request's current target branch and
+  resolve merge conflicts autonomously, preserving the intent of both sides.
+  This is normally the remote default branch. For a dependent pull request, use
+  its parent branch until that layer merges and the pull request is retargeted;
+  then use the remote default branch.
 - After every merge or update, rerun the relevant quality gates — linting,
   tests, and required checks — and fix what they surface before pushing.
 

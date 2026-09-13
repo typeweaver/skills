@@ -26,6 +26,26 @@ review, commit, or deliver it here.
    evidence invalidates the agreed outcome, when a step needs authority you do
    not have, or before an action you cannot undo.
 
+## Honor an approved scaffold
+
+When the agreed outcome has an approved scaffold, read its plan and every
+`@scaffold` marker before editing. Treat its ownership boundaries,
+architecture-bearing files, boundary-crossing dependency edges and package
+choices, public contracts, and test intent as locked. Decide algorithms and
+internal data structures yourself; add private helper files, local types, and
+tests inside the locked boundaries when the implementation needs them.
+
+A change that moves responsibility; adds, removes, or replaces an approved
+boundary-crossing dependency or package; alters a public contract or planned
+behavior; removes a scaffolded boundary; or creates a new owner needs a revised
+scaffold and another structure review. Stop and report that need instead of
+hiding it as a plan deviation.
+
+Replace each marker with working behavior, an active test, or durable
+documentation. The implementation is incomplete while a search within its
+scope still finds `@scaffold`, or while a planned test has neither an active
+case nor an approved scaffold revision that removes it.
+
 ## Shape the code
 
 - Extract or share code only when deleting it would move duplicated logic back
@@ -69,9 +89,10 @@ need is scope creep: revert it and report what prompted it as a follow-up.
 1. Run the check command CI runs, not only the tests you touched.
 2. Read the complete diff for scope creep and debug output.
 3. If a plan file exists, record in it every decision where you chose between
-   workable alternatives, every deviation from the plan, and each check you
-   ran with its result. Otherwise put the same in the report; create no new
-   file.
+   workable alternatives, every permitted deviation from the plan, and each
+   check you ran with its result. An approved scaffold is stricter: revise and
+   reapprove it before continuing. Otherwise put the same in the report; create
+   no new file.
 4. Report what changed, those decisions, the checks with their results, the
    abstractions you left out with the condition that would justify adding them
    ("skipped X, add when Y"), and the follow-ups, so that a reviewer with the

@@ -5,7 +5,7 @@ description: >-
   from the code. Use for module comments, inline explanations, API documentation,
   TODOs, deprecations, suppressions, or workaround notes during implementation or
   review. Do not use for standalone user documentation, general prose, commit
-  messages, or review discussion.
+  messages, review discussion, or temporary `@scaffold` planning annotations.
 ---
 
 # Comment It
