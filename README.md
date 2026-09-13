@@ -150,7 +150,8 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[review-it](skills/engineering/review-it/SKILL.md)** — Independently review
   an intended change or complete pull request.
 - **[define-goal](skills/engineering/define-goal/SKILL.md)** — Turn a request
-  into a concise, verifiable goal and stopping condition.
+  into one goal an agent can work against alone, with its completion evidence
+  and stop condition.
 - **[to-issues](skills/engineering/to-issues/SKILL.md)** — Record actionable
   work locally and synchronize it externally when authorized.
 - **[conventional-commit](skills/engineering/conventional-commit/SKILL.md)** —

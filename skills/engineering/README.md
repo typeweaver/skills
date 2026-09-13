@@ -37,8 +37,9 @@ from task context; user-invoked skills start only by explicit human command.
   implementation, or reviewed delivery at the right level of detail.
 - **[review-it](./review-it/SKILL.md)** — Independently review an intended change
   or complete pull request.
-- **[define-goal](./define-goal/SKILL.md)** — Turn a request into a concise,
-  verifiable goal and stopping condition.
+- **[define-goal](./define-goal/SKILL.md)** — Turn a request into one goal an
+  agent can work against alone, with its completion evidence and stop
+  condition.
 - **[to-issues](./to-issues/SKILL.md)** — Record actionable work locally and
   synchronize it externally when authorized.
 - **[conventional-commit](./conventional-commit/SKILL.md)** — Create coherent
