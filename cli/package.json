@@ -1,7 +1,7 @@
 {
   "name": "equip-it",
   "version": "0.1.1",
-  "description": "Guided installer for Typeweaver Skills: software-engineering skills and agents for Claude Code, Codex, OpenCode, and Kiro",
+  "description": "Skill your agents: install opinionated software-engineering skills and agent adapters for Claude Code, Codex, OpenCode, and Kiro",
   "keywords": [
     "agent-skills",
     "claude-code",

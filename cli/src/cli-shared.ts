@@ -37,6 +37,15 @@ export const packageVersion: Effect.Effect<string, never, FileSystem.FileSystem>
 export const harnessFlag = (name: Harness, description: string) =>
   Flag.boolean(name).pipe(Flag.withDefault(false), Flag.withDescription(description));
 
+/** Accepted on commands that never prompt, so `--yes` is safe to pass everywhere. */
+export const acceptedYesFlag = {
+  yes: Flag.boolean("yes").pipe(
+    Flag.withDefault(false),
+    Flag.withAlias("y"),
+    Flag.withDescription("Accepted for consistency; this command never prompts"),
+  ),
+};
+
 export const mutationFlags = {
   force: Flag.boolean("force").pipe(
     Flag.withDefault(false),

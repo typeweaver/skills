@@ -1,14 +1,20 @@
-import { Effect } from "effect";
-import { Command, Flag } from "effect/unstable/cli";
+import { Console, Effect, Runtime } from "effect";
+import { CliError, Command, Flag } from "effect/unstable/cli";
 import { HARNESSES } from "./domain.js";
 import { runDoctor } from "./commands/doctor.js";
 import { runGenerate } from "./commands/generate.js";
 import { runUninstall } from "./commands/uninstall.js";
 import { runUpdate } from "./commands/update.js";
 import { installCommand } from "./cli-install.js";
-import { harnessFlag, mutationFlags, packageVersion, parseSelection } from "./cli-shared.js";
+import {
+  acceptedYesFlag,
+  harnessFlag,
+  mutationFlags,
+  packageVersion,
+  parseSelection,
+} from "./cli-shared.js";
 
-const update = Command.make("update", mutationFlags, (config) =>
+const update = Command.make("update", { ...mutationFlags, ...acceptedYesFlag }, (config) =>
   Effect.gen(function* () {
     yield* runUpdate(yield* packageVersion, config);
   }),
@@ -34,6 +40,7 @@ const uninstallFlags = {
     Flag.withDescription("Limit removal to agent names, 'all', or 'none'"),
   ),
   ...mutationFlags,
+  ...acceptedYesFlag,
 };
 
 const uninstall = Command.make("uninstall", uninstallFlags, (config) =>
@@ -79,4 +86,28 @@ export const runCli = (argv: ReadonlyArray<string>) =>
   Effect.gen(function* () {
     const version = yield* packageVersion;
     yield* Command.runWith(root, { version })(argv);
-  });
+  }).pipe(
+    Effect.tapError((error) =>
+      isExpectedError(error) ? Console.error(formatExpectedError(error)) : Effect.void,
+    ),
+  );
+
+/**
+ * Expected outcomes (conflicts, missing receipts, drift) are user-facing
+ * results, not defects. They carry `Runtime.errorReported = false`, so the
+ * runtime does not log them; the CLI prints their message instead and still
+ * exits with code 1. The parser's own errors (help, unknown flags) are
+ * rendered by `Command.runWith` and are excluded here.
+ */
+export const isExpectedError = (error: unknown): error is { readonly message: string } =>
+  typeof error === "object" &&
+  error !== null &&
+  !CliError.isCliError(error) &&
+  !Runtime.getErrorReported(error) &&
+  "message" in error &&
+  typeof error.message === "string";
+
+export const formatExpectedError = (error: { readonly message: string }): string => {
+  const files = "files" in error && Array.isArray(error.files) ? error.files : [];
+  return [error.message, ...files.map((file) => `  ${String(file)}`)].join("\n");
+};
