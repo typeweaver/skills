@@ -24,10 +24,12 @@ small, explicit, and portable across supported agent harnesses.
 
 ## Writing skills
 
+[Read and apply the skill philosophy](docs/skill-philosophy.md) before adding,
+revising, or reviewing a skill. It defines the repository's rules for skill
+scope, triggering, structure, writing, safety, and validation.
+
 - Write reusable instructions and repository documentation in English.
 - Match the directory name and the `name` field in `SKILL.md` exactly.
-- Design from concrete trigger examples, the behavior or knowledge the skill
-  must add, and its expected output. Give each skill one clear responsibility.
 - Use model invocation when the agent can usefully discover the skill from the
   task context. Use user-only invocation only for workflows that should start
   exclusively by an explicit human command, and encode that choice for every
@@ -35,26 +37,6 @@ small, explicit, and portable across supported agent harnesses.
 - Give every `agents/openai.yaml` a `display_name`, `short_description`, and
   `default_prompt`. Declare invocation policy only when it deviates from the
   harness default of implicit invocation, mirroring the frontmatter convention.
-- Keep the frontmatter `description` to the outcome and every automatic trigger
-  context. Do not summarize the body there.
-- Assume a capable agent. Teach only the specialized mindset, domain knowledge,
-  judgment, constraints, procedure, or output contract that changes its
-  behavior.
-- Use short imperative actions and scannable bullets. Omit origin stories,
-  rhetorical setup, broad advice, and explanations of obvious steps.
-- Match specificity to risk: use principles for contextual judgment and exact
-  sequences only for fragile or consistency-critical work.
-- Keep cross-skill routing in orchestrators. Focused skills must remain useful
-  without companion skills.
-- Keep one source of truth for each rule and disclose branch-specific detail
-  through clearly named reference files.
-- After behavior is correct, run a separate compression pass. Remove repeated
-  introductions, conclusions, checklists, description/body overlap, and rules
-  owned by another skill without weakening safeguards or output contracts.
-- Forward-test substantial or behavior-sensitive revisions with clean context
-  when practical, then refine the skill from observed behavior.
-- Keep organization-, team-, and person-specific policy out of reusable skills.
-  Discover and follow such policy from the target repository at execution time.
 
 ## Writing agents
 

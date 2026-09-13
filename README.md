@@ -3,9 +3,10 @@
 Opinionated software-engineering skills and thin agent adapters for coding
 agents. Install them with `equip-it`. The skills encode one way of working:
 challenge the idea, plan, craft, review, commit, deliver. They are deliberately
-specific rather than neutral. Reusable behavior lives in skills; agents add
-execution context, tool boundaries, and context isolation for supported
-harnesses.
+specific rather than neutral, and every line has to change what the agent does;
+see the [skill philosophy](docs/skill-philosophy.md). Reusable behavior lives
+in skills; agents add execution context, tool boundaries, and context isolation
+for supported harnesses.
 
 ## Install
 
