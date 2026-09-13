@@ -1,4 +1,4 @@
 interface:
   display_name: "Guard It"
-  short_description: "Set up proven, machine-enforced quality gates for a TypeScript project"
+  short_description: "Set up CI checks for a TypeScript project and prove each one fires"
   default_prompt: "Use $guard-it to harden this TypeScript project with quality gates that are proven to fail CI on real violations."
