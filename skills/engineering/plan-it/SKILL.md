@@ -32,6 +32,11 @@ workflow around the work.
 - Turn necessary research into a step that names the decision it must unlock.
 - Cover final validation across behavior, regression protection,
   documentation, and operational concerns when relevant.
+- When the plan will feed a structure review, make it scaffold-ready: settle
+  the owning modules and architecture-bearing paths, dependency direction,
+  caller-visible inputs, outputs and failures, and observable test cases. Keep
+  private helpers and algorithms open. A contract whose fields, variants,
+  arity, or failure form remain undecided is not ready to scaffold.
 - If the work contains multiple independently deliverable outcomes, create a
   lightweight roadmap and linked milestone plans. Keep shared context in the
   roadmap and enough milestone-specific context in each plan to execute it

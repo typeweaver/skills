@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scaffold It"
+  short_description: "Turn an approved plan into a reviewable code scaffold"
+  default_prompt: "Use $scaffold-it to materialize this approved plan as a green code and test scaffold without implementing behavior."

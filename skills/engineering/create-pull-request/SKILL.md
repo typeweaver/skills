@@ -17,6 +17,8 @@ comments, and review guidance. Never merge the pull request.
    repository instructions.
 2. Confirm one coherent purpose. Remove unrelated work, debug artifacts,
    temporary changes, and comments that justify change history.
+   `@scaffold` annotations are the review subject of an approved scaffold pull
+   request, not cleanup candidates; preserve them in that workflow.
 3. Run relevant checks and report only validation that actually passed.
 4. Push when necessary, then create or update the branch's existing pull
    request—never create a duplicate.
