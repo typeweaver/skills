@@ -136,8 +136,8 @@ are created only after separate user authorization at the delivery checkpoint.
   mindset.
 - **[ask-donald-knuth](skills/engineering/ask-donald-knuth/SKILL.md)** — Judge
   algorithms and programs through Donald Knuth's engineering mindset.
-- **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Shape an unclear
-  problem into a shared, challenged understanding.
+- **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Stress-test an
+  idea in rounds until every consequential decision is settled.
 - **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
   into a durable, handoff-ready engineering plan.
 - **[scaffold-it](skills/engineering/scaffold-it/SKILL.md)** — Lay out the
