@@ -28,3 +28,35 @@ later disappear.
 When the test framework has a pending-test construct that keeps the suite green,
 prefer one named pending case per bullet. In an existing test file, place cases
 beside the suite that will own them. Never add a passing placeholder assertion.
+
+## Worked example
+
+This TypeScript example illustrates the shape only. Translate its comment and
+declaration syntax to the target repository.
+
+```ts
+// @scaffold Purpose: Define the caller-visible account-suspension boundary.
+// @scaffold Owns: Suspension requests and results.
+// @scaffold Provides: SuspendAccountInput, SuspendAccountResult, and SuspendAccount.
+// @scaffold Depends on: The existing AccountId type and AccountStore port.
+// @scaffold Implement: Persist the suspension or return AccountNotFound.
+export interface SuspendAccountInput {
+  readonly accountId: AccountId;
+  readonly reason: string;
+}
+
+export type SuspendAccountResult =
+  { readonly _tag: "Suspended" } | { readonly _tag: "AccountNotFound" };
+
+/** Resolves only after the store confirms durable persistence. */
+export type SuspendAccount = (
+  store: AccountStore,
+  input: SuspendAccountInput,
+) => Promise<SuspendAccountResult>;
+```
+
+```ts
+// @scaffold Tests:
+test.todo("an active account -> resolves after persistence and returns Suspended");
+test.todo("an unknown account -> returns AccountNotFound");
+```

@@ -29,22 +29,30 @@ review, commit, or deliver it here.
 ## Honor an approved scaffold
 
 When the agreed outcome has an approved scaffold, read its plan and every
-`@scaffold` marker before editing. Treat its ownership boundaries,
-architecture-bearing files, boundary-crossing dependency edges and package
-choices, public contracts, and test intent as locked. Decide algorithms and
-internal data structures yourself; add private helper files, local types, and
-tests inside the locked boundaries when the implementation needs them.
+`@scaffold` marker before editing. Use its ownership, architecture-bearing file
+roles, boundary-crossing dependencies, public contracts, and test intent as the
+reviewed baseline, not an exhaustive prescription. Preserve that baseline by
+default. The scaffolded file list is not an allowlist: add private helper files,
+local types, internal modules, and additional tests wherever they fit the
+approved outcome.
 
-A change that moves responsibility; adds, removes, or replaces an approved
-boundary-crossing dependency or package; alters a public contract or planned
-behavior; removes a scaffolded boundary; or creates a new owner needs a revised
-scaffold and another structure review. Stop and report that need instead of
-hiding it as a plan deviation.
+Implementation reveals constraints a plan cannot predict. When evidence shows
+that a different structure is simpler or more correct, make the smallest
+coherent deviation and record it under `Scaffold deviations`: the reviewed
+decision, its replacement, the evidence, and the affected contracts and tests.
+Never hide structural drift as an implementation detail. Stop only when the
+deviation changes the agreed outcome or scope, requires new authority, or
+introduces serious irreversible risk; otherwise implement it for review.
 
 Replace each marker with working behavior, an active test, or durable
 documentation. The implementation is incomplete while a search within its
 scope still finds `@scaffold`, or while a planned test has neither an active
-case nor an approved scaffold revision that removes it.
+case nor a recorded `Scaffold deviations` entry explaining why it changed or
+was removed.
+
+Run the final literal marker search after updating the plan and report. Do not
+quote the marker token in tracked completion notes: a sentence claiming none
+remain otherwise recreates the marker it reports as removed.
 
 ## Shape the code
 
@@ -69,6 +77,8 @@ case nor an approved scaffold revision that removes it.
 
 - Every input and failure path of the agreed outcome has a test that fails
   without your change. A test that passes on the old code tests nothing.
+- Exercise each changed public entry point through the import or export path its
+  callers use. A direct-module test does not prove the package surface works.
 - A test that breaks on a refactor that changed no behavior tests the
   implementation; rewrite it against the contract. Asserting how often an
   internal collaborator was called is that test.
@@ -90,9 +100,9 @@ need is scope creep: revert it and report what prompted it as a follow-up.
 2. Read the complete diff for scope creep and debug output.
 3. If a plan file exists, record in it every decision where you chose between
    workable alternatives, every permitted deviation from the plan, and each
-   check you ran with its result. An approved scaffold is stricter: revise and
-   reapprove it before continuing. Otherwise put the same in the report; create
-   no new file.
+   check you ran with its result. For an approved scaffold, append material
+   differences under `Scaffold deviations` so the reviewed baseline remains
+   legible. Otherwise put the same in the report; create no new file.
 4. Report what changed, those decisions, the checks with their results, the
    abstractions you left out with the condition that would justify adding them
    ("skipped X, add when Y"), and the follow-ups, so that a reviewer with the

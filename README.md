@@ -90,7 +90,7 @@ flowchart TD
     plan --> approve{{brief-me: approve the plan}}
     approve --> scaffoldChoice{Structure checkpoint?}
     scaffoldChoice -->|yes| scaffold["scaffold-it · review · scaffold PR"]
-    scaffold --> approveStructure{{approve locked structure}}
+    scaffold --> approveStructure{{approve scaffold baseline}}
     approveStructure --> build["define-goal · dependent branch · craft-it"]
     scaffoldChoice -->|no| build
     build --> reviewCommit["review-it then conventional-commit"]

@@ -11,9 +11,9 @@ description: Materialize an approved engineering plan as a reviewable code and
 
 Turn an approved plan into a green, inert scaffold that exposes the proposed
 structure before implementation hides it in code volume. The scaffold is a
-contract for `craft-it`, not a first implementation: it fixes where behavior
-belongs and what callers and tests will observe while leaving private mechanics
-open.
+reviewed baseline for `craft-it`, not a first implementation or an exhaustive
+prescription: it records where behavior is expected to belong and what callers
+and tests are expected to observe while leaving implementation discovery open.
 
 ## Decide whether a scaffold earns a review
 
@@ -29,11 +29,11 @@ and leave the repository untouched.
 The plan is not approved structure while the scaffold would have to choose a
 public field, variant, function argument, result, failure form, owner, or
 dependency direction. Stop and return those decisions to planning instead of
-inventing a contract and labeling it locked.
+inventing a contract and labeling it reviewed.
 
-## Lock the structure
+## Establish the review baseline
 
-Record these as the locked structure:
+Record these as the proposed structure for review:
 
 - source and test files that establish an ownership boundary;
 - the responsibility owned by each module and the dependencies it may use;
@@ -75,15 +75,15 @@ Run the repository's formatting, lint, type, test, architecture, and generation
 checks that apply. Existing behavior and CI must remain green. Then inspect the
 complete diff:
 
-- every production and test file exists because it exposes a locked decision;
+- every production and test file exists because it exposes a reviewed decision;
 - every `@scaffold` marker maps to one implementation or test obligation;
 - no runtime path exposes unfinished behavior;
 - no private helper or generic layer was invented without a present owner.
 
-Report the plan, created and annotated files, locked structure, open
+Report the plan, created and annotated files, reviewed baseline, open
 implementation choices, checks with their results, and any reason the scaffold
 cannot stay green. Stop before implementation, commit, or pull-request work.
 
 The scaffold is ready when another agent can implement the approved behavior
-without choosing new ownership, dependency, public-contract, or test-intent
-decisions, and a reviewer can judge those decisions from this diff alone.
+without rediscovering the proposed ownership, dependencies, public contracts,
+or test intent, and a reviewer can judge those decisions from this diff alone.
