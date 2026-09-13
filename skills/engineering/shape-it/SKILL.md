@@ -46,19 +46,20 @@ a neutral contract module is resolved, leave it.
 2. Name the target by concept, in the repository's naming style. Keep tests,
    styles, and fixtures where the repository already keeps them; colocate only
    where it already colocates.
-3. Move with `git mv`, fix imports, and update every place that names the
-   path: entry points, boundary allowlists, ownership or architecture tables,
-   tool aliases. Keep public contracts unchanged. Done when a search for the
-   old path finds only changelog or history entries.
+3. Move with `git mv`, or cut and paste for an extraction, fix imports, and
+   update every place that names the path: entry points, boundary allowlists,
+   ownership or architecture tables, tool aliases. Keep public contracts
+   unchanged. Done when a search for the old path finds only changelog or
+   history entries.
 4. Run the checks the repository already has; add a dependency rule only when
    the repository already enforces boundaries.
 5. Keep the move as its own commit, before or after the behavior change, never
    mixed with it. Create the commit only when the user has asked for commits;
-   otherwise stage the move alone and leave other changes unstaged. In the
-   commit message or the handback, say what moved and which trigger justified
-   it.
+   otherwise stage only the move and do not change what else is staged. In
+   the commit message or the handback, say what moved and which trigger
+   justified it.
 
-Stay inside the trigger. A file in the diff that neither moved nor names a
-moved or deleted path is scope creep: revert it and report what prompted it as
-a follow-up. A move may rename the moved file to its concept; do not rename
-files that stay.
+Stay inside the trigger. A file in the diff that neither gave up nor received
+moved code, nor names a moved or deleted path, is scope creep: revert it and
+report what prompted it as a follow-up. A move may rename the moved file to its
+concept; do not rename files that stay.

@@ -40,9 +40,9 @@ coherent, verified candidate; do not plan, review, commit, or deliver it here.
   extract concepts, not arbitrary fragments.
 - Handle errors, edge cases, and operational failure deliberately. Build the
   smallest complete solution without speculative abstractions.
-- Place new code with the concept that owns it. When the existing structure no
-  longer matches responsibilities, restructure with `shape-it` in its own
-  commit instead of adding to the drift.
+- Place new code with the concept that owns it. When the existing structure
+  does not match responsibilities, report the drift as a follow-up, or call the
+  Skill tool with `shape-it` when the user asks for the restructuring.
 - Add a dependency only with a stated reason in the change; prefer what the
   repository already has.
 
@@ -68,9 +68,8 @@ coherent, verified candidate; do not plan, review, commit, or deliver it here.
 - Use mocks or spies only when the interaction itself is the contract or the
   boundary cannot be controlled directly. Assert behavior, not incidental call
   counts. Keep tests deterministic and resilient to sound refactoring.
-- Delete or rewrite a test that restates the implementation; it protects
-  nothing and breaks on every sound refactor. Consult `ask-kent-beck` when the
-  right feedback mechanism is unclear.
+- Delete or rewrite a test that breaks on a refactor that changed no behavior;
+  it restates the implementation and protects nothing.
 
 ## Own the touched codebase
 
