@@ -1,21 +1,23 @@
 ---
 name: shape-it
-description: Restructure code whose placement no longer matches its
-  responsibilities. Use when a folder or file mixes concerns, grows past one
-  concept, imports sideways between peers, or a new piece has no natural home,
-  and when asked to clean up, split, or reorganize a module. Not for
+description: Move code to where its responsibilities live. Use when a folder or
+  file mixes concerns, grows past one concept, imports sideways between peers
+  or forms a cycle, when a `utils` or `helpers` folder collects unrelated code,
+  when new code has no folder that owns it, and when asked to split,
+  reorganize, or clean up the structure of a module or folder. Not for
   behavior changes.
 ---
 
 # Shape It
 
 Structure is a claim about ownership. When a file or folder stops telling the
-truth about what belongs together, move the code, in its own commit, before
-adding more.
+truth about what belongs together, move the code before adding more.
 
 ## Recognize the trigger
 
-Act when you see one of these; name the trigger in the commit message.
+An entry point is the path importers outside a folder are meant to use: a
+package manifest's exports, an index a boundary rule names, or a documented
+API. Act on any of these triggers.
 
 - A folder whose files change for different reasons or in different pull
   requests: split by reason for change.
@@ -24,19 +26,19 @@ Act when you see one of these; name the trigger in the commit message.
 - A name by type (`utils`, `helpers`, `common`, `misc`, `types`) that collects
   unrelated code: move each piece to the concept that owns it.
 - Sideways imports between peers (siblings under one parent), or a cycle: move
-  the shared part below both or give one peer explicit ownership.
-- A module imported by two peers that do not share a lifecycle: it is a shared
-  concept; place it where both can reach it without importing each other.
+  the shared part to a module both can import without importing each other, or
+  make one peer the owner and route the other's import through its entry point.
 - A pass-through module or a barrel that exists only to re-export: delete it
-  unless it is a deliberate public entry point.
-- New code that has no natural home: that is a missing concept, not a reason
-  for a new `misc` folder.
+  unless it is an entry point.
+- New code that fits under no existing concept: create the concept that owns
+  it; do not open a `misc` folder.
 
-Skip a trigger that fires by the letter when no importer or reader is misled
-by the current placement. Read an existing boundary allowlist or dependency
-rule as evidence: every allowed edge is a decision, edges that service a cycle
-are debt, and a mutual dependency already routed through a neutral contract
-module is resolved.
+Skip a trigger that fires by the letter when every importer reaches the code
+through its entry point and a reader searching for the concept would look at
+the current path first. Read an existing boundary allowlist or dependency rule
+as evidence: an allowed edge is a decision, leave it; an allowed edge that
+closes a cycle is debt, report it; a mutual dependency already routed through
+a neutral contract module is resolved, leave it.
 
 ## Restructure
 
@@ -46,11 +48,17 @@ module is resolved.
    where it already colocates.
 3. Move with `git mv`, fix imports, and update every place that names the
    path: entry points, boundary allowlists, ownership or architecture tables,
-   tool aliases. Keep public contracts unchanged.
+   tool aliases. Keep public contracts unchanged. Done when a search for the
+   old path finds only changelog or history entries.
 4. Run the checks the repository already has; add a dependency rule only when
    the repository already enforces boundaries.
-5. Commit the move on its own, before or after the behavior change, never
-   mixed with it. Say what moved and which trigger justified it.
+5. Keep the move as its own commit, before or after the behavior change, never
+   mixed with it. Create the commit only when the user has asked for commits;
+   otherwise stage the move alone and leave other changes unstaged. In the
+   commit message or the handback, say what moved and which trigger justified
+   it.
 
-Do not restructure beyond the trigger. A move may rename the moved file to its
-concept; do not rename files that stay.
+Stay inside the trigger. A file in the diff that neither moved nor names a
+moved or deleted path is scope creep: revert it and report what prompted it as
+a follow-up. A move may rename the moved file to its concept; do not rename
+files that stay.
