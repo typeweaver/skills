@@ -3,25 +3,26 @@ name: craft-it
 description: Implement, fix, or refactor code once the outcome is agreed. Use
   when asked to build a feature, add or change behavior, fix a bug, or carry
   out a plan step, and the result must be ready for review. Not for spikes or
-  throwaway prototypes, for moving code without changing behavior, or for
-  reviewing a change.
+  throwaway prototypes, for restructuring code without changing behavior, or
+  for reviewing a change.
 ---
 
 # Craft It
 
 Build the smallest complete change for the agreed outcome. Smallest: nothing
 the agreed outcome does not need. Complete: every input and failure path of the
-agreed outcome is handled and tested. Leave the change verified; do not plan,
-review, commit, or deliver it here.
+agreed outcome is handled, and every one the change adds or changes is tested.
+Leave the change verified; do not plan, review, commit, or deliver it here.
 
 ## Establish the change
 
 1. Read the repository instructions, the plan file if one exists, the
-   neighboring code, and the check command CI runs.
-2. Follow the pattern the neighboring code uses, even where you would choose
-   differently. Deviate only when the pattern cannot produce the agreed
-   outcome; then apply the deviation to every file you touch and report the
-   untouched files as a follow-up.
+   neighboring code, and the check command CI runs or the verification
+   commands the repository documents.
+2. Follow the repository instructions first, then the pattern the neighboring
+   code uses, even where you would choose differently. Deviate only when the
+   pattern cannot produce the agreed outcome; then apply the deviation to every
+   file you touch and report the untouched files as a follow-up.
 3. Research and decide implementation details yourself. Ask only when new
    evidence invalidates the agreed outcome, when a step needs authority you do
    not have, or before an action you cannot undo.
@@ -29,15 +30,15 @@ review, commit, or deliver it here.
 ## Shape the code
 
 - Extract or share code only when deleting it would move duplicated logic back
-  into two or more callers. An extraction whose only caller is the function it
-  left, named for a position (`step2`, `handleRest`) rather than a concept,
-  goes back inline.
+  into two or more callers, or when it lets a test reach the logic without a
+  mock. An extraction whose only caller is the function it left, named for a
+  position (`step2`, `handleRest`) rather than a concept, goes back inline.
 - Export only what a caller outside the module uses, and keep third-party
   types out of exported signatures. Document an exported contract in the form
   the repository already uses.
-- Place new code with the concept that owns it. When the existing structure no
-  longer matches responsibilities, restructure with `shape-it` in its own
-  commit instead of adding to the drift.
+- Place new code with the concept that owns it. When the existing structure
+  does not match responsibilities, report the drift as a follow-up, or call the
+  Skill tool with `shape-it` when the user asks for the restructuring.
 - Add a dependency only with a stated reason in the change; prefer what the
   repository already has.
 - Write comments and documentation for the code at HEAD. A comment that names
@@ -47,11 +48,12 @@ review, commit, or deliver it here.
 
 ## Test the contract
 
-- Every input and failure path of the agreed outcome has a test that fails
-  without your change. A test that passes on the old code tests nothing.
+- Every input and failure path the change adds or changes has a test that
+  fails without your change; for a refactor, the existing tests pass unchanged
+  before and after.
 - A test that breaks on a refactor that changed no behavior tests the
-  implementation; rewrite it against the contract. Asserting how often an
-  internal collaborator was called is that test.
+  implementation; delete it or rewrite it against the contract. Asserting how
+  often an internal collaborator was called is that test.
 - Keep domain logic in pure functions and effects at the edge, so tests reach
   the logic without mocks. Mock only a boundary you cannot control. A test that
   reads the real clock, randomness, or network, or depends on test order, is
@@ -62,11 +64,14 @@ review, commit, or deliver it here.
 A pre-existing defect, performance concern, or behavior the task does not
 mention is a follow-up in your report, not a change, unless the agreed outcome
 cannot work without it. A hunk in the diff that the agreed outcome does not
-need is scope creep: revert it and report what prompted it as a follow-up.
+need is scope creep: revert it and report what prompted it as a follow-up. A
+hunk that keeps a file you touched consistent with the pattern or deviation
+you applied is part of the agreed outcome, not scope creep.
 
 ## Finish
 
-1. Run the check command CI runs, not only the tests you touched.
+1. Run the check command CI runs or the verification commands the repository
+   documents, not only the tests you touched.
 2. Read the complete diff for scope creep and debug output.
 3. If a plan file exists, record in it every decision where you chose between
    workable alternatives, every deviation from the plan, and each check you
