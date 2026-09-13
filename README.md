@@ -136,8 +136,8 @@ are created only after separate user authorization at the delivery checkpoint.
   algorithms and programs through Donald Knuth's engineering mindset.
 - **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Shape an unclear
   problem into a shared, challenged understanding.
-- **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
-  into a durable, handoff-ready engineering plan.
+- **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn a settled approach
+  into ordered steps, each with a check that proves it done.
 - **[craft-it](skills/engineering/craft-it/SKILL.md)** — Implement maintainable,
   repository-native software with durable contracts and tests.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
