@@ -85,7 +85,7 @@ the companion mindset throughout. Hexagons are human checkpoints.
 ```mermaid
 flowchart TD
     idea([Idea]) --> challenge[challenge-me]
-    challenge -.->|skip when outcome is already clear| plan[plan-it]
+    challenge -.->|skip when no consequential decision is open| plan[plan-it]
     challenge --> plan
     plan --> approve{{brief-me: approve the plan}}
     approve --> build["define-goal · branch · craft-it"]
