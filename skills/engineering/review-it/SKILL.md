@@ -30,11 +30,16 @@ the verdict or the scope.
 3. For every changed signature, export, schema, config key, or default, list
    its callers, consumers, and tests and check that each still holds. Read
    outside the diff only along a call, import, or data flow the diff touches.
-4. Run the repository's own read-only checks: tests, typecheck, lint. Check a
+4. For every parameter, option, field, or default the diff adds or changes,
+   work out the result at its boundaries from the code: absent, empty, zero,
+   negative, oversized. If you catch yourself taking its contract from the one
+   test the diff ships, go back to the code.
+5. Run the repository's own read-only checks: tests, typecheck, lint. Check a
    library call you cannot cite against the installed version's documentation.
 
 Scope is set when you can name the diff you reviewed (refs, staged, or files),
-every changed public name with its uses, and the checks you ran.
+every changed public name with its uses, the boundary results for every
+parameter the diff adds or changes, and the checks you ran.
 
 ## Find and classify
 
@@ -60,10 +65,12 @@ Read the diff for these tells; the tell sets the severity.
   fixed here.
 
 Every Blocking or Important finding quotes the changed line and names the
-failure it causes. No quoted line or no named failure: drop it. A Follow-up
-names file and line and the failure or cost. A rename, reorder, or reformat
-with no failure named is a style note: drop it. Skip anything a formatter,
-linter, or typecheck already enforces.
+failure it causes. A Follow-up names file and line and the failure or cost. At
+every severity, no line or no named failure or cost: drop it. A rename,
+reorder, or reformat with no failure named is a style note: drop it at every
+severity. Asking for it as a separate formatting commit is the same style note
+under a Follow-up label. Skip anything a formatter, linter, or typecheck
+already enforces.
 
 Honor required and forbidden perspectives from the user or the handoff. To
 invoke one, call the Skill tool with the matching `ask-*` skill; its
@@ -97,7 +104,7 @@ when there are no findings.
 
 ### Follow-ups
 
-- **<topic>** — <why it matters outside the current change>
+- **<topic>** — `<file:line>`, <the failure or cost outside the current change>
 
 ### Validation and confidence
 
