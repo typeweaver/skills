@@ -1,32 +1,41 @@
 ---
 name: define-goal
-description: Turn a task, ticket, plan, or request into a concise, verifiable
-  goal. Use when an autonomous agent needs a clear outcome and stopping
-  condition.
+description: Turn a task, ticket, or plan into one goal an agent can work
+  against on its own: the outcome, the evidence that proves it done, and when
+  to stop. Use when handing work to an agent or subagent, setting the objective
+  for an autonomous run, or asked what done means here. Use after the outcome
+  is understood, not to explore or challenge it, and not to plan the work.
 ---
 
 # Define Goal
 
-Turn the provided context into a short, tool-independent objective.
+State the agreed outcome as one goal an agent can work against without you and
+know when to stop.
 
-A good goal states:
+The goal states:
 
-- what concrete outcome must be true,
-- what evidence proves completion,
-- important scope or constraints when they matter,
-- when the agent should stop and report a genuine blocker instead of grinding.
+- what must be true when the work is done,
+- what evidence proves it,
+- the scope boundaries and constraints the source names,
+- that the agent stops and reports when blocked: a required check, decision, or
+  authorization cannot be obtained by the agent and the request has been posted
+  or reported.
 
-Prefer measurable or binary outcomes over activity descriptions.
+Name the outcome, not the activity: "refactor the parser", "improve error
+handling", and "investigate the timeout" name work, not what is true once that
+work is done.
 
-Ask one concise clarification question only when missing information could
-materially change the intended outcome or how completion is verified.
-Otherwise infer reasonable details from the available context.
+Evidence is a result a third party can check, not "it works". Keep the goal
+tool-independent: name a command or check only when the source or the
+repository already documents it.
 
-Do not invent requirements, metrics, commands, or constraints.
+A threshold, metric, command, or constraint you cannot point to in the source
+or the repository is invented: leave it out.
 
-When genuinely blocked by unavailable external input, permissions,
-infrastructure, or a required human decision, stop and report the blocker
-and what is needed to continue.
+Ask one clarification question only when two plausible readings of the request
+lead to different outcomes or different completion evidence. Ask it as the two
+readings with the one you recommend. Otherwise take the reading the context
+supports best and name it in the goal.
 
-Output one concise goal. Prefer 1–3 sentences.
-Do not add tool-specific syntax unless requested.
+Output one goal, 1–3 sentences, and nothing else. If you catch yourself listing
+steps, files, or commands, you are planning: state the outcome instead.
