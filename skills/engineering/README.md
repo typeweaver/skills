@@ -30,6 +30,9 @@ from task context; user-invoked skills start only by explicit human command.
   repository-native software with durable contracts and tests.
 - **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
   without narrating what the code already says.
+- **[guard-it](./guard-it/SKILL.md)** — Set up machine-enforced checks in a
+  TypeScript project that fail CI on detectable defects and complexity drift,
+  and prove that each one fires.
 - **[nextjs-feature-architecture](./nextjs-feature-architecture/SKILL.md)** —
   Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
