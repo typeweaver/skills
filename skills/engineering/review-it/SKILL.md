@@ -10,9 +10,10 @@ description: Review a code change or pull request diff and return findings that
 
 # Review It
 
-Find what the change breaks and what it makes the next change pay for, prove
-each from the diff, and report nothing else. Put findings in the report only:
-do not edit, stage, commit, push, or create issues.
+Find what the change breaks and what it makes the next change pay for and
+prove each from the diff. Report a pre-existing defect you meet on the way as
+a Follow-up, and report nothing else. Put findings in the report only: do not
+edit, stage, commit, push, or create issues.
 
 Review from a context that did not author the change. If you authored or
 orchestrated it, delegate by following
@@ -32,8 +33,8 @@ the verdict or the scope.
 4. Run the repository's own read-only checks: tests, typecheck, lint. Check a
    library call you cannot cite against the installed version's documentation.
 
-Scope is set when you can name base and head, every changed public name with
-its uses, and the checks you ran.
+Scope is set when you can name the diff you reviewed (refs, staged, or files),
+every changed public name with its uses, and the checks you ran.
 
 ## Find and classify
 
@@ -51,15 +52,18 @@ Read the diff for these tells; the tell sets the severity.
   a caller must know the implementation to call it; a test breaks on a
   behavior-preserving refactor because it asserts private state, call order,
   or call counts that are not the contract; new behavior has no test that
-  fails without it; a README, doc comment, type, or changelog line is now
-  false; a rule in the repository's instructions is broken.
-- **Follow-up**, a defect or cost the change did not introduce, or one outside
-  the diff: name it; do not ask for it to be fixed here.
+  fails without it in a repository that tests that layer; a README, doc
+  comment, type, or changelog line is now false; a rule in the repository's
+  instructions is broken.
+- **Follow-up**, a defect or cost the change did not introduce, or new
+  behavior the repository has no test layer for; do not ask for it to be
+  fixed here.
 
-Every finding quotes the hunk and names the failure it causes. No quoted line
-or no named failure: drop it. A rename, reorder, or reformat with no failure
-named is a style note: drop it. Skip anything a formatter, linter, or
-typecheck already enforces.
+Every Blocking or Important finding quotes the changed line and names the
+failure it causes. No quoted line or no named failure: drop it. A Follow-up
+names file and line and the failure or cost. A rename, reorder, or reformat
+with no failure named is a style note: drop it. Skip anything a formatter,
+linter, or typecheck already enforces.
 
 Honor required and forbidden perspectives from the user or the handoff. To
 invoke one, call the Skill tool with the matching `ask-*` skill; its

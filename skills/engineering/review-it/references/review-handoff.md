@@ -5,9 +5,10 @@ change, and the contract the reviewer receives.
 
 ## Delegating
 
-1. Confirm the scope exists: the base and head refs resolve (`git rev-parse`)
-   and the diff between them is non-empty (`git diff --stat <base>...<head>`).
-   If either fails, fix the scope; do not start a reviewer.
+1. Confirm the scope exists: the refs resolve and
+   `git diff --stat <base>...<head>` is non-empty, or
+   `git diff --cached --stat` is non-empty for a staged review. If the scope
+   is empty, fix it; do not start a reviewer.
 2. Fill in the contract below with facts you can point to. Link goals, plans,
    and check output by path. Leave out the implementation conversation, an
    expected verdict, and your defense of the change.
@@ -27,7 +28,7 @@ apply; state evidence gaps.
 ### Assignment
 
 - **Repository:** <repository or worktree>
-- **Change:** <exact base and head, staged diff, or explicit file boundary>
+- **Change:** <exact base and head, staged changes, or a named file set>
 - **Excluded:** <unrelated working-tree changes>
 - **Instructions:** <applicable repository guidance>
 
