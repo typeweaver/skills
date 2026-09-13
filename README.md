@@ -138,8 +138,8 @@ are created only after separate user authorization at the delivery checkpoint.
   problem into a shared, challenged understanding.
 - **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
   into a durable, handoff-ready engineering plan.
-- **[craft-it](skills/engineering/craft-it/SKILL.md)** — Implement maintainable,
-  repository-native software with durable contracts and tests.
+- **[craft-it](skills/engineering/craft-it/SKILL.md)** — Build the smallest
+  complete change for an agreed outcome, with tests that fail without it.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**

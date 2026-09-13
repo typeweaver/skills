@@ -1,87 +1,78 @@
 ---
 name: craft-it
-description: Implement or refactor code once the intended outcome is clear. Use
-  for production changes that must fit the repository, remain maintainable, and
-  be ready for independent review.
+description: Implement, fix, or refactor code once the outcome is agreed. Use
+  when asked to build a feature, add or change behavior, fix a bug, or carry
+  out a plan step, and the result must be ready for review. Not for spikes or
+  throwaway prototypes, for moving code without changing behavior, or for
+  reviewing a change.
 ---
 
 # Craft It
 
-Build the smallest complete solution so the touched code is understandable from
-the repository alone. Treat actual public interfaces as package-quality
-contracts without imposing speculative stability on private code. Leave a
-coherent, verified candidate; do not plan, review, commit, or deliver it here.
+Build the smallest complete change for the agreed outcome. Smallest: nothing
+the agreed outcome does not need. Complete: every input and failure path of the
+agreed outcome is handled and tested. Leave the change verified; do not plan,
+review, commit, or deliver it here.
 
 ## Establish the change
 
-1. Inspect repository instructions, the active goal, architecture, neighboring
-   code, public surfaces, tests, and validation commands.
-2. Identify existing contracts and the smallest coherent change that satisfies
-   the outcome.
-3. Follow sound repository patterns. Keep deliberate improvements internally
-   consistent and leave broader convergence outside the change.
-4. Decide implementation details and perform necessary research independently.
-   Pause only when new evidence invalidates the approved outcome or scope,
-   requires unavailable authority, or creates serious irreversible risk.
+1. Read the repository instructions, the plan file if one exists, the
+   neighboring code, and the check command CI runs.
+2. Follow the pattern the neighboring code uses, even where you would choose
+   differently. Deviate only when the pattern cannot produce the agreed
+   outcome; then apply the deviation to every file you touch and report the
+   untouched files as a follow-up.
+3. Research and decide implementation details yourself. Ask only when new
+   evidence invalidates the agreed outcome, when a step needs authority you do
+   not have, or before an action you cannot undo.
 
-## Build code that can grow
+## Shape the code
 
-- Give each module clear ownership of related data, state, and behavior. Keep
-  cohesion high and coupling low, explicit, and directed.
-- Avoid cycles, hidden shared state, and contracts that expose private or
-  third-party representations.
-- Share a component only when consumers truly share semantics and lifecycle.
-  Prefer composition over premature reuse or a broad common layer.
-- Prefer a functional core with an imperative shell: pure transformations for
-  domain logic, explicit dependencies, and narrow effectful boundaries.
-- Keep public interfaces small, stable, and consumer-oriented. Export only what
-  callers need and document public contracts to package-quality standards.
-- Minimize change amplification. Let each function tell one coherent story and
-  extract concepts, not arbitrary fragments.
-- Handle errors, edge cases, and operational failure deliberately. Build the
-  smallest complete solution without speculative abstractions.
+- Extract or share code only when deleting it would move duplicated logic back
+  into two or more callers. An extraction whose only caller is the function it
+  left, named for a position (`step2`, `handleRest`) rather than a concept,
+  goes back inline.
+- Export only what a caller outside the module uses, and keep third-party
+  types out of exported signatures. Document an exported contract in the form
+  the repository already uses.
+- Place new code with the concept that owns it. When the existing structure no
+  longer matches responsibilities, restructure with `shape-it` in its own
+  commit instead of adding to the drift.
+- Add a dependency only with a stated reason in the change; prefer what the
+  repository already has.
+- Write comments and documentation for the code at HEAD. A comment that names
+  a reviewer, the conversation, a plan step, "now", or "previously" narrates
+  history: state the constraint instead, or delete it. Delete documentation
+  your change made false.
 
-## Write durable documentation
+## Test the contract
 
-- Prefer expressive names, types, structure, and tests over narrated code.
-- Document public behavior, inputs, outputs, errors, side effects, invariants,
-  and non-obvious usage with the repository's established documentation form.
-- Use inline comments only for durable rationale, constraints, invariants,
-  surprising dependency behavior, or non-obvious coupling.
-- Write for the code at HEAD: never address a reviewer or refer to a
-  conversation, diff, temporary plan, or plan step. Link an issue only when it
-  is the durable source of an external constraint and the repository expects it.
-- Remove stale or redundant documentation; a false explanation is worse than
-  none.
+- Every input and failure path of the agreed outcome has a test that fails
+  without your change. A test that passes on the old code tests nothing.
+- A test that breaks on a refactor that changed no behavior tests the
+  implementation; rewrite it against the contract. Asserting how often an
+  internal collaborator was called is that test.
+- Keep domain logic in pure functions and effects at the edge, so tests reach
+  the logic without mocks. Mock only a boundary you cannot control. A test that
+  reads the real clock, randomness, or network, or depends on test order, is
+  not deterministic: inject the value it reads.
 
-## Test contracts, not implementation
+## Hold the scope
 
-- Cover observable behavior, important boundaries, failure modes, and
-  regressions introduced or exposed by the change.
-- Test pure transformations directly. At effectful boundaries, prefer small
-  fakes, in-memory implementations, or injected ports.
-- Use mocks or spies only when the interaction itself is the contract or the
-  boundary cannot be controlled directly. Assert behavior, not incidental call
-  counts. Keep tests deterministic and resilient to sound refactoring.
+A pre-existing defect, performance concern, or behavior the task does not
+mention is a follow-up in your report, not a change, unless the agreed outcome
+cannot work without it. A hunk in the diff that the agreed outcome does not
+need is scope creep: revert it and report what prompted it as a follow-up.
 
-## Own the touched codebase
+## Finish
 
-Fix a pre-existing defect without asking when it is understood, bounded,
-low-risk, testable, and does not change the approved outcome. Keep it separate
-when combining it would obscure either change. Leave broad, risky, or independent
-work outside the candidate and preserve enough context to resume it. Do not
-publish external work items without authorization.
-
-## Finish the candidate
-
-1. Run relevant focused and repository-wide checks.
-2. Inspect the complete diff for accidental scope, debug artifacts, stale
-   documentation, and repository inconsistencies.
-3. Preserve material decisions, deviations, evidence, and refactoring pressure
-   in an existing handoff; otherwise report them without creating a new artifact.
-4. Report the outcome, important decisions, validation, nearby defects fixed,
-   and follow-ups.
-
-The candidate is ready when it fulfills the agreed outcome, fits the repository,
-has evidence for its behavior, and can be judged by an independent reviewer
-without reconstructing the implementation conversation.
+1. Run the check command CI runs, not only the tests you touched.
+2. Read the complete diff for scope creep and debug output.
+3. If a plan file exists, record in it every decision where you chose between
+   workable alternatives, every deviation from the plan, and each check you
+   ran with its result. Otherwise put the same in the report; create no new
+   file.
+4. Report what changed, those decisions, the checks with their results, the
+   abstractions you left out with the condition that would justify adding them
+   ("skipped X, add when Y"), and the follow-ups, so that a reviewer with the
+   repository and the report alone can judge the change.
