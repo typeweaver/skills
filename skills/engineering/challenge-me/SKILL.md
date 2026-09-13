@@ -1,6 +1,6 @@
 ---
 name: challenge-me
-description: Stress-test an idea before anyone plans or builds it: question its
+description: Stress-test an idea before anyone plans or builds it. Question its
   goal, scope, assumptions, and risks in rounds, recommend an answer for every
   open decision, and end with a shared understanding the user confirms. Use
   when the user brings an idea, feature request, or proposal whose goal,
@@ -29,14 +29,13 @@ settled; a decision whose prerequisite is deferred is deferred with it.
 
 Research the facts this round depends on and report what you found with its
 source. Facts are your job, never the user's: if you catch yourself asking
-something a file or document answers, read it instead. Research for the next
-round runs in a subagent while the user answers this one.
+something a file or document answers, read it instead.
 
-Ask at most three questions from the frontier, prerequisites first. Put every
-risk or alternative the user has not named on the frontier as a decision:
-accept, mitigate, or rule out. Decide anything reversible yourself and record
-it in the summary. Give each question two to four options and exactly one
-recommendation:
+Ask at most three questions from the frontier, prerequisites first, in plain
+language at the user's decision level. A risk or alternative the user has not
+named enters the frontier when it is consequential; put it there as a decision:
+accept, mitigate, or rule out. Decide anything reversible yourself. Give each
+question two to four options and exactly one recommendation:
 
 ```markdown
 ### 1. <short decision title>
@@ -60,10 +59,10 @@ use it from then on.
 
 ## Stop
 
-Stop when the frontier is empty. Before writing the summary, list the steps a
-plan would contain; a step with an open consequential choice reopens the
-frontier. If you catch yourself summarizing while a frontier question remains,
-ask it instead.
+Stop when the frontier is empty. Before writing the summary, list for yourself
+the steps a plan would contain and keep that list out of the conversation; a
+step with an open consequential choice reopens the frontier. If you catch
+yourself summarizing while a frontier question remains, ask it instead.
 
 The summary is the shared understanding:
 
