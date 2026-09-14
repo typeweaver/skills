@@ -147,6 +147,8 @@ are created only after separate user authorization at the delivery checkpoint.
   complete change for an agreed outcome, with tests that fail without it.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
+- **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
+  that answers its reader's questions and passes a fresh-reader test.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
