@@ -16,7 +16,8 @@ The loop is that command: one invocation, run unattended, red while the symptom
 is present and green once it is gone. Everything below is mechanical once the
 loop exists.
 
-This skill diagnoses and fixes. It does not commit, push, or open anything.
+This skill diagnoses, and fixes when the fix is authorized. It does not
+commit, push, or open anything itself.
 
 ## 1. Build the loop
 
@@ -29,7 +30,9 @@ Done when one command you have already run at least once:
 - goes red on the user's exact symptom, not on a symptom nearby;
 - is deterministic, or has a reproduction rate you measured and pinned
   ("red in 12 of 100 runs");
-- runs in seconds;
+- runs fast enough to run it dozens of times: seconds for a unit-level loop,
+  and for a batch, bisect, or end-to-end loop, fast enough that one full pass
+  fits in a single unattended run;
 - runs unattended: no manual step, no click, no waiting on you.
 
 If you catch yourself reading code to form a theory before this command exists,
@@ -50,11 +53,12 @@ this runs against it.
 ## 3. Hypothesize
 
 Write three to five hypotheses, ranked by how much of the minimized loop they
-explain. Each names a cause and the prediction that would disprove it: "if
+explain. Each names a cause and the observation that would disprove it: "if
 state leaks through the module-level cache, clearing it between the two calls
 turns the loop green." A claim no observation can contradict is not a
-hypothesis; replace it. Show the ranked list to the user before you test any of
-it.
+hypothesis; replace it. Write the ranked list into the report before you test
+any of it. Done when each hypothesis names a cause and the observation that
+would disprove it.
 
 ## 4. Instrument
 
@@ -74,10 +78,15 @@ out; do not widen the fix instead.
    make the test easy. Confirm it fails for the cause you confirmed in step 4
    and not for a setup error.
 2. When no seam exercises that path, that is the finding. Report it with the
-   seam the code would need and ask whether to restructure first.
-3. Make the test pass with the smallest change at the confirmed cause. A change
-   that makes the symptom disappear without addressing that cause is a symptom
-   patch: say so and name what it hides.
+   seam the code would need, and ask whether to restructure first; when the user
+   agrees, call the Skill tool with `shape-it`.
+3. Implement only when the user asked for the fix or the task already
+   authorized one; otherwise report the confirmed cause and the smallest change
+   you would make. When you implement, make the test pass with the smallest
+   change at the confirmed cause: call the Skill tool with `craft-it` for the
+   implementation and return here for step 6. A change that makes the symptom
+   disappear without addressing that cause is a symptom patch: say so and name
+   what it hides.
 
 ## 6. Clean up
 

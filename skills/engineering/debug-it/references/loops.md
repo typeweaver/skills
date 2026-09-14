@@ -48,7 +48,7 @@ directly, and build the loop there.
 ## Only a production report exists
 
 Reconstruct the input from the log line, request, or payload and redact it.
-Commit it as a fixture only once the loop is red. When the symptom needs data
+Add it as a fixture file only once the loop is red. When the symptom needs data
 you cannot obtain, that data is the artifact to ask for in step 1.
 
 ## The symptom depends on the environment
