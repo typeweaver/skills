@@ -163,8 +163,8 @@ are created only after separate user authorization at the delivery checkpoint.
   Create coherent Git commit boundaries and Conventional Commit messages.
 - **[create-pull-request](skills/engineering/create-pull-request/SKILL.md)** —
   Verify completed work and create or update a focused pull request.
-- **[pr-review-loop](skills/engineering/pr-review-loop/SKILL.md)** — Handle
-  review feedback and checks until a pull request is merged or blocked.
+- **[pr-review-loop](skills/engineering/pr-review-loop/SKILL.md)** — Work an
+  open pull request's review comments and checks until a human merges it.
 
 See the [engineering catalog](skills/engineering/README.md) for invocation
 details.

@@ -1,56 +1,69 @@
 ---
 name: pr-review-loop
-description: Handle review feedback and checks on an open pull request until a
-  human merges it. Use when asked to monitor or continue an active PR.
+description: Work an open pull request's review comments and failing checks
+  until a human merges it. Use when asked to address or answer review feedback
+  on a pull request, to fix a red check on one, or to watch or keep an eye on a
+  pull request until it can be merged. Not for opening a pull request and not
+  for reviewing a diff yourself.
 ---
 
 # PR Review Loop
 
-Own the review-feedback loop for an open pull request.
+Carry one open pull request until a human merges it: answer every review
+comment and keep its required checks green. Never merge or close the pull
+request; report it merge-ready and leave both to a human.
 
-Never merge the pull request.
+Every reply, report, and pushed diff is visible to everyone who can see the
+pull request. Check each for credentials, tokens, private keys, and internal
+hostnames, and name what the value identifies instead of pasting it; copied
+check output and log excerpts are where they leak.
 
-## Monitor
+## Watch
 
-After the PR is created:
+Re-check the pull request after every push and every reply, and keep
+re-checking while it is open. One pass reads every new review comment, every
+new review verdict, and the state of every check. When the harness offers no
+subscription, scheduler, or background run, say that you cannot watch past this
+run and hand back what is outstanding; do not report that you are watching.
 
-- Subscribe to review activity when the environment supports it.
-- Otherwise periodically re-check for new reviews, comments, and threads.
-- If subscriptions or scheduled checks are not possible, report that limitation instead of pretending to monitor.
+## Answer every review comment
 
-Continue monitoring and handling feedback until a human merges or closes the
-pull request, or it is genuinely blocked.
+A review comment is one reviewer item; a thread is the conversation around it.
+Take Agree unless one of the other tests fires.
 
-## Handle feedback
+- **Agree** — make the change, verify it, push it, and resolve the thread.
+- **Unsure** — two readings of the comment lead to different changes: ask on
+  the thread the question that separates them and say which you would take.
+- **Disagree** — you can name what implementing it would break: reply on the
+  thread with that failure.
 
-For each new review comment:
+When a reviewer repeats a request after your reply, implement it; refuse only
+when you can name the check it fails, the repository rule it breaks, or the
+requirement it contradicts, and then ask the user to decide.
 
-- **Agree:** implement the improvement, verify the change, push it, and resolve the thread.
-- **Unsure:** reply on the thread with the smallest necessary clarification question.
-- **Disagree:** explain the reasoning on the thread instead of silently ignoring the feedback.
+## Keep the branch mergeable
 
-If a reviewer reiterates a requested change after your explanation, implement it unless it conflicts with higher-priority requirements, correctness, security, or safety. Escalate such conflicts instead.
+- Run the checks the repository documents before every push and fix what they
+  report. Work a red required check like a review comment until it is green or
+  it blocks you.
+- Update the branch from the remote default branch with the convention the
+  repository uses: its contributing guide, its repository instructions, or how
+  the branch's earlier updates were made. Merge when none of them says; under
+  rebase, push with `--force-with-lease` and never a plain `--force`.
+- Resolve a conflict by the intent of each side traced to the commit or pull
+  request that introduced it. The checks that passed on both sides before the
+  update must pass after it.
 
-After every change, check again for new feedback.
+## Report merge readiness
 
-## Keep the branch healthy
+The pull request is merge-ready when:
 
-- Keep the branch current with the remote default branch: merge its updates in
-  and resolve merge conflicts autonomously, preserving the intent of both
-  sides.
-- After every merge or update, rerun the relevant quality gates — linting,
-  tests, and required checks — and fix what they surface before pushing.
+- every review comment is implemented, asked about, or answered with a reason,
+- every thread you opened or acted on is resolved or names who must resolve it,
+- no newer review comment is waiting,
+- every check the pull request marks required is green.
 
-## Finish
-
-The PR is merge-ready when:
-
-- all actionable review feedback has been implemented or explicitly clarified,
-- all resolvable review threads are resolved,
-- no newer review feedback is waiting,
-- relevant required checks pass.
-
-Report merge readiness, keep watching for new feedback, and stop only when the
-pull request is merged, closed, or genuinely blocked.
-
-When blocked, report what prevents further progress and what is needed to continue in the relevant PR thread. If progress requires a human decision, request that decision explicitly and state the available options when known.
+Report that, then keep watching. Stop only when the pull request is merged,
+closed, or blocked: a required check, decision, or authorization cannot be
+obtained by the agent and the request has been posted or reported. Post that
+request in the pull request, naming the options when you know them.

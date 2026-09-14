@@ -47,8 +47,8 @@ from task context; user-invoked skills start only by explicit human command.
   Git commit boundaries and Conventional Commit messages.
 - **[create-pull-request](./create-pull-request/SKILL.md)** — Verify completed
   work and create or update a focused pull request.
-- **[pr-review-loop](./pr-review-loop/SKILL.md)** — Handle review feedback and
-  checks until a pull request is merged or blocked.
+- **[pr-review-loop](./pr-review-loop/SKILL.md)** — Work an open pull request's
+  review comments and checks until a human merges it.
 
 ## User-invoked
 
