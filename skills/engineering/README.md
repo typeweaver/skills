@@ -31,8 +31,8 @@ from task context; user-invoked skills start only by explicit human command.
 - **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
   without narrating what the code already says.
 - **[nextjs-feature-architecture](./nextjs-feature-architecture/SKILL.md)** —
-  Design feature-oriented Next.js App Router systems with explicit ownership
-  across runtime boundaries and coordinated state.
+  Decide where each part of a Next.js App Router feature lives, from the route
+  contract to the state owner.
 - **[brief-me](./brief-me/SKILL.md)** — Summarize a discussion, plan,
   implementation, or reviewed delivery at the right level of detail.
 - **[review-it](./review-it/SKILL.md)** — Independently review an intended change

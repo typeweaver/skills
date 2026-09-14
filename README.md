@@ -143,8 +143,8 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
-  — Design feature-oriented Next.js App Router systems with explicit ownership
-  across runtime boundaries and coordinated state.
+  — Decide where each part of a Next.js App Router feature lives, from the
+  route contract to the state owner.
 - **[brief-me](skills/engineering/brief-me/SKILL.md)** — Summarize a discussion,
   plan, implementation, or reviewed delivery at the right level of detail.
 - **[review-it](skills/engineering/review-it/SKILL.md)** — Independently review
