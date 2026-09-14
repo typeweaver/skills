@@ -1,50 +1,65 @@
 # Boundaries, Public Interfaces, and Structure
 
-Use this reference in step 2 of the procedure. Trees are growth consequences,
-not starting templates. Do not reproduce them mechanically.
+Step 2 of the procedure. Trees are growth consequences, not starting
+templates. Do not reproduce them mechanically.
 
-## Protect module and runtime boundaries
+## Protect dependency direction
 
-Prefer UI dependencies that flow from `app` to `features` to shared product
-components to shared UI. Let server dependencies flow from feature operations
-through domain or platform contracts to infrastructure. These are ownership
-directions, not required folders. Hide storage, transport, credentials, and
-vendor details behind the narrowest meaningful contract.
+```text
+app page ──► feature composition root
+                └──► shared UI
+browser query ──► Route Handler ──► feature operation
+client component ──► Server Function ──► private feature operation
+feature operation ──► domain/platform contract ──► infrastructure
+workflow ──► public participant operations or injected ports
+```
 
-- Expose intentional feature entry points; reject deep imports into another
-  feature's internals.
-- Compose peer features in `app` or an explicit workflow instead of importing
-  one feature's UI or internals into another. When several features reuse a
-  headless capability, move that capability below them rather than choosing one
-  feature as the accidental owner.
+UI dependencies flow from `app` to `features` to shared product components to
+shared UI. Server dependencies flow from feature operations through domain or
+platform contracts to infrastructure. These are ownership directions, not
+required folders.
+
+- `app` composes public feature surfaces; features never import from `app`.
+- Peer features meet in `app` or an explicit workflow; they do not import one
+  another. When several features reuse a headless capability, move that
+  capability below them rather than choosing one feature as the accidental
+  owner.
+- Reject deep imports into another feature's internals.
+- Domain and platform modules do not depend on route-facing features.
+- Hide storage, transport, credentials, and vendor details behind a contract
+  whose signature names no vendor type.
+
+## Separate the runtimes
+
 - Keep server-only, client-only, and environment-neutral exports distinct. Do
-  not re-export them through one ambiguous barrel.
-- Use entry points such as `feature`, `feature/server`, and `feature/client`
-  only when real consumers need those different runtime capabilities. Do not
-  add symmetric barrels by convention.
+  not re-export them through one ambiguous barrel, and do not re-export client
+  hooks or providers from a server entry point.
+- Add `feature/server` or `feature/client` only when a module outside the
+  feature already imports from it and would otherwise pull the other runtime
+  into its graph. An entry point with no importer outside the feature is a
+  symmetric barrel; delete it.
 - Mark sensitive modules with `server-only` and browser-bound modules with
-  `client-only` when that makes invalid imports fail early.
-- Give browser reads a browser-safe transport. A client query must not import a
-  server-only feature operation; let a Route Handler or the repository's
+  `client-only` when that makes invalid imports fail early. Client modules
+  never import a `server-only` operation.
+- Give browser reads a browser-safe transport. A browser query must not import
+  a server-only feature operation; let a Route Handler or the repository's
   established client transport delegate to that operation.
 - Pass only the data a Client Component needs across the server/client
   boundary, using an explicit serializable DTO or view model rather than raw
   storage or vendor objects.
 - Prefer route-level composition when two features only need to appear or react
   to the same route state together.
-- When the repository's scale makes boundary drift costly, enforce public
-  entry points and forbidden import directions with its package, lint, or
-  dependency checks. Do not introduce enforcement tooling merely because this
-  skill was invoked. Read an existing import allowlist as evidence: each
-  approved edge is a boundary decision, and edges that service a cycle are
-  debt.
+- Add or extend an import rule only when the repository already enforces
+  boundaries with a package, lint, or dependency check. Read an existing import
+  allowlist as evidence: each approved edge is a boundary decision, and edges
+  that service a cycle are debt.
 
 ## Start from one capability
 
 The smallest server-read capability often starts with three files: a page that
-owns the route contract, a feature composition root, and its server operation.
-Omit the operation when the capability needs no server data. Direct imports are
-honest until a named external consumer appears.
+owns the route contract, a feature composition root, and its feature
+operation. Omit the operation when the capability needs no server data. Direct
+imports are honest until a named external consumer appears.
 
 ```text
 app/projects/[projectId]/page.tsx
@@ -54,8 +69,9 @@ features/project-overview/get-project-overview.server.ts
 
 - The page validates the route contract and renders `ProjectOverview`.
 - `project-overview.tsx` owns the capability lifecycle and expected outcomes.
-- `get-project-overview.server.ts` owns the use-case contract, authorization
-  boundary, mapping, and cache policy. It imports `server-only` and delegates
+- `get-project-overview.server.ts` is the feature operation: it owns the use
+  case, authorization boundary, mapping, and cache policy. It imports
+  `server-only` and delegates
   reused policy or data access to lower domain or platform contracts when they
   serve more than this feature.
 
@@ -66,6 +82,10 @@ paths to the repository (`app/` + `lib/` is fine). File suffixes such as
 marker (`server-only`, `'use server'`, `"use client"`), so follow the
 repository's naming.
 
+Avoid `ui/model/server/actions` directories, repository layers, and symmetric
+barrels that exist only because a diagram contained them. Collapse query-key,
+query-options, and fetcher modules into one client module until they diverge.
+
 ## Grow one pressure at a time
 
 | Pressure                                        | Add only then                                                                                  |
@@ -75,15 +95,11 @@ repository's naming.
 | Named external compositor needs a feature part  | Public widget + optional `index.ts`                                                            |
 | External server consumer (Route Handler)        | `server.ts` with `server-only`                                                                 |
 | External client consumer (provider/commands)    | `client.ts` with `"use client"`                                                                |
-| Browser read of server data                     | HTTP transport, not a Server Action                                                            |
-| Mutation from a Client Component                | `'use server'` adapter, or the existing HTTP transport when a client cache owns reconciliation |
+| Browser read of server data                     | HTTP transport, not a Server Function                                                          |
+| Mutation from a Client Component                | Server Function, or the existing HTTP transport when a browser query cache owns reconciliation |
 | Shared transient workflow across client islands | Scoped feature provider and store                                                              |
 | Behavior spanning independent features          | Explicit workflow feature                                                                      |
 | Headless capability reused across features      | Lower domain or platform contract                                                              |
-
-Avoid `ui/model/server/actions` directories, repository layers, and symmetric
-barrels that exist only because a diagram contained them. Collapse query-key,
-query-options, and fetcher modules into one client module until they diverge.
 
 ## Keep the page a composition root
 
@@ -98,33 +114,3 @@ Master-detail is a common case: two features meet at the route.
 
 Pass Server feature surfaces into a client provider as `children` or slots from
 their Server composition boundary so they stay in the server graph.
-
-## Protect dependency direction
-
-```text
-app page ──► feature composition root
-                └──► shared UI
-browser query ──► Route Handler ──► feature server operation
-status client ──► Server Function adapter ──► private server operation
-feature server operation ──► domain/platform contract ──► infrastructure
-workflow ──► public participant operations or injected ports
-```
-
-- `app` composes public feature surfaces; features never import from `app`.
-- Peer features meet in `app` or an explicit workflow; they do not import one
-  another.
-- Domain and platform modules do not depend on route-facing features.
-- Client modules never import `.server.ts` operations or `server-only` barrels.
-- Server entry points never re-export client hooks or providers.
-
-## Choose the matching worked example
-
-Load at most one:
-
-- [examples/search-page.md](examples/search-page.md) — URL-owned search
-- [examples/operations-dashboard.md](examples/operations-dashboard.md) —
-  mixed freshness across widgets
-- [examples/editor-workflow.md](examples/editor-workflow.md) — unsaved
-  working copy
-- [examples/master-detail-workspace.md](examples/master-detail-workspace.md) —
-  navigable selection and route slots

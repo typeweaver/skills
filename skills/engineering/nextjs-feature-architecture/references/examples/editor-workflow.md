@@ -23,9 +23,9 @@ features/document-editor/editor-recovery.client.ts
 `DocumentEditor` is the composition root. Widgets stay inside the feature
 because they jointly edit one document. Do not add `server.ts` until an
 external server consumer exists. Client widgets import
-`save-document.action.ts` (`'use server'`), which authorizes and delegates to
-the private `save-document.server.ts`. Never import the `.server.ts` file from
-a Client Component.
+the Server Function `save-document.action.ts` (`'use server'`), which
+authorizes and delegates to the private `save-document.server.ts`. Never
+import the `.server.ts` file from a Client Component.
 
 ## Assign state precisely
 

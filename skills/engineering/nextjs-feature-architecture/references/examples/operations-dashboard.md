@@ -43,16 +43,16 @@ remove its entry point.
 
 ## Assign state by lifecycle
 
-| Value                                   | Owner                                   |
-| --------------------------------------- | --------------------------------------- |
-| Project identity                        | Route param                             |
-| Confirmed range and team filters        | Normalized URL search params            |
-| Current aggregate metrics               | Server operation and its cache contract |
-| Refreshing activity feed                | TanStack Query browser cache            |
-| Authoritative project status            | Server                                  |
-| Temporary status projection             | Mutation lifecycle or query cache       |
-| Comparison candidates and tray state    | Scoped feature Zustand store            |
-| Hovered chart point or open widget menu | Local widget state                      |
+| Value                                   | Owner                                    |
+| --------------------------------------- | ---------------------------------------- |
+| Project identity                        | Route param                              |
+| Confirmed range and team filters        | Normalized URL search params             |
+| Current aggregate metrics               | Feature operation and its cache contract |
+| Refreshing activity feed                | TanStack Query browser cache             |
+| Authoritative project status            | Server                                   |
+| Temporary status projection             | Mutation lifecycle or query cache        |
+| Comparison candidates and tray state    | Scoped feature Zustand store             |
+| Hovered chart point or open widget menu | Local widget state                       |
 
 The URL, query cache, and store solve different problems. Do not mirror the
 range into Zustand, copy the activity result into the store, or put comparison
@@ -81,7 +81,7 @@ ProjectPage
 - The provider wraps only widgets participating in comparison. Narrow it
   further if the page layout allows that without awkward composition.
 
-Independent server operations should start independently. Do not fetch metrics
+Independent feature operations should start independently. Do not fetch metrics
 and activity sequentially at the page merely because both widgets are visible.
 
 ## Make browser cache identity complete
@@ -117,7 +117,7 @@ When prefetching:
 - create a request-scoped query client;
 - prefetch only data consumed through the browser cache;
 - hydrate the exact key the client widget will read;
-- let server prefetch call the server operation while the client query calls
+- let server prefetch call the feature operation while the client query calls
   the browser fetcher; share the key and result contract, not an unsafe query
   function across runtimes;
 - avoid duplicating a Server Component read and a client query unless the
@@ -125,7 +125,7 @@ When prefetching:
 
 If activity requires a project permission result before its request can begin,
 decide whether this is a real authorization dependency. Prefer one authorized
-server operation over a client waterfall when the browser never needs the
+feature operation over a client waterfall when the browser never needs the
 intermediate result.
 
 ## Reconcile mutations across widgets
@@ -133,7 +133,7 @@ intermediate result.
 A project-status mutation may affect the status card, activity feed, and
 aggregate metrics. Reconcile each projection through its actual owner.
 
-On the server, inside the `'use server'` adapter that delegates to the private
+On the server, inside the Server Function that delegates to the private
 operation:
 
 1. Validate authorization and expected revision.
@@ -144,17 +144,18 @@ operation:
    intended invalidation scope. Without Cache Components, use the repository's
    established `revalidateTag` / `revalidatePath` contract.
 4. Decide how the current UI observes the invalidation. `updateTag` or a
-   relevant `revalidatePath` in a Server Action can update the current UI in the
-   same round trip; `revalidateTag(tag, "max")` deliberately permits stale UI.
-   `refresh()` only refreshes the client router and never invalidates cached
-   data. A Route Handler does not update the current UI by itself.
+   relevant `revalidatePath` in a Server Function can update the current UI in
+   the same round trip; `revalidateTag(tag, "max")` deliberately permits stale
+   UI. `refresh()` only refreshes the client router and never invalidates
+   cached data. A Route Handler does not update the current UI by itself.
 5. Return the confirmed status and any activity projection the browser can
    reconcile.
 
 In the client mutation lifecycle, update or invalidate only TanStack keys that
-actually live in the browser. Do not add `router.refresh()` after an Action that
-already re-rendered the route. Do not call `queryClient.invalidateQueries` for
-metrics that exist only in a Server Component.
+actually live in the browser. Do not add `router.refresh()` after a Server
+Function that already re-rendered the route. Do not call
+`queryClient.invalidateQueries` for metrics that exist only in a Server
+Component.
 
 Do not place this server-data reconciliation in the comparison store. The
 store owns only its transient workflow.
@@ -213,7 +214,7 @@ or workflow provider injects commands into participant UI when needed.
 - Invalidating the entire query cache after every status mutation.
 - Importing `get-dashboard-activity.server.ts` from a browser query function.
 - Treating a Server Component metrics cache as a TanStack Query cache.
-- A default feature barrel that re-exports server operations and client hooks.
+- A default feature barrel that re-exports feature operations and client hooks.
 - Splitting filters, metrics, activity, and status into separate features
   without different product ownership.
 

@@ -1,26 +1,27 @@
 # State Coordination Across Widgets
 
-Use this reference when several widgets read or change related state, or when
-choosing between URL parameters, local React state, TanStack Query, Zustand,
-cookies, and browser storage.
+Step 3 of the procedure, and the single owner of the state table.
 
 Assign ownership before choosing a library. Libraries implement a lifecycle;
 they do not decide which lifecycle the product needs.
 
 ## Classify each value
 
-| State or representation                | Typical owner                                      |
-| -------------------------------------- | -------------------------------------------------- |
-| Route identity                         | Route params                                       |
-| Confirmed, shareable view              | Normalized URL search params                       |
-| Widget-local draft or interaction      | Local Client Component                             |
-| Authoritative entity                   | Server or data layer                               |
-| Browser cache of server data           | Client query cache, when browser freshness matters |
-| Temporary optimistic projection        | Mutation lifecycle or client query cache           |
-| Shared transient client workflow       | Scoped feature store, when justified               |
-| Persistent user preference             | Cookie or browser storage                          |
-| Unsaved multi-widget working copy      | Scoped feature store with explicit base state      |
-| Behavior spanning independent features | Explicit workflow feature                          |
+Every value gets exactly one row. When two rows look possible, the five
+questions under "Decide by restoration and lifecycle" pick one.
+
+| State or representation                | Owner                                         |
+| -------------------------------------- | --------------------------------------------- |
+| Route identity                         | Route params                                  |
+| Confirmed, shareable view              | Normalized URL search params                  |
+| Widget-local draft or interaction      | Local Client Component                        |
+| Authoritative entity                   | Server or data layer                          |
+| Browser cache of server data           | Browser query cache                           |
+| Temporary optimistic projection        | Mutation lifecycle or browser query cache     |
+| Shared transient client workflow       | Scoped feature store                          |
+| Persistent user preference             | Cookie or browser storage                     |
+| Unsaved multi-widget working copy      | Scoped feature store with explicit base state |
+| Behavior spanning independent features | Explicit workflow feature                     |
 
 Distinguish the authoritative source from a useful representation. A TanStack
 Query cache may own the browser's current server-data projection while the
@@ -42,20 +43,22 @@ Ask in order:
 5. Must it survive a browser restart? Give persistence an explicit durability,
    versioning, hydration, and conflict contract.
 
-Do not introduce Context, Zustand, or TanStack Query merely to avoid deciding
-these questions.
+Do not introduce Context, a global store, or a browser query cache to avoid
+deciding these questions. The tell: the container holds a value that also
+exists in the URL, in a server read, or in a query cache, and two places
+write it.
 
 ## Coordinate common widget relationships
 
 | Relationship                                        | Preferred coordination                         |
 | --------------------------------------------------- | ---------------------------------------------- |
 | Widgets respond to the same route filters           | One typed URL contract                         |
-| Widgets display the same remote entity              | Shared query identity or server operation      |
+| Widgets display the same remote entity              | Shared query identity or feature operation     |
 | One widget changes another's navigable selection    | Semantic URL navigation                        |
 | One widget changes ephemeral client workflow        | Scoped store command                           |
 | A mutation affects browser-cache widgets            | Query-cache update or deliberate invalidation  |
 | A mutation affects server-rendered cached widgets   | Server invalidation plus deliberate UI refresh |
-| A result enables a truly dependent second request   | Explicit dependency; assess the waterfall      |
+| A request takes an input the first request returns  | Explicit dependency; assess the waterfall      |
 | Several features participate in one product command | Workflow feature with a semantic operation     |
 
 Passing the same typed input to several widgets is composition, not duplicated
@@ -123,16 +126,16 @@ widgets, client navigation reuse, or offline-aware caching.
   freshness per query where it differs; a global default only prevents
   immediate refetch.
 - Give the browser query a browser-safe fetcher. It may call a Route Handler
-  that delegates to the feature's server operation; it must not import a
-  `server-only` operation into the client graph.
-- Prefetch and hydrate only queries that benefit a client cache consumer. A
-  Server Component with no browser freshness need can call its server operation
+  that delegates to the feature operation; it must not import a `server-only`
+  operation into the client graph.
+- Prefetch and hydrate only queries a browser-cache consumer reads. A Server
+  Component with no browser freshness need calls its feature operation
   directly.
 - Create request-scoped query clients during server prefetch. Never share one
   cache instance across requests or tenants.
 - Start known independent queries in parallel. Dependent queries are real
   waterfalls; preserve them only when the second input cannot exist earlier,
-  or redesign the server operation or API to flatten them.
+  or redesign the feature operation or API to flatten them.
 - Let mutations update known cache entries when the returned result is
   sufficient. Invalidate only the affected key families when a refetch is the
   safer reconciliation contract.
@@ -179,8 +182,7 @@ undo history.
 - Define which queries are updated directly, which are invalidated, and which
   widgets show the mutation error.
 - Name server-render cache invalidation separately and define how the current
-  route or region observes it. A QueryClient cannot refresh data owned only by
-  a Server Component.
+  route or region observes it; see [caching.md](caching.md).
 - Treat partial success and concurrent server revisions as domain outcomes,
   not generic toast-only failures.
 - Keep unsaved editor state separate from optimistic server-cache state. A
@@ -191,8 +193,7 @@ undo history.
 
 Cookie or browser-storage persistence introduces another timeline.
 
-- Cookie `.set` / `.delete` only in a Server Function or Route Handler, never
-  during RSC render.
+- Set or delete cookies only under the rule in [caching.md](caching.md).
 - State whether persistence is a preference, crash-recovery aid, or durable
   product record.
 - Version the stored shape and define migration or discard behavior.
@@ -205,16 +206,9 @@ Cookie or browser-storage persistence introduces another timeline.
 ## Introduce orchestration only for active behavior
 
 The page may pass one route contract to several independent features without
-owning an orchestration feature. Add an explicit workflow owner when a product
-command coordinates participants, state transitions, retries, or compensation
-across feature boundaries.
-
-Expose semantic workflow operations. Let the workflow depend on public
-participant operations or injected ports. Participant features do not import
-one another; when their UI must emit workflow intent, inject a callback or
-command at the composition boundary instead of adding a reverse import. Do not
-put cross-feature behavior in the page, a shared utility folder, or a global
-store.
+owning an orchestration feature. For when a workflow feature is required and
+what it may depend on, see [ownership.md](ownership.md), "Own cross-feature
+behavior".
 
 ## Escalate specialized synchronization
 
@@ -223,14 +217,3 @@ multi-tab coordination, and CRDT or operational-transform systems add ordering,
 identity, replay, and conflict contracts that this state split does not solve.
 Treat them as separate architecture work. Do not represent them as a larger
 Zustand store or a few more query invalidations.
-
-## Apply the matching scenario
-
-- [examples/search-page.md](examples/search-page.md) applies URL ownership to
-  search, filters, sorting, pagination, and history.
-- [examples/operations-dashboard.md](examples/operations-dashboard.md) combines
-  Server Components, hydrated queries, multi-key mutations, and scoped Zustand.
-- [examples/editor-workflow.md](examples/editor-workflow.md) defines an unsaved
-  working copy, autosave, conflicts, and recovery persistence.
-- [examples/master-detail-workspace.md](examples/master-detail-workspace.md)
-  uses route identity for selection and modal-versus-page rendering.
