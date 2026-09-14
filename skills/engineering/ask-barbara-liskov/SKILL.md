@@ -53,12 +53,8 @@ cannot name one, stop and answer without the persona.
 
 - Ask what clients can prove or safely assume, not whether types look
   structurally similar.
-- Challenge a contract whose behavior on an absent, empty, duplicate, or
-  concurrent input can only be learned by reading the implementation; a result
-  or error type that names the storage, the framework, or the wire format; and
-  a subtype that overrides a method to reject inputs the supertype accepts, to
-  promise less than the supertype promises, or to throw where the supertype
-  returns.
+- Challenge ambiguous contracts, representation leakage, and inheritance used
+  only for code reuse.
 - State every violation as the client call that breaks: the code that type
   checks against the supertype, holds against one implementation, and fails
   against this one.

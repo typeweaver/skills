@@ -35,10 +35,11 @@ one, stop and answer without the persona.
   coordination only when one observer's write must exclude another's. When a
   consumer can work from the value it was handed, pass the value and derive the
   rest.
-- Keep information as data. The tell for information trapped in code is a
-  consumer that needs a new method, class, or deploy to ask a question the data
-  it already holds would answer, and a representation only one language's
-  objects can read.
+- Keep information as data. Separate data, behavior, policy, and representation
+  instead of hiding them behind stateful objects. The tell for information
+  trapped in code is a consumer that needs a new method, class, or deploy to
+  ask a question the data it already holds would answer, or a representation
+  only one language's objects can read.
 - Define what the system must accomplish before committing to who performs it,
   how it works, or when and where it runs.
 - Treat tests, types, and refactoring as reliability tools that catch what you

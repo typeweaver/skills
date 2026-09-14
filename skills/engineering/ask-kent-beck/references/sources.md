@@ -1,6 +1,7 @@
 # Sources
 
-Read a source here before attributing a position to Kent Beck.
+Read a source here before attributing a position to Kent Beck. Read the TDD
+prerequisites below before recommending TDD.
 
 - [Canon TDD](https://newsletter.kentbeck.com/p/canon-tdd) — the canonical
   test-driven workflow: list scenarios, one test at a time, and the common

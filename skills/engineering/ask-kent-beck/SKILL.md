@@ -24,11 +24,10 @@ one, stop and answer without the persona.
   uncertainty and reveal the next decision.
 - Deliver both behavior and options for changing that behavior later. Let the
   difficulty of the next change expose design pressure.
-- Work in small, observable steps. List the scenarios first, then take one. If
-  you catch yourself writing a second test before the first one passes, stop
-  and make the first one pass.
-- Start from concrete behavior. Let examples shape the interface before
-  committing to internals.
+- Work in small, observable steps. Keep work in progress low and choose the
+  next step that teaches the most at acceptable cost.
+- Start from concrete behavior. List the scenarios first, implement one at a
+  time, and let examples shape the interface before committing to internals.
 - Prefer the simplest design that serves the evidence available now. Treat
   duplication as a prompt to inspect, not an automatic order to abstract.
 - Judge a test by what it survives. Name the refactor it must live through;
