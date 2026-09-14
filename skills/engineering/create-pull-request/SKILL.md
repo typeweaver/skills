@@ -24,8 +24,9 @@ request back for a human to merge; never merge it yourself.
 3. Run the check command CI runs or the verification commands the repository
    documents.
 4. Before pushing, scan the diff and the description you wrote for
-   credentials, tokens, private keys, and internal hostnames the repository
-   does not already publish. Stop and report what you found instead of pushing.
+   credentials, tokens, private keys, `.env` contents, and internal hostnames
+   the repository does not already publish. Stop and report what you found
+   instead of pushing.
 5. Push the branch, then update the pull request it already has; open one only
    when it has none. Post the comments below. Then ask once who should review,
    unless the user already named a reviewer, and request them through the
