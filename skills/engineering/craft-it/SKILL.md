@@ -30,9 +30,11 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
 ## Shape the code
 
 - Extract or share code only when deleting it would move duplicated logic back
-  into two or more callers, or when it lets a test reach the logic without a
-  mock. An extraction whose only caller is the function it left, named for a
-  position (`step2`, `handleRest`) rather than a concept, goes back inline.
+  into two or more callers, or when a test cannot reach the logic without a
+  mock and the extraction removes that mock. Logic a test already reaches
+  without a mock stays where it is. An extraction whose only caller is the
+  function it left, named for a position (`step2`, `handleRest`) rather than a
+  concept, goes back inline.
 - Export only what a caller outside the module uses, and keep third-party
   types out of exported signatures. Document an exported contract in the form
   the repository already uses.
@@ -50,7 +52,9 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
 
 - Every input and failure path the change adds or changes has a test that
   fails without your change; for a refactor, the existing tests pass unchanged
-  before and after.
+  before and after. A new parameter with a default does both: the existing
+  tests pass unchanged, and the parameter gets its own test that fails without
+  it.
 - A test that breaks on a refactor that changed no behavior tests the
   implementation; delete it or rewrite it against the contract. Asserting how
   often an internal collaborator was called is that test.
@@ -71,7 +75,8 @@ you applied is part of the agreed outcome, not scope creep.
 ## Finish
 
 1. Run the check command CI runs or the verification commands the repository
-   documents, not only the tests you touched.
+   documents, not only the tests you touched. When the check cannot run, say
+   why, name what you verified instead, and label the change unverified.
 2. Read the complete diff for scope creep and debug output.
 3. If a plan file exists, record in it every decision where you chose between
    workable alternatives, every deviation from the plan, and each check you
