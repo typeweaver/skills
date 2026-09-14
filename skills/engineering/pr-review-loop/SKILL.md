@@ -14,24 +14,29 @@ comment and keep its required checks green. Never merge or close the pull
 request; report it merge-ready and leave both to a human.
 
 Every reply, report, and pushed diff is visible to everyone who can see the
-pull request. Check each for credentials, tokens, private keys, and internal
-hostnames, and name what the value identifies instead of pasting it; copied
-check output and log excerpts are where they leak.
+pull request. Check each for credentials, tokens, private keys, `.env`
+contents, and internal hostnames the repository does not already publish, and
+name what the value identifies instead of pasting it; copied check output and
+log excerpts are where they leak.
 
 ## Watch
 
-Re-check the pull request after every push and every reply, and keep
-re-checking while it is open. One pass reads every new review comment, every
-new review verdict, and the state of every check. When the harness offers no
-subscription, scheduler, or background run, say that you cannot watch past this
-run and hand back what is outstanding; do not report that you are watching.
+Decide first whether you can watch at all. When the harness offers no
+subscription, scheduler, or background run, this run ends at the last pass you
+can make: say that you cannot watch past this run and hand back what is
+outstanding, and do not report that you are watching.
+
+Re-check the pull request after every push and every reply. One pass reads
+every new review comment, every new review verdict, and the state of every
+check.
 
 ## Answer every review comment
 
 A review comment is one reviewer item; a thread is the conversation around it.
 Take Agree unless one of the other tests fires.
 
-- **Agree** — make the change, verify it, push it, and resolve the thread.
+- **Agree** — make the change, verify it, call the Skill tool with
+  `conventional-commit`, push it, and resolve the thread.
 - **Unsure** — two readings of the comment lead to different changes: ask on
   the thread the question that separates them and say which you would take.
 - **Disagree** — you can name what implementing it would break: reply on the
@@ -43,13 +48,16 @@ requirement it contradicts, and then ask the user to decide.
 
 ## Keep the branch mergeable
 
-- Run the checks the repository documents before every push and fix what they
-  report. Work a red required check like a review comment until it is green or
-  it blocks you.
+- Run the check command CI runs or the verification commands the repository
+  documents before every push, and fix what they report. For a red required
+  check, one pass reads the failing job's log, reproduces the failure locally,
+  fixes it, and pushes; repeat until the check is green. When it needs an
+  authorization or decision you cannot obtain, it blocks you.
 - Update the branch from the remote default branch with the convention the
   repository uses: its contributing guide, its repository instructions, or how
-  the branch's earlier updates were made. Merge when none of them says; under
-  rebase, push with `--force-with-lease` and never a plain `--force`.
+  the branch's earlier updates were made. Merge the default branch in when none
+  of them says; under rebase, push with `--force-with-lease` and never a plain
+  `--force`.
 - Resolve a conflict by the intent of each side traced to the commit or pull
   request that introduced it. The checks that passed on both sides before the
   update must pass after it.
@@ -63,7 +71,9 @@ The pull request is merge-ready when:
 - no newer review comment is waiting,
 - every check the pull request marks required is green.
 
-Report that, then keep watching. Stop only when the pull request is merged,
-closed, or blocked: a required check, decision, or authorization cannot be
-obtained by the agent and the request has been posted or reported. Post that
-request in the pull request, naming the options when you know them.
+Report that, then keep watching. Stop when the pull request is merged, closed,
+blocked, or when this run ends because the harness cannot watch past it — and
+then hand back what is outstanding. Blocked: a required check, decision, or
+authorization cannot be obtained by the agent and the request has been posted
+or reported. Post that request in the pull request, naming the options when you
+know them.
