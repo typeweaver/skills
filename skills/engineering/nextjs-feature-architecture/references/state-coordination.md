@@ -36,7 +36,7 @@ Ask in order:
    value in the URL.
 2. Is the value authoritative server data? Read it on the server unless a real
    browser freshness, polling, optimistic, or offline lifecycle justifies a
-   client cache.
+   browser query cache.
 3. Is it used by one client island only? Keep it local.
 4. Is it a transient workflow shared by several client islands? Use a scoped
    store at their smallest common boundary.

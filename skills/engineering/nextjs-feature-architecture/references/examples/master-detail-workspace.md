@@ -134,7 +134,7 @@ updates. Use route identity and feature query contracts.
 - **Back and Forward:** Browser history should restore both collection view and
   selected detail without a competing store copy.
 - **Deep links:** Copied item URLs must work without a previously rendered
-  collection or client cache.
+  collection or browser query cache.
 - **Deleted item:** Define the list correction, detail outcome, close path, and
   cache invalidation together.
 - **Mobile presentation:** A narrow viewport may navigate to the canonical full
