@@ -23,14 +23,16 @@ request back for a human to merge; never merge it yourself.
    Do not amend or rewrite an existing commit to do so unless asked.
 3. Run the check command CI runs or the verification commands the repository
    documents.
-4. Before pushing, scan the diff and the description you wrote for
-   credentials, tokens, private keys, `.env` contents, and internal hostnames
-   the repository does not already publish. Stop and report what you found
-   instead of pushing.
+4. Before pushing, scan the diff and the title, description, and comments you
+   will publish for credentials, tokens, private keys, `.env` contents, and
+   internal hostnames the repository does not already publish. Stop and report
+   what you found instead of pushing.
 5. Push the branch, then update the pull request it already has; open one only
-   when it has none. Post the comments below. Then ask once who should review,
-   unless the user already named a reviewer, and request them through the
-   platform's review-request mechanism.
+   when it has none. Post the comments below that the pull request does not
+   already carry. Then ask once who should review and request them through the
+   platform's review-request mechanism, unless the user already named a
+   reviewer, the pull request already has one, or an orchestrating workflow
+   defers reviewer selection.
 6. Confirm the title, the description, and the diff you pushed agree, and that
    the review request registered.
 
@@ -58,7 +60,8 @@ write the subject covering them all, in the type and scope those commits use.
 
 ### Validation
 
-- <check you ran, with the result you saw; omit a check you did not run>
+- <check you ran, with the result you saw; omit a check you did not run and
+  do not report a failed check as passed>
 
 ### Related
 
@@ -67,9 +70,8 @@ write the subject covering them all, in the type and scope those commits use.
 
 ## Comments
 
-Post one comment for a decision where you chose between two workable
-approaches and a reviewer could reasonably prefer the other: name the
-decision, why you chose it, and what you want confirmed. Post one comment
-naming the reading order when the diff spans more than one module and a
-reviewer starting in the wrong one has to backtrack. If neither applies, post
+Post one comment for a decision a reviewer can see in the diff and could
+reasonably have made the other way: name the decision, why you chose it, and
+what you want confirmed. Post one comment naming the reading order when a
+reviewer starting in the wrong file has to backtrack. If neither applies, post
 nothing.
