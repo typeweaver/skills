@@ -11,10 +11,9 @@ description: >-
 # Comment It
 
 Keep a comment only when deleting it loses information the code cannot express.
-Write for the repository at HEAD: the reader has the code and the tests, not the
-conversation, the diff, or the review. No comment carries a secret, credential,
-internal URL, customer name, or pasted ticket content; state the constraint
-without the value.
+Your reader has the code and the tests, not the conversation, the diff, or the
+review. No comment carries a secret, credential, internal URL, customer name, or
+pasted ticket content; state the constraint without the value.
 
 ## Identify the reader
 
@@ -43,9 +42,10 @@ Deleting the comment loses information the code cannot express when it states:
 Tells that it loses nothing: it restates the next line, a name, or the control
 flow; it names the change, a reviewer, a plan, or the conversation; it claims
 "handles edge cases" or "for safety"; it keeps disabled code; it inventories
-exports or fills a documentation quota. Delete it. A comment that contradicts
-the code or the tests is false: correct or delete it. One you cannot follow is
-not thereby wrong; check it against the code first.
+exports or fills a documentation quota. Delete it. When the claim guards a real
+constraint, state the exact condition and consequence instead of deleting it. A
+comment that contradicts the code or the tests is false: correct or delete it.
+One you cannot follow is not thereby wrong; check it against the code first.
 
 ## Put it at the right level
 
