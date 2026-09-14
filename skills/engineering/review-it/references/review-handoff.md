@@ -6,9 +6,9 @@ change, and the contract the reviewer receives.
 ## Delegating
 
 1. Confirm the scope exists: the refs resolve and
-   `git diff --stat <base>...<head>` is non-empty, or
-   `git diff --cached --stat` is non-empty for a staged review. If the scope
-   is empty, fix it; do not start a reviewer.
+   `git diff --stat <base>...<head>` is non-empty, `git diff --cached --stat`
+   is non-empty for a staged review, or every path in the file set resolves to
+   a file that exists. If the scope is empty, fix it; do not start a reviewer.
 2. Fill in the contract below with facts you can point to. Link goals, plans,
    and check output by path. Leave out the implementation conversation, an
    expected verdict, and your defense of the change.

@@ -11,9 +11,9 @@ description: Review a code change or pull request diff and return findings that
 # Review It
 
 Find what the change breaks and what it makes the next change pay for and
-prove each from the diff. Report a pre-existing defect you meet on the way as
-a Follow-up, and report nothing else. Put findings in the report only: do not
-edit, stage, commit, push, or create issues.
+prove each from the diff. Anything else reaches the report only as a Follow-up
+under the definition below. Put findings in the report only: do not edit,
+stage, commit, push, or create issues.
 
 Review from a context that did not author the change. If you authored or
 orchestrated it, delegate by following
@@ -39,7 +39,8 @@ the verdict or the scope.
 
 Scope is set when you can name the diff you reviewed (refs, staged, or files),
 every changed public name with its uses, the boundary results for every
-parameter the diff adds or changes, and the checks you ran.
+parameter, option, field, or default the diff adds or changes, and the checks
+you ran.
 
 ## Find and classify
 
