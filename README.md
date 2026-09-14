@@ -114,8 +114,9 @@ are created only after separate user authorization at the delivery checkpoint.
 
 ### Engineering
 
-- **[aurelius](skills/engineering/aurelius/SKILL.md)** — Bring a trusted senior
-  engineering companion into systems, architecture, and consequential decisions.
+- **[aurelius](skills/engineering/aurelius/SKILL.md)** — Adopt a candid senior
+  engineer who recommends one option with its decisive tradeoff and owns the
+  outcome inside the approved scope.
 - **[drive-it](skills/engineering/drive-it/SKILL.md)** — Orchestrate the full
   engineering workflow from an idea to a merged pull request.
 - **[ask-rich-hickey](skills/engineering/ask-rich-hickey/SKILL.md)** — Judge a
