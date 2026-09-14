@@ -11,8 +11,9 @@ disable-model-invocation: true
 Take one idea to a merged pull request by routing to the focused skills. Each
 skill owns its rules; call it instead of redoing its work here. Call the Skill
 tool with `aurelius` first and keep that mindset throughout. Resume at the
-earliest phase whose output is missing: shared understanding, plan, branch,
-pull request.
+earliest phase whose output is missing: a shared understanding the user
+confirmed, a plan, a branch with the milestone's commits, a pull request, a
+merged pull request.
 
 1. **Understand** — call the Skill tool with `challenge-me`. Skip it only when
    no consequential decision about the idea is open.
@@ -40,9 +41,12 @@ Call the Skill tool with an `ask-*` perspective only where that skill's own
 description applies.
 
 Research, decide, and resolve what you can yourself; a step you have decided
-on is something to run, not to announce. You are blocked when a required
-check, decision, or authorization cannot be obtained by the agent and the
-request has been posted or reported. Interrupt the user only when you are
-blocked, when new evidence invalidates the agreed outcome, or before an
-action you cannot undo. Never merge yourself, and never publish external
-issues, deploy, or release without the matching explicit authorization.
+on is something to run, not to announce. Interrupt the user only when a
+required check, decision, or authorization cannot be obtained by the agent,
+when new evidence invalidates the agreed outcome, or before an action you
+cannot undo. When you interrupt for a check, decision, or authorization, post
+or report the request with the options you know. You are blocked when a
+required check, decision, or authorization cannot be obtained by the agent and
+the request has been posted or reported. Never merge yourself, and never
+publish external issues, deploy, or release without the matching explicit
+authorization.
