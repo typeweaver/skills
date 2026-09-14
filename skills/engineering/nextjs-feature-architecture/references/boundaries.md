@@ -1,15 +1,50 @@
-# Feature Structure and Public Interfaces
+# Boundaries, Public Interfaces, and Structure
 
-Use this reference when a feature grows beyond one composition root or a named
-external compositor needs part of it. Trees are growth consequences, not
-starting templates. Do not reproduce them mechanically.
+Use this reference in step 2 of the procedure. Trees are growth consequences,
+not starting templates. Do not reproduce them mechanically.
+
+## Protect module and runtime boundaries
+
+Prefer UI dependencies that flow from `app` to `features` to shared product
+components to shared UI. Let server dependencies flow from feature operations
+through domain or platform contracts to infrastructure. These are ownership
+directions, not required folders. Hide storage, transport, credentials, and
+vendor details behind the narrowest meaningful contract.
+
+- Expose intentional feature entry points; reject deep imports into another
+  feature's internals.
+- Compose peer features in `app` or an explicit workflow instead of importing
+  one feature's UI or internals into another. When several features reuse a
+  headless capability, move that capability below them rather than choosing one
+  feature as the accidental owner.
+- Keep server-only, client-only, and environment-neutral exports distinct. Do
+  not re-export them through one ambiguous barrel.
+- Use entry points such as `feature`, `feature/server`, and `feature/client`
+  only when real consumers need those different runtime capabilities. Do not
+  add symmetric barrels by convention.
+- Mark sensitive modules with `server-only` and browser-bound modules with
+  `client-only` when that makes invalid imports fail early.
+- Give browser reads a browser-safe transport. A client query must not import a
+  server-only feature operation; let a Route Handler or the repository's
+  established client transport delegate to that operation.
+- Pass only the data a Client Component needs across the server/client
+  boundary, using an explicit serializable DTO or view model rather than raw
+  storage or vendor objects.
+- Prefer route-level composition when two features only need to appear or react
+  to the same route state together.
+- When the repository's scale makes boundary drift costly, enforce public
+  entry points and forbidden import directions with its package, lint, or
+  dependency checks. Do not introduce enforcement tooling merely because this
+  skill was invoked. Read an existing import allowlist as evidence: each
+  approved edge is a boundary decision, and edges that service a cycle are
+  debt.
+
+## Start from one capability
 
 The smallest server-read capability often starts with three files: a page that
 owns the route contract, a feature composition root, and its server operation.
 Omit the operation when the capability needs no server data. Direct imports are
 honest until a named external consumer appears.
-
-## Start with one complete capability
 
 ```text
 app/projects/[projectId]/page.tsx

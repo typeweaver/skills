@@ -64,6 +64,16 @@ owners.
 
 ## Own confirmed view state in the URL
 
+- Put state in the URL when opening a copied URL should restore the view.
+- Treat URL changes as navigation. Prefer links or forms where they fit, and
+  centralize parameter semantics and dependent resets such as pagination.
+- Know which URL changes reach the server. A shallow update (`history.*`, and
+  the default of libraries such as nuqs) changes the URL and client hooks only;
+  Server Components and page `searchParams` do not re-render.
+- Overlays, sheets, and dialogs selected by URL on one route are page
+  composition: a page-owned Client compositor reads the URL and mounts the
+  peer features. Do not let one feature mount its peers, and do not make the
+  update notify the server unless a Server Component must observe it.
 - Parse, validate, normalize, and default the complete route-view contract
   before data operations or query keys use it.
 - Centralize semantic changes such as `setQuery`, `toggleFilter`, `setSort`,
@@ -108,8 +118,10 @@ widgets, client navigation reuse, or offline-aware caching.
 - Define feature-owned query option or key factories. Include every normalized
   variable that changes the result, including entity, filters, pagination,
   locale, authorization scope, user, or tenant as appropriate.
-- Keep freshness policy with the query contract (see `SKILL.md`, "Assign
-  state deliberately"); a global default only prevents immediate refetch.
+- Keep freshness policy with the query contract. Give the client a non-zero
+  default freshness so hydrated data is not refetched immediately, and declare
+  freshness per query where it differs; a global default only prevents
+  immediate refetch.
 - Give the browser query a browser-safe fetcher. It may call a Route Handler
   that delegates to the feature's server operation; it must not import a
   `server-only` operation into the client graph.
@@ -134,7 +146,9 @@ selected access to one transient workflow that does not belong in the URL or
 server cache.
 
 - Create a vanilla store per provider instance at the smallest common feature
-  boundary (see `SKILL.md`, "Assign state deliberately").
+  boundary when it is initialized from server data or holds per-user state; a
+  module-global store is shared across requests during server rendering. A
+  browser-only store for transient UI state may stay module-global.
 - Keep React Server Components outside the store lifecycle. They may provide
   serializable initialization data to a Client Component provider but must not
   read or mutate the client store.
@@ -154,6 +168,8 @@ undo history.
 
 ## Model optimistic state and reconciliation
 
+- Allow derived or optimistic copies only when their source and reconciliation
+  behavior are explicit.
 - Name the authoritative server result, the optimistic projection, and the
   event that reconciles them.
 - Cancel or account for in-flight reads that could overwrite an optimistic
