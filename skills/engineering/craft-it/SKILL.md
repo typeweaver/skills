@@ -32,9 +32,9 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
 - Extract or share code only when deleting it would move duplicated logic back
   into two or more callers, or when a test cannot reach the logic without a
   mock and the extraction removes that mock. Logic a test already reaches
-  without a mock stays where it is. An extraction whose only caller is the
-  function it left, named for a position (`step2`, `handleRest`) rather than a
-  concept, goes back inline.
+  without a mock is not by itself a reason to extract it. An extraction whose
+  only caller is the function it left, named for a position (`step2`,
+  `handleRest`) rather than a concept, goes back inline.
 - Export only what a caller outside the module uses, and keep third-party
   types out of exported signatures. Document an exported contract in the form
   the repository already uses.
