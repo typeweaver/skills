@@ -27,17 +27,17 @@ features/search/search-view.test.ts
 
 ## Assign state
 
-| Value                                   | Owner                           |
-| --------------------------------------- | ------------------------------- |
-| Confirmed query                         | URL `q`                         |
-| Selected filters                        | Normalized URL parameters       |
-| Sort order                              | URL `sort`                      |
-| Current page                            | URL `page`                      |
-| Text while the user is typing           | Local `SearchField` state       |
-| Available filter options                | Server operation or cached data |
-| Search results and total count          | Server operation                |
-| Optional browser-refreshed result cache | TanStack Query, when justified  |
-| Sidebar disclosure on a narrow viewport | Local `FilterSidebar` state     |
+| Value                                   | Owner                            |
+| --------------------------------------- | -------------------------------- |
+| Confirmed query                         | URL `q`                          |
+| Selected filters                        | Normalized URL parameters        |
+| Sort order                              | URL `sort`                       |
+| Current page                            | URL `page`                       |
+| Text while the user is typing           | Local `SearchField` state        |
+| Available filter options                | Feature operation or cached data |
+| Search results and total count          | Feature operation                |
+| Optional browser-refreshed result cache | TanStack Query, when justified   |
+| Sidebar disclosure on a narrow viewport | Local `FilterSidebar` state      |
 
 Parse `searchParams` into `SearchView` at the narrowest boundary that needs
 the view. On Next.js 15+ `searchParams` is a Promise; with Cache Components,

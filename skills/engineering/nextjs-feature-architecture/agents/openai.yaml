@@ -1,4 +1,4 @@
 interface:
   display_name: "Next.js Feature Architecture"
-  short_description: "Design feature-oriented Next.js App Router systems"
-  default_prompt: "Use $nextjs-feature-architecture to design, review, or restructure this Next.js App Router system within the requested scope."
+  short_description: "Decide where each part of a Next.js App Router feature lives"
+  default_prompt: "Use $nextjs-feature-architecture to decide where each part of this Next.js App Router feature lives, within the requested scope."

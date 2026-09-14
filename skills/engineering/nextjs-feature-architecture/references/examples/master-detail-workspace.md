@@ -57,8 +57,8 @@ behavior in the route slot or a generic modal provider.
 | ----------------------------------------- | ----------------------------------------- |
 | Selected item                             | Canonical route param                     |
 | Confirmed list filters, sort, and page    | Normalized URL search params              |
-| List results                              | Server operation or browser query cache   |
-| Authoritative item detail                 | Server operation or browser query cache   |
+| List results                              | Feature operation or browser query cache  |
+| Authoritative item detail                 | Feature operation or browser query cache  |
 | Whether navigation presents modal or page | Router composition and navigation context |
 | Dialog focus, disclosure, and animation   | Local dialog state                        |
 | Unsaved detail form fields                | Local form or scoped edit workflow        |
