@@ -18,11 +18,13 @@ delete it.
 ## Establish the facts
 
 1. Read the shared understanding, the repository's instructions, the plans this
-   work touches, and the check command CI runs.
+   work touches, and the check command CI runs or the verification commands the
+   repository documents.
 2. Answer yourself every question the repository, its documentation, or the
    environment can answer. Ask the user only when a missing decision changes
-   which steps exist, and then ask at their decision level with one recommended
-   answer they can accept or reject.
+   which steps exist, the scope boundary, or a choice that is expensive to
+   reverse, and then ask at their decision level with one recommended answer
+   they can accept or reject.
 
 ## Record the decisions
 
@@ -40,13 +42,14 @@ consequence.
 - Give each step an outcome and end it with `Done when:` and a check the
   executor can run: a command, a file that exists, a test that passes.
   "Reviewed", "looks right", or "works as expected" is not a check.
-- After every step the repository's checks pass. A step that leaves them broken
-  merges with the next step.
-- Order steps so each step's check can run when the step starts: a step follows
-  the step that creates what its check reads. Steps with no such relation stay
-  in any order; do not invent a sequence.
-- Make research its own step, and name the decision it unlocks and the
-  observation that settles it.
+- After every step the repository's checks pass — the check command CI runs or
+  the verification commands the repository documents. A step that leaves them
+  broken merges with the next step.
+- Order steps so each one can run when it starts: a step follows the step that
+  creates what it changes or what its check reads. Steps with no such relation
+  stay in any order; do not invent a sequence.
+- When a decision cannot be made from what you read, make the research its own
+  step, and name the decision it unlocks and the observation that settles it.
 - Validate at the end across behavior, the regressions this change could cause,
   and every document or operational setting the change makes false.
 - Cut milestones as tracer bullets: each carries one narrow case end to end
@@ -66,9 +69,11 @@ Follow an existing repository convention. Otherwise write the plan under
 [assets/plan-template.md](assets/plan-template.md). Drop a section the work
 leaves empty instead of filling it with the obvious.
 
-Link a source only when a step's execution or its check depends on it, and say
-in one clause what the executor takes from it. Do not copy secrets, tokens,
-credentials, or personal data into the plan; name where they live.
+Link the source that establishes the outcome — the issue, the shared
+understanding, the predecessor plan — plus any source a step's execution or its
+check depends on, and say in one clause what the executor takes from it. Do not
+copy secrets, tokens, credentials, or personal data into the plan; name where
+they live.
 
 The plan is done when every step carries a runnable check and nothing in it
 points back at this conversation: a sentence containing "as discussed", "as

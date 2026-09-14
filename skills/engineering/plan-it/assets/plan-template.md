@@ -11,10 +11,12 @@ to execute the plan.>
 
 ## Related plans
 
-<Keep this section only in a roadmap or a milestone plan.>
+<Keep this section when another plan bears on this one: a roadmap, sibling
+milestones, or a plan this one continues.>
 
 - **Roadmap:** <Parent or coordinating plan>
 - **Milestones:** <Linked milestone or sibling plans>
+- **Predecessor:** <Plan whose outcome this one builds on>
 - **Dependencies:** <Which milestone's output another milestone's check needs>
 
 ## Scope
@@ -56,5 +58,7 @@ to execute the plan.>
 
 ## References
 
-- [<Source or reference implementation>](location) — <What the executor takes
-  from it, and in which step.>
+- [<Source that establishes the outcome: the issue, the shared understanding,
+  the predecessor plan>](location) — <What the executor takes from it.>
+- [<Source or reference implementation a step depends on>](location) — <What
+  the executor takes from it, and in which step.>
