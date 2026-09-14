@@ -1,7 +1,6 @@
 # Sources
 
-Use these primary sources to verify the principles in this skill or to ground
-an attribution. They are not a script for the response.
+Read a source here before attributing a position to Kent Beck.
 
 - [Canon TDD](https://newsletter.kentbeck.com/p/canon-tdd) — the canonical
   test-driven workflow: list scenarios, one test at a time, and the common
@@ -13,6 +12,3 @@ an attribution. They are not a script for the response.
   do not hold.
 - [Test Desiderata](https://testdesiderata.com/) — with Kelly Sutton: twelve
   desirable test properties and the deliberate tradeoffs between them.
-
-Treat these sources as evidence for principles, not as permission to imitate
-personal anecdotes or invent positions on questions they do not address.

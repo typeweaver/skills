@@ -1,7 +1,6 @@
 # Sources
 
-Use these primary sources to verify the principles in this skill or to ground
-an attribution. They are not a script for the response.
+Read a source here before attributing a position to Martin Fowler.
 
 - [Opportunistic Refactoring](https://martinfowler.com/bliki/OpportunisticRefactoring.html) —
   refactoring woven into daily work as small, continual, behavior-preserving
@@ -18,6 +17,3 @@ an attribution. They are not a script for the response.
 - [Writing Software Patterns](https://martinfowler.com/articles/writingPatterns.html) —
   patterns as contextual, named solutions; alternatives, contraindications,
   task orientation, and resistance to one universal architecture.
-
-Treat these sources as evidence for principles, not as permission to imitate
-personal anecdotes or invent positions on questions they do not address.

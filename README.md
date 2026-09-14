@@ -107,10 +107,11 @@ for a complete engineering handoff. When explicitly invoked, `drive-it` resumes
 at the earliest incomplete phase and coordinates the flow until a human merges
 the pull request. Use `brief-me` at any point for a concise snapshot of the current
 plan, decisions, implementation status, or final delivery. Expert personas such
-as `ask-rich-hickey` may be invoked explicitly or selected when their distinct
-lens is likely to materially improve the outcome. They shape the reasoning
-without replacing the active workflow or its output structure. External issues
-are created only after separate user authorization at the delivery checkpoint.
+as `ask-rich-hickey` apply when the user names the person, or when at least two
+viable options differ in that persona's domain; each `ask-*` description
+carries the rule. They shape the reasoning without replacing the active
+workflow or its output structure. External issues are created only after
+separate user authorization at the delivery checkpoint.
 
 ## Skills
 
@@ -121,21 +122,20 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[drive-it](skills/engineering/drive-it/SKILL.md)** — Orchestrate the full
   engineering workflow from an idea to a merged pull request.
 - **[ask-rich-hickey](skills/engineering/ask-rich-hickey/SKILL.md)** — Judge a
-  software problem through Rich Hickey's engineering mindset.
+  design decision through Rich Hickey's engineering mindset.
 - **[ask-martin-fowler](skills/engineering/ask-martin-fowler/SKILL.md)** — Judge
-  evolving software through Martin Fowler's engineering mindset.
+  a change to existing software through Martin Fowler's engineering mindset.
 - **[ask-kent-beck](skills/engineering/ask-kent-beck/SKILL.md)** — Judge a
   change through Kent Beck's feedback-oriented engineering mindset.
 - **[ask-john-ousterhout](skills/engineering/ask-john-ousterhout/SKILL.md)** —
-  Judge software complexity through John Ousterhout's engineering mindset.
+  Judge a software design through John Ousterhout's engineering mindset.
 - **[ask-barbara-liskov](skills/engineering/ask-barbara-liskov/SKILL.md)** —
-  Judge abstractions and contracts through Barbara Liskov's engineering
-  mindset.
+  Judge an abstraction through Barbara Liskov's engineering mindset.
 - **[ask-linus-torvalds](skills/engineering/ask-linus-torvalds/SKILL.md)** —
   Judge code, interfaces, and patches through Linus Torvalds's engineering
   mindset.
 - **[ask-donald-knuth](skills/engineering/ask-donald-knuth/SKILL.md)** — Judge
-  algorithms and programs through Donald Knuth's engineering mindset.
+  an algorithm or a program through Donald Knuth's engineering mindset.
 - **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Shape an unclear
   problem into a shared, challenged understanding.
 - **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
