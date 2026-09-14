@@ -213,7 +213,7 @@ or workflow provider injects commands into participant UI when needed.
 - Hydrating every server read into TanStack Query by default.
 - Invalidating the entire query cache after every status mutation.
 - Importing `get-dashboard-activity.server.ts` from a browser query function.
-- Treating a Server Component metrics cache as a TanStack Query cache.
+- Treating a Server Component metrics cache as a browser query cache.
 - A default feature barrel that re-exports feature operations and client hooks.
 - Splitting filters, metrics, activity, and status into separate features
   without different product ownership.
