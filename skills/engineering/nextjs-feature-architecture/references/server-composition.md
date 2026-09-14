@@ -25,3 +25,5 @@ Step 4 of the procedure.
 - Use a link for navigation and a form for submission unless the interaction
   needs a value the server cannot render: a browser API, a keystroke-level
   response, or optimistic feedback.
+- Test route parsing and feature operations directly; test navigation,
+  mutation, and cache wiring at their integration boundaries.

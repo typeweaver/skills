@@ -31,9 +31,10 @@ Prefer UI dependencies that flow from `app` to `features` to `components` to
 - Inspect existing primitives and variants before creating custom markup.
   Compose an existing primitive, or add a central variant when the repository
   already has a variant contract the interaction fits.
-- A primitive may enter `components/ui` on its first use when the repository
-  already has a variant contract it fits. Otherwise leave it in the feature
-  until a second feature needs it.
+- A primitive may enter `components/ui` on its first use when you can state its
+  variant and token contract without naming the feature that asked for it. When
+  you cannot, leave it in the feature until a second feature needs it. First use
+  permits centralization; it does not require it.
 - Give locally developed primitives the same token, accessibility, variant,
   and composition discipline as registry-derived components.
 - Keep domain-specific visualizations inside their feature when their markup is
