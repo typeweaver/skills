@@ -160,7 +160,7 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[to-issues](skills/engineering/to-issues/SKILL.md)** — Record actionable
   work locally and synchronize it externally when authorized.
 - **[conventional-commit](skills/engineering/conventional-commit/SKILL.md)** —
-  Create coherent Git commit boundaries and Conventional Commit messages.
+  Create Conventional Commits whose split and message follow from the diff.
 - **[create-pull-request](skills/engineering/create-pull-request/SKILL.md)** —
   Verify completed work and create or update a focused pull request.
 - **[pr-review-loop](skills/engineering/pr-review-loop/SKILL.md)** — Handle
