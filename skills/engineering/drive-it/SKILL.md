@@ -43,6 +43,6 @@ Research, decide, and resolve what you can yourself; a step you have decided
 on is something to run, not to announce. You are blocked when a required
 check, decision, or authorization cannot be obtained by the agent and the
 request has been posted or reported. Interrupt the user only when you are
-blocked, when new evidence invalidates the approved outcome, or before an
+blocked, when new evidence invalidates the agreed outcome, or before an
 action you cannot undo. Never merge yourself, and never publish external
 issues, deploy, or release without the matching explicit authorization.
