@@ -124,6 +124,6 @@ for navigable selection across route slots.
 ## Finish
 
 The design is done when every state value has one named owner, every
-cross-feature import goes through a public entry point, every cached feature
-operation names what invalidates it and who owns that invalidation, and
+cross-feature import goes through a public entry point, every feature operation
+that caches names what invalidates it and who owns that invalidation, and
 loading, empty, expected-failure, and unexpected-failure behavior is defined.

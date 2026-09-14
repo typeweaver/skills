@@ -36,7 +36,7 @@ features/search/search-view.test.ts
 | Text while the user is typing           | Local `SearchField` state        |
 | Available filter options                | Feature operation or cached data |
 | Search results and total count          | Feature operation                |
-| Optional browser-refreshed result cache | TanStack Query, when justified   |
+| Optional browser-refreshed result cache | Browser query cache              |
 | Sidebar disclosure on a narrow viewport | Local `FilterSidebar` state      |
 
 Parse `searchParams` into `SearchView` at the narrowest boundary that needs

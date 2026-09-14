@@ -101,7 +101,7 @@ filters and pagination when returning.
 ## Coordinate data and mutations
 
 Server-render detail by default. Introduce TanStack Query when the detail or
-list genuinely needs browser polling, optimistic mutation, focus refetch, or
+list needs browser polling, optimistic mutation, focus refetch, or
 cache reuse across soft navigation.
 
 When a detail mutation also changes a list row:
