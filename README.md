@@ -156,7 +156,7 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[conventional-commit](skills/engineering/conventional-commit/SKILL.md)** —
   Create coherent Git commit boundaries and Conventional Commit messages.
 - **[create-pull-request](skills/engineering/create-pull-request/SKILL.md)** —
-  Verify completed work and create or update a focused pull request.
+  Open or update a branch's pull request with the context a reviewer needs.
 - **[pr-review-loop](skills/engineering/pr-review-loop/SKILL.md)** — Handle
   review feedback and checks until a pull request is merged or blocked.
 
