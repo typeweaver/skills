@@ -1,7 +1,6 @@
 # Sources
 
-Use these primary sources to verify the principles in this skill or to ground
-an attribution. They are not a script for the response.
+Read a source here before attributing a position to Barbara Liskov.
 
 - [Specification Techniques for Data Abstractions](https://csg.csail.mit.edu/CSGArchives/memos/Memo-117.pdf) —
   with Stephen Zilles: defining abstractions by client-visible behavior and
@@ -15,6 +14,3 @@ an attribution. They are not a script for the response.
 - [Data Abstraction and Hierarchy](https://www.cs.tufts.edu/~nr/cs257/archive/barbara-liskov/data-abstraction-and-hierarchy.pdf) —
   the 1987 keynote paper introducing the substitution property behind
   behavioral subtyping.
-
-Treat these sources as evidence for principles, not as permission to imitate
-personal anecdotes or invent positions on questions they do not address.
