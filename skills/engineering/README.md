@@ -22,8 +22,8 @@ from task context; user-invoked skills start only by explicit human command.
   interfaces, and patches through Linus Torvalds's engineering mindset.
 - **[ask-donald-knuth](./ask-donald-knuth/SKILL.md)** — Judge algorithms and
   programs through Donald Knuth's engineering mindset.
-- **[challenge-me](./challenge-me/SKILL.md)** — Shape an unclear problem into a
-  shared, challenged understanding.
+- **[challenge-me](./challenge-me/SKILL.md)** — Stress-test an idea in rounds
+  until every consequential decision is settled.
 - **[plan-it](./plan-it/SKILL.md)** — Turn shared understanding into a durable,
   handoff-ready engineering plan.
 - **[craft-it](./craft-it/SKILL.md)** — Implement maintainable,
