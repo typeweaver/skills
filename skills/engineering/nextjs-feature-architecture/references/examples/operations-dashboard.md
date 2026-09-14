@@ -7,7 +7,7 @@ a scoped client workflow without turning the dashboard into one client-owned
 state tree.
 
 Read [../state-coordination.md](../state-coordination.md) and
-[../example-structure.md](../example-structure.md) first.
+[../boundaries.md](../boundaries.md) first.
 
 ## Shape the feature around one capability
 
