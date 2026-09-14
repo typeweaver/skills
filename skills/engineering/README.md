@@ -8,20 +8,20 @@ from task context; user-invoked skills start only by explicit human command.
 
 - **[aurelius](./aurelius/SKILL.md)** — Bring a trusted senior engineering
   companion into systems, architecture, and consequential decisions.
-- **[ask-rich-hickey](./ask-rich-hickey/SKILL.md)** — Judge a software problem
+- **[ask-rich-hickey](./ask-rich-hickey/SKILL.md)** — Judge a design decision
   through Rich Hickey's engineering mindset.
-- **[ask-martin-fowler](./ask-martin-fowler/SKILL.md)** — Judge evolving
-  software through Martin Fowler's engineering mindset.
+- **[ask-martin-fowler](./ask-martin-fowler/SKILL.md)** — Judge a change to
+  existing software through Martin Fowler's engineering mindset.
 - **[ask-kent-beck](./ask-kent-beck/SKILL.md)** — Judge a change through Kent
   Beck's feedback-oriented engineering mindset.
-- **[ask-john-ousterhout](./ask-john-ousterhout/SKILL.md)** — Judge software
-  complexity through John Ousterhout's engineering mindset.
-- **[ask-barbara-liskov](./ask-barbara-liskov/SKILL.md)** — Judge abstractions
-  and contracts through Barbara Liskov's engineering mindset.
+- **[ask-john-ousterhout](./ask-john-ousterhout/SKILL.md)** — Judge a software
+  design through John Ousterhout's engineering mindset.
+- **[ask-barbara-liskov](./ask-barbara-liskov/SKILL.md)** — Judge an
+  abstraction through Barbara Liskov's engineering mindset.
 - **[ask-linus-torvalds](./ask-linus-torvalds/SKILL.md)** — Judge code,
   interfaces, and patches through Linus Torvalds's engineering mindset.
-- **[ask-donald-knuth](./ask-donald-knuth/SKILL.md)** — Judge algorithms and
-  programs through Donald Knuth's engineering mindset.
+- **[ask-donald-knuth](./ask-donald-knuth/SKILL.md)** — Judge an algorithm or a
+  program through Donald Knuth's engineering mindset.
 - **[challenge-me](./challenge-me/SKILL.md)** — Shape an unclear problem into a
   shared, challenged understanding.
 - **[plan-it](./plan-it/SKILL.md)** — Turn shared understanding into a durable,
