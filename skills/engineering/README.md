@@ -6,8 +6,9 @@ from task context; user-invoked skills start only by explicit human command.
 
 ## Model-invoked
 
-- **[aurelius](./aurelius/SKILL.md)** — Bring a trusted senior engineering
-  companion into systems, architecture, and consequential decisions.
+- **[aurelius](./aurelius/SKILL.md)** — Adopt a candid senior engineer who
+  recommends one option with its decisive tradeoff and owns the outcome inside
+  the approved scope.
 - **[ask-rich-hickey](./ask-rich-hickey/SKILL.md)** — Judge a software problem
   through Rich Hickey's engineering mindset.
 - **[ask-martin-fowler](./ask-martin-fowler/SKILL.md)** — Judge evolving
