@@ -1,51 +1,57 @@
 ---
 name: to-issues
-description: Preserve plans, findings, or follow-up work as actionable issue
-  records. Use when deferred work needs local tracking or the user authorizes
-  synchronization to an external tracker.
+description: Turn follow-up work, review findings, or plan items into issue
+  records someone can pick up later. Use when asked to file, track, or write up
+  follow-ups, to park work for later, to turn a plan or roadmap into issues, or
+  to sync recorded work to a tracker. Not for doing the follow-up now, and not
+  for leaving a TODO in the source.
 ---
 
 # To Issues
 
-Preserve actionable work without expanding the current implementation.
+Keep work that stays out of the current change as records someone can pick up
+later. Record an item only when the current change is correct and meets the
+agreed outcome without it; otherwise do the work now. A record is one issue:
+a local Markdown file or a tracker issue.
 
 ## Choose the destination
 
 Record each outcome in exactly one place.
 
-- **External tracker when authorized:** if the user names or approves a
-  tracker, create the issues there and nowhere else. Write local records only
-  when the repository's conventions require a local mirror.
+- **External tracker when authorized:** create or update tracker issues only
+  after explicit user authorization for that action; a tracker the user names
+  in passing is not authorization to publish to it. Then create the issues
+  there and nowhere else, and write a local record only where the repository
+  documents a local mirror.
 - **Local otherwise:** follow an existing repository convention; else write
-  one Markdown file per independent outcome under `docs/issues/` using
-  [assets/issue-template.md](assets/issue-template.md). Local records need no
+  one Markdown file per record under `docs/issues/`. Local records need no
   separate authorization when repository changes are already approved.
 - **Migrating:** when a tracker is authorized for outcomes that already have
   local records, move them into the tracker and delete the local files in the
   same change; do not keep both.
 - **Response fallback:** when repository writes are not authorized or no
   workspace exists, return issue drafts without creating files.
+- **Plans and roadmaps:** keep the durable plan as the technical source of
+  truth and record one issue that states the outcome and links the plan. For a
+  roadmap, record an umbrella issue plus one issue per milestone that ships on
+  its own.
 
-## Process
+## Write the records
 
-1. Read the relevant plan, conversation, PR, findings, code, and existing issue
-   records.
-2. Keep work in the current change when it is required for correctness or the
-   agreed outcome. Record only genuinely deferred work.
-3. Split records by independently deliverable outcome. Keep related tasks
-   together when separating them would lose necessary context.
-4. Capture the reason, goal, observable completion criteria, and only the
-   references needed to resume the work.
-5. Link the originating plan, pull request, review, or issue when available.
-
-When synchronizing a plan, keep the durable plan as the technical source of
-truth. Create a concise tracker issue that explains the outcome and links the
-plan. For a roadmap, create an umbrella issue and separate issues only for
-independently executable milestones.
-
-Do not invent requirements, labels, priorities, owners, or implementation
-details unsupported by the source context. Do not add status or date ceremony
-unless the repository already requires it.
+1. Read the plan, conversation, pull request, review, findings, and code the
+   items come from, and the records that already exist. An outcome an existing
+   record already covers is not a second record; add the new evidence to that
+   record instead.
+2. One record per outcome that could be delivered and closed on its own. If
+   closing one record would leave another half-done, they are one record.
+3. Write each record on [assets/issue-template.md](assets/issue-template.md)
+   from the source context. A requirement, label, priority, owner, or
+   implementation detail you cannot point to there is invented: leave it out.
+   Add a status or date field only where the repository already uses one.
+4. Reference where a log, configuration, or finding lives instead of copying
+   it into the record. No record carries credentials, tokens, private keys,
+   `.env` contents, and internal hostnames the repository does not already
+   publish; name what the value identifies instead of pasting it.
 
 ## Report back
 
