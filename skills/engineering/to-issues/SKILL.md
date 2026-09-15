@@ -11,14 +11,19 @@ Preserve actionable work without expanding the current implementation.
 
 ## Choose the destination
 
-- **Local by default:** Follow an existing repository convention. Otherwise
-  write one Markdown file per independent outcome under `docs/issues/` using
+Record each outcome in exactly one place.
+
+- **External tracker when authorized:** if the user names or approves a
+  tracker, create the issues there and nowhere else. Write local records only
+  when the repository's conventions require a local mirror.
+- **Local otherwise:** follow an existing repository convention; else write
+  one Markdown file per independent outcome under `docs/issues/` using
   [assets/issue-template.md](assets/issue-template.md). Local records need no
-  separate external authorization when repository changes are already approved.
-- **External when authorized:** Create tracker issues only after explicit user
-  authorization. Reuse local records or plans as the source instead of drafting
-  competing descriptions.
-- **Response fallback:** When repository writes are not authorized or no
+  separate authorization when repository changes are already approved.
+- **Migrating:** when a tracker is authorized for outcomes that already have
+  local records, move them into the tracker and delete the local files in the
+  same change; do not keep both.
+- **Response fallback:** when repository writes are not authorized or no
   workspace exists, return issue drafts without creating files.
 
 ## Process
