@@ -158,7 +158,7 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[define-goal](skills/engineering/define-goal/SKILL.md)** — Turn a request
   into a concise, verifiable goal and stopping condition.
 - **[to-issues](skills/engineering/to-issues/SKILL.md)** — Record actionable
-  work locally and synchronize it externally when authorized.
+  work in exactly one place: an authorized tracker, or local files.
 - **[conventional-commit](skills/engineering/conventional-commit/SKILL.md)** —
   Create coherent Git commit boundaries and Conventional Commit messages.
 - **[create-pull-request](skills/engineering/create-pull-request/SKILL.md)** —

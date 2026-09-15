@@ -46,8 +46,9 @@ Record each outcome in exactly one place.
    closing one record would leave another half-done, they are one record.
 3. Write each record on [assets/issue-template.md](assets/issue-template.md)
    from the source context. A requirement, label, priority, owner, or
-   implementation detail you cannot point to there is invented: leave it out.
-   Add a status or date field only where the repository already uses one.
+   implementation detail you cannot point to in that source context is invented:
+   leave it out. Add a status or date field only where the repository already
+   uses one.
 4. Reference where a log, configuration, or finding lives instead of copying
    it into the record. No record carries credentials, tokens, private keys,
    `.env` contents, and internal hostnames the repository does not already
@@ -56,4 +57,6 @@ Record each outcome in exactly one place.
 ## Report back
 
 Report created local paths and external issue links. Distinguish local records
-from published tracker items and state any item that could not be created.
+from published tracker items and state any item that could not be created. When
+the user named a tracker you were not authorized to publish to, say that nothing
+was published there and offer to publish on their authorization.
