@@ -1,61 +1,85 @@
 ---
 name: plan-it
-description: Turn a confirmed understanding into a durable, execution-ready
-  engineering plan. Use for substantial work that needs coordinated steps,
-  recorded decisions, a clean handoff, or multiple milestones.
+description: Write the plan another agent implements from, with ordered steps, a
+  check that proves each step done, and the decisions behind them. Use when the
+  approach is settled and the work spans several steps or sessions, or when it
+  splits into milestones that ship separately. Not for shaping an unclear idea,
+  for sprint or capacity planning, or for work that fits in one step.
 ---
 
 # Plan It
 
-Transform the shared understanding into a plan that another capable agent can
-execute without reconstructing the conversation. Design the work, not the
-workflow around the work.
+Turn the shared understanding into a plan file another agent executes without
+reconstructing this conversation. Plan changes to the system and the evidence
+that each one landed. A step whose title is a process action — create a branch,
+commit, open a pull request, request review — is workflow around the work:
+delete it.
 
-## Capture the understanding
+## Establish the facts
 
-1. Inspect the repository, applicable instructions, conversation, research,
-   tickets, and existing plans. Establish discoverable facts yourself.
-2. Preserve the intended outcome, relevant current state, scope boundaries,
-   constraints, and assumptions.
-3. Record material decisions with their decisive rationale and implementation
-   consequences. Include alternatives actually evaluated, supporting evidence,
-   and conditions for revisiting the decision when they matter. Summarize the
-   result instead of replaying the discussion.
-4. Keep unresolved risks, questions, and research needs visible. Ask for input
-   only when a missing decision prevents a useful plan.
+1. Read the shared understanding, the repository's instructions, the plans this
+   work touches, and the check command CI runs or the verification commands the
+   repository documents.
+2. Answer yourself every question the repository, its documentation, or the
+   environment can answer. Ask the user only when a missing decision changes
+   which steps exist, the scope boundary, or a choice that is expensive to
+   reverse, and then ask at their decision level with one recommended answer
+   they can accept or reject.
+
+## Record the decisions
+
+Record every decision where two workable alternatives existed: the one chosen,
+why the other lost, and what the choice forces in implementation. Where a choice
+rests on an assumption you did not verify, add the observation that would
+reverse it.
+
+A decision entry that narrates the conversation — "we first considered", "you
+then said" — is replay. State the choice, the alternative it beat, and the
+consequence.
 
 ## Shape the work
 
-- Organize the implementation into coherent steps ordered by real dependencies.
-- Give each step a concrete outcome and evidence that can prove it complete.
-- Keep the system usable at meaningful intermediate boundaries.
-- Turn necessary research into a step that names the decision it must unlock.
-- Cover final validation across behavior, regression protection,
-  documentation, and operational concerns when relevant.
-- If the work contains multiple independently deliverable outcomes, create a
-  lightweight roadmap and linked milestone plans. Keep shared context in the
-  roadmap and enough milestone-specific context in each plan to execute it
-  independently. Link the roadmap to every milestone plan, each milestone back
-  to the roadmap, and plans to one another when dependencies exist.
+- Give each step an outcome and end it with `Done when:` and a check the
+  executor can run: a command, a file that exists, a test that passes.
+  "Reviewed", "looks right", or "works as expected" is not a check.
+- After every step the repository's checks pass — the check command CI runs or
+  the verification commands the repository documents. A step that leaves them
+  broken merges with the next step.
+- Order steps so each one can run when it starts: a step follows the step that
+  creates what it changes or what its check reads. Steps with no such relation
+  stay in any order; do not invent a sequence.
+- When a decision cannot be made from what you read, make the research its own
+  step, and name the decision it unlocks and the observation that settles it.
+- Validate at the end across behavior, the regressions this change could cause,
+  and every document or operational setting the change makes false.
+- Cut milestones as tracer bullets: each carries one narrow case end to end
+  through every layer the full outcome touches, so the system runs after it.
+  Use expand-contract — add the new path, migrate the callers, remove the old —
+  only for a refactor whose mechanical change is too wide to slice by case.
+- When outcomes can ship without one another, write a roadmap plus one plan per
+  milestone. Keep the shared context in the roadmap, and in each milestone plan
+  enough to execute it without reading its siblings. Link the roadmap to every
+  milestone plan, each milestone back to the roadmap, and milestones to one
+  another where one's check needs another's output.
 
 ## Write the handoff
 
 Follow an existing repository convention. Otherwise write the plan under
-`docs/plans/` with a descriptive filename and use
-[assets/plan-template.md](assets/plan-template.md) as a starting point. Adapt the
-structure when the work needs it; omit sections that add no useful information.
+`docs/plans/` with a descriptive filename, starting from
+[assets/plan-template.md](assets/plan-template.md). Drop a section the work
+leaves empty instead of filling it with the obvious.
 
-Include relevant files, systems, research, documentation, reference
-implementations, and related plans when they help a new agent find the right
-starting point. Explain briefly what each important source establishes or why
-it should be read. Keep only context that affects execution, decisions, or
-validation.
+Link the source that establishes the outcome — the issue, the shared
+understanding, the predecessor plan — plus any source a step's execution or its
+check depends on, and say in one clause what the executor takes from it. Do not
+copy into the plan credentials, tokens, private keys, `.env` contents, and
+internal hostnames the repository does not already publish, or personal data;
+name where they live.
 
-The plan is ready when a capable agent can understand the direction, continue
-the work, and judge completion from the repository and the plan alone. Preserve
-decision-equivalent context: what is settled, why, what evidence supports it,
-and what new evidence would justify reopening it.
+The plan is done when every step carries a runnable check and nothing in it
+points back at this conversation: a sentence containing "as discussed", "as
+agreed", or "see above" names evidence the executor does not have.
 
-Report the plan path, intended outcome, overall approach, and material risks or
-open questions. Do not begin implementation unless the request also authorizes
-it.
+Report the plan path, the outcome, the approach, and each open risk with the
+step or decision it affects. Hand the plan back and wait; begin implementation
+only when the user authorizes it.
