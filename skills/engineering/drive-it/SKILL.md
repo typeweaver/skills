@@ -37,8 +37,8 @@ merged pull request.
    requests, then call the Skill tool with `pr-review-loop` until every pull
    request is merged by a human or blocked.
 
-Call the Skill tool with an `ask-*` perspective only where that skill's own
-description applies.
+To invoke an expert perspective, call the Skill tool with the matching `ask-*`
+skill; its description decides when it applies.
 
 Research, decide, and resolve what you can yourself; a step you have decided
 on is something to run, not to announce. Interrupt the user only when a
