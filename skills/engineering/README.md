@@ -39,8 +39,8 @@ from task context; user-invoked skills start only by explicit human command.
   or complete pull request.
 - **[define-goal](./define-goal/SKILL.md)** — Turn a request into a concise,
   verifiable goal and stopping condition.
-- **[to-issues](./to-issues/SKILL.md)** — Record actionable work locally and
-  synchronize it externally when authorized.
+- **[to-issues](./to-issues/SKILL.md)** — Record actionable work in exactly one
+  place: an authorized tracker, or local files.
 - **[conventional-commit](./conventional-commit/SKILL.md)** — Create coherent
   Git commit boundaries and Conventional Commit messages.
 - **[create-pull-request](./create-pull-request/SKILL.md)** — Verify completed
