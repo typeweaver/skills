@@ -18,8 +18,9 @@ Read the target repository's style guide, documentation layout, and neighboring
 documents first, and follow them; carry no conventions from elsewhere. This
 skill writes files in the repository and publishes nothing; publishing a
 document outside the repository needs its own authorization. No document
-carries a secret, credential, internal URL, or customer name: state the
-constraint without the value.
+carries credentials, tokens, private keys, `.env` contents, and internal
+hostnames the repository does not already publish, and none carries a customer
+name: state the constraint without the value.
 
 ## 1. Name the reader and the type
 
