@@ -150,8 +150,8 @@ are created only after separate user authorization at the delivery checkpoint.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
-- **[brief-me](skills/engineering/brief-me/SKILL.md)** — Summarize a discussion,
-  plan, implementation, or reviewed delivery at the right level of detail.
+- **[brief-me](skills/engineering/brief-me/SKILL.md)** — Re-orient a reader on
+  a discussion, plan, implementation, or reviewed delivery in one read.
 - **[review-it](skills/engineering/review-it/SKILL.md)** — Review a code change
   or pull request diff and return findings that name what breaks, backed by
   the diff.
