@@ -26,6 +26,9 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
 3. Research and decide implementation details yourself. Ask only when new
    evidence invalidates the agreed outcome, when a step needs authority you do
    not have, or before an action you cannot undo.
+4. When the agreed outcome is a defect fix and neither a failing command nor
+   the code tells you the cause, call the Skill tool with `debug-it` for the
+   diagnosis, then implement the confirmed fix here.
 
 ## Shape the code
 
@@ -46,7 +49,9 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
 - Write comments and documentation for the code at HEAD. A comment that names
   a reviewer, the conversation, a plan step, "now", or "previously" narrates
   history: state the constraint instead, or delete it. Delete documentation
-  your change made false.
+  your change made false. When the agreed outcome needs a standalone document
+  — a README, a guide, an ADR — call the Skill tool with `document-it` for
+  that document.
 
 ## Test the contract
 
