@@ -72,8 +72,9 @@ leaves empty instead of filling it with the obvious.
 Link the source that establishes the outcome — the issue, the shared
 understanding, the predecessor plan — plus any source a step's execution or its
 check depends on, and say in one clause what the executor takes from it. Do not
-copy secrets, tokens, credentials, or personal data into the plan; name where
-they live.
+copy into the plan credentials, tokens, private keys, `.env` contents, and
+internal hostnames the repository does not already publish, or personal data;
+name where they live.
 
 The plan is done when every step carries a runnable check and nothing in it
 points back at this conversation: a sentence containing "as discussed", "as
