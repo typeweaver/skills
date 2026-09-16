@@ -1,7 +1,7 @@
 ---
 name: pr-review-loop
-description: Work an open pull request's review comments and failing checks
-  until a human merges it. Use when asked to address or answer review feedback
+description: Work an open pull request's review comments and checks until a
+  human merges it. Use when asked to address or answer review feedback
   on a pull request, to fix a red check on one, or to watch or keep an eye on a
   pull request until it can be merged. Not for opening a pull request and not
   for reviewing a diff yourself.
@@ -32,7 +32,6 @@ check.
 
 ## Answer every review comment
 
-A review comment is one reviewer item; a thread is the conversation around it.
 Take Agree unless one of the other tests fires.
 
 - **Agree** — make the change, verify it, call the Skill tool with
