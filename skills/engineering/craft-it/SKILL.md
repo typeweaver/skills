@@ -29,6 +29,10 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
 4. When the agreed outcome is a defect fix and neither a failing command nor
    the code tells you the cause, call the Skill tool with `debug-it` for the
    diagnosis, then implement the confirmed fix here.
+5. When files with `@scaffold` lines exist for the agreed outcome, they are
+   the starting point: keep their signatures, replace each not-implemented
+   body and pending test, and delete every `@scaffold` line. The change is
+   incomplete while a search still finds one.
 
 ## Shape the code
 

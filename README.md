@@ -88,7 +88,9 @@ flowchart TD
     challenge -.->|skip when outcome is already clear| plan[plan-it]
     challenge --> plan
     plan --> approve{{brief-me: approve the plan}}
-    approve --> build["define-goal · branch · craft-it"]
+    approve -.->|structure checkpoint| scaffold[scaffold-it]
+    scaffold --> build["define-goal · branch · craft-it"]
+    approve --> build
     build --> reviewCommit["review-it then conventional-commit"]
     reviewCommit --> followups[to-issues]
     reviewCommit --> more{More commits or milestones?}
@@ -138,6 +140,9 @@ are created only after separate user authorization at the delivery checkpoint.
   problem into a shared, challenged understanding.
 - **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
   into a durable, handoff-ready engineering plan.
+- **[scaffold-it](skills/engineering/scaffold-it/SKILL.md)** — Lay out the
+  files, signatures, and test cases of a plan for structure approval before
+  implementing.
 - **[craft-it](skills/engineering/craft-it/SKILL.md)** — Build the smallest
   complete change for an agreed outcome, with tests that fail without it.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
