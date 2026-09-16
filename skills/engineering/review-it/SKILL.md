@@ -1,19 +1,16 @@
 ---
 name: review-it
-description: Review a code change or pull request diff and return findings that
-  name what breaks or what the next change pays for, each backed by the lines
-  that show it. Use when asked to review, check, or look over a diff, branch,
-  commit, or pull request, before a commit, or when a pull request receives
-  new commits. Not for acting on review comments or for reviewing documents
-  and plans.
+description: Review a code change or pull request diff and report what breaks,
+  backed by the lines that show it. Use when asked to review, check, or look
+  over a diff, branch, commit, or pull request, or before a commit. Not for
+  acting on review comments or for reviewing documents and plans.
 ---
 
 # Review It
 
-Find what the change breaks and what it makes the next change pay for and
-prove each from the diff. Anything else reaches the report only as a Follow-up
-under the definition below. Put findings in the report only: do not edit,
-stage, commit, push, or create issues.
+Find what the change breaks and what it makes the next change pay for, and
+prove each from the diff. Put findings in the report only: do not edit, stage,
+commit, push, or create issues.
 
 Review from a context that did not author the change. If you authored or
 orchestrated it, delegate by following
@@ -34,13 +31,12 @@ the verdict or the scope.
    work out the result at its boundaries from the code: absent, empty, zero,
    negative, oversized. If you catch yourself taking its contract from the one
    test the diff ships, go back to the code.
-5. Run the repository's own read-only checks: tests, typecheck, lint. Check a
-   library call you cannot cite against the installed version's documentation.
+5. Run the repository's read-only checks. Check a library call you cannot cite
+   against the installed version's documentation.
 
 Scope is set when you can name the diff you reviewed (refs, staged, or files),
-every changed public name with its uses, the boundary results for every
-parameter, option, field, or default the diff adds or changes, and the checks
-you ran.
+every changed public name with its uses, the boundary results from step 4, and
+the checks you ran.
 
 ## Find and classify
 
@@ -65,17 +61,13 @@ Read the diff for these tells; the tell sets the severity.
   behavior the repository has no test layer for; do not ask for it to be
   fixed here.
 
-Every Blocking or Important finding quotes the changed line and names the
-failure it causes. A Follow-up names file and line and the failure or cost. At
-every severity, no line or no named failure or cost: drop it. A rename,
-reorder, or reformat with no failure named is a style note: drop it at every
-severity. Asking for it as a separate formatting commit is the same style note
-under a Follow-up label. Skip anything a formatter, linter, or typecheck
-already enforces.
+Every finding names file and line and the failure or cost; Blocking and
+Important quote the changed line. No line or no named failure: drop it. A
+rename, reorder, or reformat with no failure named is a style note, also when
+asked for as a separate formatting commit: drop it.
 
 Honor required and forbidden perspectives from the user or the handoff. To
-invoke one, call the Skill tool with the matching `ask-*` skill; its
-description decides when it applies. A perspective adds findings to this
+invoke one, call the Skill tool with the matching `ask-*` skill. A perspective adds findings to this
 report; it does not change the severities or the template. Say in the report
 when a required perspective is unavailable instead of substituting one.
 
