@@ -3,7 +3,7 @@ name: to-issues
 description: Turn follow-up work, review findings, or plan items into issue
   records someone can pick up later. Use when asked to file, track, or write up
   follow-ups, to park work for later, to turn a plan or roadmap into issues, or
-  to sync recorded work to a tracker. Not for doing the follow-up now, and not
+  to publish recorded work to a tracker the user authorizes. Not for doing the follow-up now, and not
   for leaving a TODO in the source.
 ---
 
