@@ -20,7 +20,7 @@ request.
 2. Split into separate commits when each part could be reverted alone without
    breaking the build or tests; keep code and the tests that cover it in one
    commit.
-3. Before staging, scan the diff for credentials, tokens, private keys, `.env`
+3. Before staging, scan both diffs from step 1 for credentials, tokens, private keys, `.env`
    contents, and internal hostnames the repository does not already publish.
    Leave a file that carries one out of the commit — unstage it if it is
    already staged — and report it instead of committing.
@@ -37,7 +37,8 @@ request.
 Always follow Conventional Commits, even where the repository previously used
 another style. Write the subject, body, and footers in English.
 
-`<type>(<scope>): <imperative description>`
+`<type>(<scope>): <imperative description>`, or `<type>: <imperative
+description>` without a scope.
 
 - Derive type and scope from the diff, not from the ticket or the branch name.
   Read the subjects `git log --oneline -20` prints and take the scope those
