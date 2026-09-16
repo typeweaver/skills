@@ -147,8 +147,9 @@ are created only after separate user authorization at the delivery checkpoint.
   across runtime boundaries and coordinated state.
 - **[brief-me](skills/engineering/brief-me/SKILL.md)** — Summarize a discussion,
   plan, implementation, or reviewed delivery at the right level of detail.
-- **[review-it](skills/engineering/review-it/SKILL.md)** — Independently review
-  an intended change or complete pull request.
+- **[review-it](skills/engineering/review-it/SKILL.md)** — Review a code change
+  or pull request diff and return findings that name what breaks, backed by
+  the diff.
 - **[define-goal](skills/engineering/define-goal/SKILL.md)** — Turn a request
   into a concise, verifiable goal and stopping condition.
 - **[to-issues](skills/engineering/to-issues/SKILL.md)** — Record actionable
