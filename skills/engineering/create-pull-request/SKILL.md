@@ -29,12 +29,12 @@ request back for a human to merge; never merge it yourself.
    what you found instead of pushing.
 5. Push the branch, then update the pull request it already has; open one only
    when it has none. Post the comments below that the pull request does not
-   already carry. Then ask once who should review and request them through the
-   platform's review-request mechanism, unless the user already named a
-   reviewer, the pull request already has one, or an orchestrating workflow
-   defers reviewer selection.
+   already carry. Request the reviewer the user named through the platform's
+   review-request mechanism; when none was named, ask once who should review,
+   unless the pull request already has a reviewer or an orchestrating workflow
+   defers the choice.
 6. Confirm the title, the description, and the diff you pushed agree, and that
-   the review request registered.
+   any review request you made registered.
 
 Follow-up work you discover stays out of this pull request; list it in your
 report. Create external issues only with explicit authorization for that
@@ -67,6 +67,10 @@ write the subject covering them all, in the type and scope those commits use.
 
 - <issue, plan, or specification; omit this section when empty>
 ```
+
+The whole description stays under about 150 words. Analysis, rejected
+alternatives, and the reasoning behind each finding belong in the diff, a plan
+file, or a comment a reviewer asked for, not here.
 
 ## Comments
 
