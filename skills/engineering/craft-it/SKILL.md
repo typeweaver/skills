@@ -3,8 +3,8 @@ name: craft-it
 description: Implement, fix, or refactor code once the outcome is agreed. Use
   when asked to build a feature, add or change behavior, fix a bug, or carry
   out a plan step, and the result must be ready for review. Not for spikes or
-  throwaway prototypes, for restructuring code without changing behavior, or
-  for reviewing a change.
+  throwaway prototypes, for moving code between files or folders, or for
+  reviewing a change.
 ---
 
 # Craft It
@@ -34,16 +34,14 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
 
 - Extract or share code only when deleting it would move duplicated logic back
   into two or more callers, or when a test cannot reach the logic without a
-  mock and the extraction removes that mock. Logic a test already reaches
-  without a mock is not by itself a reason to extract it. An extraction whose
-  only caller is the function it left, named for a position (`step2`,
-  `handleRest`) rather than a concept, goes back inline.
+  mock and the extraction removes that mock. An extraction whose only caller
+  is the function it left, named for a position (`step2`, `handleRest`) rather
+  than a concept, goes back inline.
 - Export only what a caller outside the module uses, and keep third-party
   types out of exported signatures. Document an exported contract in the form
   the repository already uses.
 - Place new code with the concept that owns it. When the existing structure
-  does not match responsibilities, report the drift as a follow-up, or call the
-  Skill tool with `shape-it` when the user asks for the restructuring.
+  does not match responsibilities, report the drift as a follow-up.
 - Add a dependency only with a stated reason in the change; prefer what the
   repository already has.
 - Write comments and documentation for the code at HEAD. A comment that names
