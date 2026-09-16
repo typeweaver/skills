@@ -1,4 +1,4 @@
 interface:
   display_name: "Challenge Me"
   short_description: "Stress-test an idea until every consequential decision is settled"
-  default_prompt: "Use $challenge-me to stress-test this idea until every consequential decision is settled and I have confirmed the shared understanding."
+  default_prompt: "Use $challenge-me to stress-test this idea until every consequential decision is settled and ask me to confirm the shared understanding."

@@ -1,9 +1,7 @@
 ---
 name: challenge-me
-description: Stress-test an idea before anyone plans or builds it. Question its
-  goal, scope, assumptions, and risks in rounds, recommend an answer for every
-  open decision, and end with a shared understanding the user confirms. Use
-  when the user brings an idea, feature request, or proposal whose goal, scope,
+description: Stress-test an idea before anyone plans or builds it. Use when
+  the user brings an idea, feature request, or proposal whose goal, scope,
   or approach is not yet settled, wants that idea challenged before anyone
   plans it, or asks what they are missing. Not for writing the plan,
   summarizing where things stand, or ideas already settled enough to plan. Not
