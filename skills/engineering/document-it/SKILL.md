@@ -41,8 +41,6 @@ Tells that the types are mixed: a rationale paragraph between numbered steps;
 every option listed inside a walkthrough; a first-success path that branches on
 "if you use X". Move that material to the document whose type owns it.
 
-Done when reader, arrival question, and type are written down.
-
 ## 2. List the questions, answer first
 
 List every question the reader asks, in the order it arises for them, not in
@@ -71,8 +69,6 @@ Say what you mean. When a literal phrase exists, use it.
   wrong; an opening sentence that announces what the section will do; a word
   chosen for rhythm that a plainer word would replace without loss. Replace each
   with the literal statement.
-
-Done when every tell above has been found and replaced.
 
 ## 4. Delete
 
