@@ -1,6 +1,6 @@
 # Building a red loop
 
-How to get one unattended red command per failure class. Consulted from step 1;
+One unattended red command per failure class. Step 1 of the skill reads this;
 the skill body owns the procedure.
 
 ## A test that already fails
@@ -18,8 +18,8 @@ test file comes later, in step 5.
 
 ## An intermittent failure
 
-Run the candidate loop in a counted batch (`for i in $(seq 100)`) and record the
-failure count. Below roughly one failure in twenty, bisection and single-run
+Run the candidate loop in a counted batch of 100 and record the failure
+count. Below roughly one failure in twenty, bisection and single-run
 observations are unreliable: raise the rate first by shortening timeouts,
 running the batch in parallel, pinning a seed the runner exposes, shrinking a
 delay, or constraining the scheduler to one worker or one CPU. Quote the pinned

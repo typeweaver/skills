@@ -13,8 +13,7 @@ description: Find the cause of a defect by building a command that goes red on
 
 No hypothesis before a command exists that goes red on the reported symptom.
 The loop is that command: one invocation, run unattended, red while the symptom
-is present and green once it is gone. Everything below is mechanical once the
-loop exists.
+is present and green once it is gone.
 
 This skill diagnoses, and fixes when the fix is authorized. It does not
 commit, push, or open anything itself.
@@ -57,8 +56,7 @@ explain. Each names a cause and the observation that would disprove it: "if
 state leaks through the module-level cache, clearing it between the two calls
 turns the loop green." A claim no observation can contradict is not a
 hypothesis; replace it. Write the ranked list into the report before you test
-any of it. Done when each hypothesis names a cause and the observation that
-would disprove it.
+any of it.
 
 ## 4. Instrument
 
@@ -78,8 +76,7 @@ out; do not widen the fix instead.
    make the test easy. Confirm it fails for the cause you confirmed in step 4
    and not for a setup error.
 2. When no seam exercises that path, that is the finding. Report it with the
-   seam the code would need, and ask whether to restructure first; when the user
-   agrees, call the Skill tool with `shape-it`.
+   seam the code would need, and ask whether to restructure first.
 3. Implement only when the user asked for the fix or the task already
    authorized one; otherwise report the confirmed cause and the smallest change
    you would make. When you implement, make the test pass with the smallest
