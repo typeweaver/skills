@@ -26,6 +26,8 @@ from task context; user-invoked skills start only by explicit human command.
   shared, challenged understanding.
 - **[plan-it](./plan-it/SKILL.md)** — Turn shared understanding into a durable,
   handoff-ready engineering plan.
+- **[scaffold-it](./scaffold-it/SKILL.md)** — Lay out the files, signatures,
+  and test cases of a plan for structure approval before implementing.
 - **[craft-it](./craft-it/SKILL.md)** — Build the smallest complete change
   for an agreed outcome, with tests that fail without it.
 - **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
