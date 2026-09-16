@@ -39,6 +39,6 @@ lead to different outcomes or different completion evidence. Ask it as the two
 readings with the one you recommend. Otherwise take the reading the context
 supports best and name it in the goal.
 
-Output one goal, 1–3 sentences plus the stop condition, and nothing else. If
-you catch yourself listing steps or files, you are planning: state the outcome
-instead.
+Output the goal in at most three sentences, then the stop condition in one
+more, and nothing else. If you catch yourself listing steps or files, you are
+planning: state the outcome instead.
