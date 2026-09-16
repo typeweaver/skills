@@ -62,7 +62,7 @@ behavior in the route slot or a generic modal provider.
 | Whether navigation presents modal or page | Router composition and navigation context |
 | Dialog focus, disclosure, and animation   | Local dialog state                        |
 | Unsaved detail form fields                | Local form or scoped edit workflow        |
-| Optimistic item update                    | Mutation lifecycle or query cache         |
+| Optimistic item update                    | Mutation lifecycle or browser query cache |
 
 The same selected item identity must authorize and cache consistently in the
 modal and full-page renderings. Presentation context does not create a second

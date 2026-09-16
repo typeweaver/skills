@@ -24,7 +24,7 @@ questions under "Decide by restoration and lifecycle" pick one.
 | Behavior spanning independent features | Explicit workflow feature                     |
 
 Distinguish the authoritative source from a useful representation. A TanStack
-Query cache may own the browser's current server-data projection while the
+The browser query cache may own the browser's current server-data projection while the
 server remains authoritative. An editor store may own the unsaved working copy
 while recording which server revision it was derived from.
 
@@ -45,7 +45,7 @@ Ask in order:
 
 Do not introduce Context, a global store, or a browser query cache to avoid
 deciding these questions. The tell: the container holds a value that also
-exists in the URL, in a server read, or in a query cache, and two places
+exists in the URL, in a server read, or in a browser query cache, and two places
 write it.
 
 ## Coordinate common widget relationships
@@ -56,7 +56,7 @@ write it.
 | Widgets display the same remote entity              | Shared query identity or feature operation     |
 | One widget changes another's navigable selection    | Semantic URL navigation                        |
 | One widget changes ephemeral client workflow        | Scoped store command                           |
-| A mutation affects browser-cache widgets            | Query-cache update or deliberate invalidation  |
+| A mutation affects browser query cache widgets      | Browser query cache update or invalidation     |
 | A mutation affects server-rendered cached widgets   | Server invalidation plus deliberate UI refresh |
 | A request takes an input the first request returns  | Explicit dependency; assess the waterfall      |
 | Several features participate in one product command | Workflow feature with a semantic operation     |
@@ -128,7 +128,7 @@ widgets, client navigation reuse, or offline-aware caching.
 - Give the browser query a browser-safe fetcher. It may call a Route Handler
   that delegates to the feature operation; it must not import a `server-only`
   operation into the client graph.
-- Prefetch and hydrate only queries a browser-cache consumer reads. A Server
+- Prefetch and hydrate only queries a browser query cache consumer reads. A Server
   Component with no browser freshness need calls its feature operation
   directly.
 - Create request-scoped query clients during server prefetch. Never share one

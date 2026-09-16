@@ -48,13 +48,13 @@ remove its entry point.
 | Project identity                        | Route param                              |
 | Confirmed range and team filters        | Normalized URL search params             |
 | Current aggregate metrics               | Feature operation and its cache contract |
-| Refreshing activity feed                | TanStack Query browser cache             |
+| Refreshing activity feed                | browser query cache (TanStack Query)            |
 | Authoritative project status            | Server                                   |
-| Temporary status projection             | Mutation lifecycle or query cache        |
+| Temporary status projection             | Mutation lifecycle or browser query cache|
 | Comparison candidates and tray state    | Scoped feature Zustand store             |
 | Hovered chart point or open widget menu | Local widget state                       |
 
-The URL, query cache, and store solve different problems. Do not mirror the
+The URL, browser query cache, and store solve different problems. Do not mirror the
 range into Zustand, copy the activity result into the store, or put comparison
 selection into the URL unless copied links must restore that workflow.
 
@@ -73,7 +73,7 @@ ProjectPage
 - Within `ProjectDashboard`, pass Server widgets to any client provider as
   `children` so they stay in the server graph.
 - `DashboardMetrics` remains a Server Component and calls its operation
-  directly when it needs no browser cache lifecycle.
+  directly when it needs no browser query cache lifecycle.
 - `DashboardActivity` may hydrate a matching TanStack Query when polling,
   focus refetch, or client navigation reuse materially improves the product.
 - `DashboardStatus` owns its mutation experience and coordinates only the
@@ -84,7 +84,7 @@ ProjectPage
 Independent feature operations should start independently. Do not fetch metrics
 and activity sequentially at the page merely because both widgets are visible.
 
-## Make browser cache identity complete
+## Make browser query cache identity complete
 
 Separate query identity, browser transport, and server behavior:
 
@@ -115,7 +115,7 @@ freshness, retry, and invalidation policy with this query contract.
 When prefetching:
 
 - create a request-scoped query client;
-- prefetch only data consumed through the browser cache;
+- prefetch only data consumed through the browser query cache;
 - hydrate the exact key the client widget will read;
 - let server prefetch call the feature operation while the client query calls
   the browser fetcher; share the key and result contract, not an unsafe query
@@ -211,7 +211,7 @@ or workflow provider injects commands into participant UI when needed.
 - One application-wide dashboard store containing URL, queries, and entities.
 - One `Promise.all` page loader whose failure blocks every widget.
 - Hydrating every server read into TanStack Query by default.
-- Invalidating the entire query cache after every status mutation.
+- Invalidating the entire browser query cache after every status mutation.
 - Importing `get-dashboard-activity.server.ts` from a browser query function.
 - Treating a Server Component metrics cache as a browser query cache.
 - A default feature barrel that re-exports feature operations and client hooks.
