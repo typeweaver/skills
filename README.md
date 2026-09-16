@@ -142,9 +142,9 @@ are created only after separate user authorization at the delivery checkpoint.
   repository-native software with durable contracts and tests.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
-- **[shape-it](skills/engineering/shape-it/SKILL.md)** — Move code to where
-  its responsibilities live: concrete triggers and a restructuring procedure
-  that keeps moves apart from behavior changes.
+- **[shape-it](skills/engineering/shape-it/SKILL.md)** — Move existing code
+  to the module that owns it in a move-only change, kept apart from behavior
+  changes.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.

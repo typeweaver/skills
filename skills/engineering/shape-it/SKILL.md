@@ -1,17 +1,16 @@
 ---
 name: shape-it
-description: Move code to where its responsibilities live. Use when a folder or
-  file mixes concerns, grows past one concept, imports sideways between peers
-  or forms a cycle, when a `utils` or `helpers` folder collects unrelated code,
-  when new code has no folder that owns it, and when asked to split,
-  reorganize, or clean up the structure of a module or folder. Not for
-  behavior changes.
+description: Move existing code to the module that owns it without changing
+  behavior. Use when asked to split, reorganize, untangle, or clean up the
+  structure of a module or folder, fix an import cycle, or sort out a `utils`
+  or `helpers` folder. Not for behavior changes (`craft-it`) or for deciding
+  where a boundary in a Next.js app should be (`nextjs-feature-architecture`).
 ---
 
 # Shape It
 
-Structure is a claim about ownership. When a file or folder stops telling the
-truth about what belongs together, move the code before adding more.
+Move code to the concept that owns it, in a move-only change kept apart from
+behavior changes.
 
 ## Recognize the trigger
 
@@ -40,20 +39,21 @@ as evidence: an allowed edge is a decision, leave it; an allowed edge that
 closes a cycle is debt, report it; a mutual dependency already routed through
 a neutral contract module is resolved, leave it.
 
+When the question is where a boundary in a Next.js app should be, not where
+existing code moves, call the Skill tool with `nextjs-feature-architecture`.
+
 ## Restructure
 
-1. Inventory what moves, who imports it, and which tests cover it.
-2. Name the target by concept, in the repository's naming style. Keep tests,
+1. Name the target by concept, in the repository's naming style. Keep tests,
    styles, and fixtures where the repository already keeps them; colocate only
    where it already colocates.
-3. Move with `git mv`, or cut and paste for an extraction, fix imports, and
+2. Move with `git mv`, or cut and paste for an extraction, fix imports, and
    update every place that names the path: entry points, boundary allowlists,
    ownership or architecture tables, tool aliases. Keep public contracts
    unchanged. Done when a search for the old path finds only changelog or
    history entries.
-4. Run the checks the repository already has; add a dependency rule only when
-   the repository already enforces boundaries.
-5. Keep the move as its own commit, before or after the behavior change, never
+3. Add a dependency rule only when the repository already enforces boundaries.
+4. Keep the move as its own commit, before or after the behavior change, never
    mixed with it. Create the commit only when the user has asked for commits;
    otherwise stage only the move and do not change what else is staged. In
    the commit message or the handback, say what moved and which trigger

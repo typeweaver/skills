@@ -1,4 +1,4 @@
 interface:
   display_name: "Shape It"
-  short_description: "Move code to where its responsibilities live"
-  default_prompt: "Use $shape-it to clean up the structure of this folder without changing behavior."
+  short_description: "Move existing code to the module that owns it without changing behavior"
+  default_prompt: "Use $shape-it to sort out this folder: move each piece to the module that owns it without changing behavior."
