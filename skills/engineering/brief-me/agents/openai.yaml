@@ -1,4 +1,4 @@
 interface:
   display_name: "Brief Me"
   short_description: "Get re-oriented with a concise, decision-ready work brief"
-  default_prompt: "Use $brief-me to re-orient me on the current work or delivery."
+  default_prompt: "Use $brief-me to brief me on where the current work or delivery stands."

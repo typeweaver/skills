@@ -41,8 +41,8 @@ explain the same conclusion.
 
 ## Language
 
-- Reference by path what lives in a plan, issue, commit, or diff; do not
-  repeat it. Keep credentials, tokens, private keys, `.env` contents, and
+- Point to what lives in a plan, issue, commit, or diff by its path, number,
+  or hash; do not repeat it. Keep credentials, tokens, private keys, `.env` contents, and
   internal hostnames the repository does not already publish out of the brief;
   name where they live.
 - When a literal phrase exists, use it. Define a repository or domain term in a
