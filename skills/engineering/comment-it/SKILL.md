@@ -36,8 +36,8 @@ Otherwise write the comment and list the code improvement in your report as
 Deleting the comment loses information the code cannot express when it states:
 
 - a rationale or a rejected alternative;
-- a unit, ordering, lifetime, concurrency, security, or performance constraint,
-  or a domain meaning, that the types cannot state;
+- a unit, ordering, lifetime, concurrency, security, or performance constraint
+  or a domain meaning the types cannot state;
 - a compatibility workaround, deliberate irregularity, or regression guard;
 - a caller-visible contract the signature hides.
 
@@ -54,9 +54,9 @@ One you cannot follow is not thereby wrong; check it against the code first.
 - **Module overview:** a durable concept, boundary, vocabulary, or design
   reason. Not exports or mechanics that drift with routine edits.
 - **Contract documentation:** caller-visible behavior, surprising inputs or
-  results, empty or indeterminate results, errors, side effects, and invariants,
-  never private implementation detail. Add an example only when names and prose
-  leave a usage unclear; state its expected result.
+  results, empty or indeterminate results, errors, side effects, and invariants;
+  no private implementation detail. Add an example only when names and prose
+  leave the usage unclear, and state its expected result.
 - **Inline explanation:** the constraint at the narrowest place it applies.
 - **TODO or workaround:** the concrete limitation, what makes shipping it safe
   now, the condition for removal, and a link to a stable issue, upstream source,
