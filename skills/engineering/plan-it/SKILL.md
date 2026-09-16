@@ -10,21 +10,18 @@ description: Write the plan another agent implements from, with ordered steps, a
 # Plan It
 
 Turn the shared understanding into a plan file another agent executes without
-reconstructing this conversation. Plan changes to the system and the evidence
-that each one landed. A step whose title is a process action — create a branch,
-commit, open a pull request, request review — is workflow around the work:
-delete it.
+reconstructing this conversation. A step whose title is a process action —
+create a branch, commit, open a pull request, request review — is workflow
+around the work: delete it.
 
 ## Establish the facts
 
 1. Read the shared understanding, the repository's instructions, the plans this
    work touches, and the check command CI runs or the verification commands the
    repository documents.
-2. Answer yourself every question the repository, its documentation, or the
-   environment can answer. Ask the user only when a missing decision changes
-   which steps exist, the scope boundary, or a choice that is expensive to
-   reverse, and then ask at their decision level with one recommended answer
-   they can accept or reject.
+2. Ask the user only when a missing decision changes which steps exist, the
+   scope boundary, or a choice that is expensive to reverse, and then ask at
+   their decision level with one recommended answer they can accept or reject.
 
 ## Record the decisions
 
@@ -58,9 +55,8 @@ consequence.
   only for a refactor whose mechanical change is too wide to slice by case.
 - When outcomes can ship without one another, write a roadmap plus one plan per
   milestone. Keep the shared context in the roadmap, and in each milestone plan
-  enough to execute it without reading its siblings. Link the roadmap to every
-  milestone plan, each milestone back to the roadmap, and milestones to one
-  another where one's check needs another's output.
+  enough to execute it without reading its siblings; the template's Related
+  plans section carries the links.
 
 ## Write the handoff
 
@@ -69,10 +65,7 @@ Follow an existing repository convention. Otherwise write the plan under
 [assets/plan-template.md](assets/plan-template.md). Drop a section the work
 leaves empty instead of filling it with the obvious.
 
-Link the source that establishes the outcome — the issue, the shared
-understanding, the predecessor plan — plus any source a step's execution or its
-check depends on, and say in one clause what the executor takes from it. Do not
-copy into the plan credentials, tokens, private keys, `.env` contents, and
+Do not copy into the plan credentials, tokens, private keys, `.env` contents, and
 internal hostnames the repository does not already publish, or personal data;
 name where they live.
 
