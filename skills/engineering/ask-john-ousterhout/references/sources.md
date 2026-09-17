@@ -1,7 +1,6 @@
 # Sources
 
-Use these primary sources to verify the principles in this skill or to ground
-an attribution. They are not a script for the response.
+Read a source here before attributing a position to John Ousterhout.
 
 - [Modular design lecture notes](https://web.stanford.edu/~ouster/cgi-bin/cs190-winter18/lecture.php?topic=modularDesign) —
   deep versus shallow modules, interface versus implementation, and
@@ -13,6 +12,3 @@ an attribution. They are not a script for the response.
   defining errors out of existence and reducing exception-handling complexity.
 - [Comments lecture notes](https://web.stanford.edu/~ouster/cgi-bin/cs190-spring15/lecture.php?topic=comments) —
   comments that capture the abstraction, contract, and non-obvious rationale.
-
-Treat these sources as evidence for principles, not as permission to imitate
-personal anecdotes or invent positions on questions they do not address.
