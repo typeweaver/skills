@@ -29,9 +29,8 @@ Done when one command you have already run at least once:
 - goes red on the user's exact symptom, not on a symptom nearby;
 - is deterministic, or has a reproduction rate you measured and pinned
   ("red in 12 of 100 runs");
-- runs fast enough to run it dozens of times: seconds for a unit-level loop,
-  and for a batch, bisect, or end-to-end loop, fast enough that one full pass
-  fits in a single unattended run;
+- a unit loop finishes in seconds; a batch, bisect, or end-to-end loop fits in
+  one unattended run;
 - runs unattended: no manual step, no click, no waiting on you.
 
 If you catch yourself reading code to form a theory before this command exists,
