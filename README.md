@@ -117,8 +117,9 @@ separate user authorization at the delivery checkpoint.
 
 ### Engineering
 
-- **[aurelius](skills/engineering/aurelius/SKILL.md)** — Bring a trusted senior
-  engineering companion into systems, architecture, and consequential decisions.
+- **[aurelius](skills/engineering/aurelius/SKILL.md)** — Adopt a candid senior
+  engineer who recommends one option with its decisive tradeoff and owns the
+  outcome inside the approved scope.
 - **[drive-it](skills/engineering/drive-it/SKILL.md)** — Orchestrate the full
   engineering workflow from an idea to a merged pull request.
 - **[ask-rich-hickey](skills/engineering/ask-rich-hickey/SKILL.md)** — Judge a
@@ -136,8 +137,8 @@ separate user authorization at the delivery checkpoint.
   mindset.
 - **[ask-donald-knuth](skills/engineering/ask-donald-knuth/SKILL.md)** — Judge
   an algorithm or a program through Donald Knuth's engineering mindset.
-- **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Shape an unclear
-  problem into a shared, challenged understanding.
+- **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Stress-test an
+  idea in rounds until every consequential decision is settled.
 - **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
   into a durable, handoff-ready engineering plan.
 - **[scaffold-it](skills/engineering/scaffold-it/SKILL.md)** — Lay out the
@@ -150,13 +151,14 @@ separate user authorization at the delivery checkpoint.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
-- **[brief-me](skills/engineering/brief-me/SKILL.md)** — Summarize a discussion,
-  plan, implementation, or reviewed delivery at the right level of detail.
+- **[brief-me](skills/engineering/brief-me/SKILL.md)** — Re-orient a reader on
+  a discussion, plan, implementation, or reviewed delivery in one read.
 - **[review-it](skills/engineering/review-it/SKILL.md)** — Review a code change
   or pull request diff and return findings that name what breaks, backed by
   the diff.
 - **[define-goal](skills/engineering/define-goal/SKILL.md)** — Turn a request
-  into a concise, verifiable goal and stopping condition.
+  into one goal an agent can work against alone, with its completion evidence
+  and stop condition.
 - **[to-issues](skills/engineering/to-issues/SKILL.md)** — Record actionable
   work locally and synchronize it externally when authorized.
 - **[conventional-commit](skills/engineering/conventional-commit/SKILL.md)** —
