@@ -50,10 +50,15 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
   repository already has.
 - Write comments and documentation for the code at HEAD. A comment that names
   a reviewer, the conversation, a plan step, "now", or "previously" narrates
-  history: state the constraint instead, or delete it. Delete documentation
-  your change made false. When the agreed outcome needs a standalone document
-  — a README, a guide, an ADR — call the Skill tool with `document-it` for
-  that document.
+  history: state the constraint instead, or delete it. Keep a comment only
+  when deleting it loses information the code cannot express: a rationale, a
+  rejected alternative, a constraint the types cannot state. When a rename, a
+  type, or a test can carry that information, make that change instead of the
+  comment. Put a lint or type suppression on the line that triggers it, never
+  on the file, and name the rule and the condition for removing it. Delete
+  documentation your change made false. When the agreed outcome needs a
+  standalone document — a README, a guide, an ADR — call the Skill tool with
+  `document-it` for that document.
 
 ## Test the contract
 
