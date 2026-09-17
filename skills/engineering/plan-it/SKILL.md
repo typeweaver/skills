@@ -49,10 +49,9 @@ consequence.
   step, and name the decision it unlocks and the observation that settles it.
 - Validate at the end across behavior, the regressions this change could cause,
   and every document or operational setting the change makes false.
-- Cut milestones as tracer bullets: each carries one narrow case end to end
-  through every layer the full outcome touches, so the system runs after it.
-  Use expand-contract — add the new path, migrate the callers, remove the old —
-  only for a refactor whose mechanical change is too wide to slice by case.
+- Cut milestones as tracer bullets: one narrow case through every layer, the
+  system running after each. Use expand-contract only when the mechanical
+  change is too wide to slice by case.
 - When outcomes can ship without one another, write a roadmap plus one plan per
   milestone. Keep the shared context in the roadmap, and in each milestone plan
   enough to execute it without reading its siblings; the template's Related
