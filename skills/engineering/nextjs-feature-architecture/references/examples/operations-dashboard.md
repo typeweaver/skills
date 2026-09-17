@@ -43,16 +43,16 @@ remove its entry point.
 
 ## Assign state by lifecycle
 
-| Value                                   | Owner                                    |
-| --------------------------------------- | ---------------------------------------- |
-| Project identity                        | Route param                              |
-| Confirmed range and team filters        | Normalized URL search params             |
-| Current aggregate metrics               | Feature operation and its cache contract |
-| Refreshing activity feed                | browser query cache (TanStack Query)            |
-| Authoritative project status            | Server                                   |
-| Temporary status projection             | Mutation lifecycle or browser query cache|
-| Comparison candidates and tray state    | Scoped feature Zustand store             |
-| Hovered chart point or open widget menu | Local widget state                       |
+| Value                                   | Owner                                     |
+| --------------------------------------- | ----------------------------------------- |
+| Project identity                        | Route param                               |
+| Confirmed range and team filters        | Normalized URL search params              |
+| Current aggregate metrics               | Feature operation and its cache contract  |
+| Refreshing activity feed                | browser query cache (TanStack Query)      |
+| Authoritative project status            | Server                                    |
+| Temporary status projection             | Mutation lifecycle or browser query cache |
+| Comparison candidates and tray state    | Scoped feature Zustand store              |
+| Hovered chart point or open widget menu | Local widget state                        |
 
 The URL, browser query cache, and store solve different problems. Do not mirror the
 range into Zustand, copy the activity result into the store, or put comparison
