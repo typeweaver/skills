@@ -3,6 +3,10 @@
 Facts that change between tool versions. Verify against the installed
 versions before proposing; the skill body owns the procedure.
 
+Propose these layers, in this order: compiler, type-aware lint, complexity,
+framework analyzers, format, dead code and dependencies, module boundaries,
+repository invariants, supply chain, published packages.
+
 ## Compiler
 
 - TypeScript 7 defaults to `strict: true`, `types: []`, `rootDir: "./"`,
@@ -30,6 +34,11 @@ versions before proposing; the skill body owns the procedure.
 - Boundaries: scoped `no-restricted-imports` overrides per folder enforce
   import direction without a second tool, and also catch type-only edges that
   `import-x/no-cycle` does not count.
+
+## Complexity
+
+- Cognitive complexity, not only cyclomatic. Start from the tool default and
+  the codebase's current distribution. The skill body owns the too-tight test.
 
 ## Framework analyzers
 

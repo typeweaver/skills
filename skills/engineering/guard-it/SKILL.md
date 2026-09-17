@@ -34,38 +34,21 @@ repository's configuration.
 
 ## Propose the guardrail set
 
-Read [references/guardrails.md](references/guardrails.md) first: it holds the
-per-layer flags, rule priorities, tool choices, and version caveats. For each
-layer, propose the strictest setting the codebase can adopt now and name what
-it prevents. Skip a layer only with a stated reason.
+Read [references/guardrails.md](references/guardrails.md) first. Propose every
+layer it names: the strictest setting the codebase can adopt now, and what it
+prevents. Skip a layer only with a stated reason.
 
-- **Compiler.** Strict-family flags and an explicit `types` list.
-- **Type-aware lint.** One linter in typed mode, prioritizing the rules that
-  catch agent-written defects. Configure it to fail on inline disable
-  directives or not to honor them; a reason comment is not a gate.
-- **Complexity.** Cognitive complexity, not only cyclomatic, from the tool
-  default and the codebase's current distribution. A threshold is too tight
-  when meeting it needs an extraction whose only caller is the function it left
-  and whose name describes a position (`handleRest`, `step2`) rather than a
-  concept: that lowers the score and nothing else. Raise the threshold with a
-  stated reason or leave the function in the baseline.
-- **Framework analyzers.** Official presets, pinned compatible versions, and
-  exactly one owner per diagnostic: compiler or linter, never both.
-- **Format.** One formatter in check mode in CI, matched to the linter family.
-- **Dead code and dependencies.** Unused files, exports, and dependencies, in
-  the mode that does not silently skip devDependencies.
-- **Module boundaries.** Cycles, orphans, and forbidden import directions.
-  Use the restricted-import rules of the linter already in place before adding
-  a dependency tool. A boundary is intended when the repository documents it
-  or the import graph already follows it; anything else is an architecture
-  proposal for the report, not a rule.
-- **Repository invariants.** When no tool encodes an invariant the repository
-  relies on, write the guard: a small script over the source graph, an
-  ownership ledger, or the emitted bundle, run by the same root check.
-- **Supply chain.** Install-delay and dependency-build restrictions,
-  lockfile-only installs in CI, and pinned, audited CI workflow actions.
-- **Published packages.** Packaging validation and a packed-tarball smoke test
-  installed with npm, not only the workspace package manager.
+- A complexity threshold is too tight when meeting it needs an extraction
+  whose only caller is the function it left and whose name describes a
+  position (`handleRest`, `step2`) rather than a concept. Raise the threshold
+  or baseline that function.
+- Configure the linter to fail on inline disable directives or not to honor
+  them; a reason comment is not a gate.
+- A module boundary is intended when the repository documents it or the import
+  graph already follows it; anything else is an architecture proposal, not a
+  rule.
+- When no tool encodes an invariant the repository relies on, write the guard
+  and run it from the same root check.
 
 ## Prove enforcement
 
