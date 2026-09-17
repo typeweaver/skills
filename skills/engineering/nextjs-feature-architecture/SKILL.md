@@ -22,7 +22,9 @@ stop and run step 1.
 request -> route contract -> page composition -> feature -> data access
 ```
 
-This is an ownership model, not a directory template. Follow the target
+This is an ownership model, not a directory template. A new `features/`,
+`widgets/`, or `shared-ui/` folder the repository does not already use is that
+template: stop and name owners in the existing tree. Follow the target
 repository and its installed Next.js version. Version-sensitive APIs
 (`error.tsx` props, cache primitives, request APIs) change between releases:
 verify against the installed version, and when you cannot, say so instead of
