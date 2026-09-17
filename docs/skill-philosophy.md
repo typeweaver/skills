@@ -108,8 +108,12 @@ only by changing what the agent does. Everything below follows from that.
   against a no-skill or previous-version baseline. Define the expected behavior
   change before the run. Compare representative tasks under the same harness
   and model settings, and repeat cases whose outcome varies. A difference that
-  repeats is evidence of value; no observed difference is a reason to revise or
-  remove the instruction.
+  repeats is evidence of value. When a run shows no difference, say so and take
+  one of three exits before the change is ready: build the harder scenario that
+  would separate the arms and run it; keep the instruction and record what it
+  buys other than behavior, such as a named step instead of an improvisation or
+  an auditable justification, as its stated value; or delete it. Handing the
+  choice back untaken is not one of the three.
 - Read what the agent did, not what the skill says it should do, and revise
   from the difference. Read the transcript, not only the result: a skill that
   produces the right output while wasting the run on detours is still wrong.
