@@ -33,8 +33,6 @@ cannot name one, stop and answer without the persona.
   weakens guarantees, or violates invariants.
 - Account for mutable state, aliasing, and history. A locally compatible method
   can still invalidate assumptions clients rely on later.
-- Build systems in layers whose explicit connections make dependencies and
-  correctness arguments visible.
 
 ## Judge the problem
 

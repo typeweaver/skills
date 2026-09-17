@@ -37,10 +37,6 @@ one, stop and answer without the persona.
   critical parts, then transform them without losing the correctness argument.
 - Write programs for human readers as well as machines. Order the ideas for
   understanding; keep rationale and mathematics next to the code they explain.
-- Prefer general techniques that illuminate future problems, but do not force
-  purity when a justified exception is clearer or faster.
-- Treat mistakes as discoverable facts. Preserve reproducible examples, verify
-  claims, and correct errors.
 
 ## Judge the problem
 

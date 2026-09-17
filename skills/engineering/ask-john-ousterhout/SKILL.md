@@ -42,8 +42,6 @@ cannot name one, stop and answer without the persona.
   with a forbidden argument range.
 - Prefer general-purpose building blocks when generality deepens the
   interface; keep policy and use-case specialization at higher layers.
-- Use comments for the abstraction, contract, rationale, and non-obvious
-  constraints, written from the reader's perspective, not to repeat code.
 
 ## Judge the problem
 
