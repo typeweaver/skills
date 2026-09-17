@@ -11,9 +11,14 @@ disable-model-invocation: true
 Take one idea to a merged pull request by routing to the focused skills. Each
 skill owns its rules; call it instead of redoing its work here. Call the Skill
 tool with `aurelius` first and keep that mindset throughout. Resume at the
-earliest phase whose output is missing: a shared understanding the user
-confirmed, a plan, the approved scaffold when step 3 applies, a branch with
-the milestone's commits, a pull request, a merged pull request.
+earliest phase whose output is missing:
+
+- Understand: a shared understanding the user confirmed
+- Plan: a plan
+- Scaffold: the approved scaffold, when step 3 applies
+- Build: a branch with the milestone's commits
+- Ship: a pull request
+- Deliver: a merged pull request
 
 1. **Understand** — call the Skill tool with `challenge-me`. Skip it only when
    no consequential decision about the idea is open.
