@@ -16,25 +16,19 @@ only when the user asks for that specific change.
 
 ## Locate the session record
 
-1. Probe the harness for a session store, assuming no directory layout: a
-   command that lists, resumes, or exports sessions, a configured transcript or
-   log location, or an environment variable naming the current session. Read
-   what it returns for the session under review and use it.
-2. Ask the user for the path when the session under review is not the one you
-   are in and the probe found nothing.
-3. When the probe finds a store you cannot read, or the only record is the work
-   the session left behind — commits, pull requests, issues, review comments —
-   say so and use that record. Name it as the source and say which of the steps
-   below it cannot satisfy.
-4. Otherwise use the conversation you are in. It is a complete record for this
-   skill; name the source you used instead of stopping.
+Use a harness session store if a command, config, or env var names one. If the
+session is not this conversation and nothing turned up, ask for the path. If
+the store is unreadable, use the work it left — commits, pull requests, issues,
+review comments — and say which later steps that record cannot satisfy.
+Otherwise use this conversation. Name the source; do not stop for lack of a
+transcript.
 
-Before quoting anything, scan it for credentials, tokens, private keys, `.env`
-contents, and internal hostnames the repository does not already publish, and
-name what the value identifies instead of pasting it.
+Before quoting, scan for credentials, tokens, private keys, `.env` contents,
+and internal hostnames the repository does not already publish; name what the
+value identifies instead of pasting it.
 
-Done when you can name the source you read and its bounds: the first and last
-turn of a transcript, or the first and last artifact of a work record.
+Done when you can name the source and its bounds: first and last turn, or first
+and last artifact.
 
 ## Build the arc
 
