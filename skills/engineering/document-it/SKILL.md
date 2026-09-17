@@ -28,14 +28,10 @@ Write down one line each: who reads this, the one question they arrive with,
 and which type answers it. Use one type per document. When the material needs
 two, write two documents and link them.
 
-- **Tutorial** — a newcomer needs a first success. Ordered steps that work end
-  to end, one path, no alternatives, no rationale.
-- **How-to** — someone with a stated problem needs it solved. Prerequisites,
-  the steps, the result they can check.
-- **Reference** — someone using the machinery needs its exact behavior.
-  Complete, ordered for lookup, no teaching.
-- **Explanation** — someone needs to understand why it is this way. Context,
-  the alternatives rejected, the consequences.
+- **Tutorial** — first success, one path, no alternatives, no rationale.
+- **How-to** — stated problem, prerequisites, steps, a result they can check.
+- **Reference** — exact behavior, ordered for lookup, no teaching.
+- **Explanation** — why it is this way, alternatives rejected, consequences.
 
 Tells that the types are mixed: a rationale paragraph between numbered steps;
 every option listed inside a walkthrough; a first-success path that branches on
@@ -59,16 +55,13 @@ the first paragraph, with no preamble before the answer.
 
 ## 3. Write plainly
 
-Say what you mean. When a literal phrase exists, use it.
-
 - Mark a requirement as one ("must", "do not") and a recommendation as one
   ("prefer", "consider"). Do not leave the reader to guess which a sentence is.
 - Define a term the first time it appears, once, then use it exactly.
-- Mannered prose is the anti-pattern: metaphor and flourish standing in for
-  direct statement. Tells: a metaphor a reader could take literally and be
-  wrong; an opening sentence that announces what the section will do; a word
-  chosen for rhythm that a plainer word would replace without loss. Replace each
-  with the literal statement.
+- Mannered prose: a metaphor a reader could take literally and be wrong; an
+  opening sentence that announces what the section will do; a word chosen for
+  rhythm that a plainer word would replace without loss. Replace each with the
+  literal statement.
 
 ## 4. Delete
 
