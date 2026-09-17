@@ -1,34 +1,40 @@
 ---
 name: challenge-me
-description: Turn an underspecified idea into a shared, challenged understanding
-  before planning. Use when unclear goals, scope, assumptions, risks, or
-  research needs could materially change the outcome.
+description: Stress-test an idea before anyone plans or builds it. Use when
+  the user brings an idea, feature request, or proposal whose goal, scope,
+  or approach is not yet settled, wants that idea challenged before anyone
+  plans it, or asks what they are missing. Not for writing the plan,
+  summarizing where things stand, or ideas already settled enough to plan. Not
+  for challenging a decision the user has already framed; that is `aurelius`.
 ---
 
 # Challenge Me
 
-Interrogate the idea until it survives. Build a shared understanding by
-stress-testing the user's goals, assumptions, and reasoning — not by
-collecting requirements politely.
+Settle every consequential decision about the idea before anyone plans it.
+The user decides; you research, recommend, and keep asking until the frontier
+is empty.
 
-## Interrogate in rounds
+A decision is a choice only the user can make: outcome, scope boundary,
+preference, cost, or risk. A fact is anything the repository, documentation,
+or environment answers. A decision is consequential when a different answer
+would change the plan's steps, its scope boundary, or a choice that is
+expensive to reverse: data model, public interface, vendor, stored data. It is
+settled when the user picks an option or accepts the recommendation, deferred
+when the user chooses to decide it later. The frontier is every consequential
+decision that is neither settled nor deferred and whose prerequisites are
+settled; a decision whose prerequisite is deferred is deferred with it.
 
-Treat the problem as a decision tree: each answered question opens deeper
-follow-ups. Every round, ask the questions whose prerequisites are already
-settled, and continue until no consequential branch is unexplored — never
-stop after one polite round.
+## Run a round
 
-- Ask only questions that probe ground the user has plausibly not settled yet
-  or whose answer changes the outcome — never ask for the sake of asking, and
-  pair every question with a recommendation the user can simply accept.
-- Challenge weak, vague, or contradictory answers directly and immediately.
-- Surface risks, alternatives, and blind spots the user has not mentioned.
-- Research facts yourself (repository, documentation, environment). Ask the
-  user only for decisions: outcomes, boundaries, preferences, cost, risk, and
-  irreversible choices. Decide reversible implementation details yourself.
+Research the facts this round depends on and report what you found with its
+source. Facts are your job, never the user's: if you catch yourself asking
+something a file or document answers, read it instead.
 
-Ask at most three questions per round, in plain language at the user's
-decision level, each formatted as:
+Ask at most three questions from the frontier, prerequisites first, in plain
+language at the user's decision level. A risk or alternative the user has not
+named enters the frontier when it is consequential; put it there as a decision:
+accept, mitigate, or rule out. Decide anything reversible yourself. Give each
+question two to four options and exactly one recommendation:
 
 ```markdown
 ### 1. <short decision title>
@@ -41,20 +47,31 @@ decision level, each formatted as:
 - **B — <option>:** <consequence>
 ```
 
-Offer 2–4 concrete options and recommend exactly one. Let the user answer
-with selections such as `1A, 2B` or `use the recommendations`.
+The user may answer with `1A, 2B` or `use the recommendations`.
 
-## Finish
+When an answer restates the goal, names a best practice instead of an option,
+picks two options at once, or contradicts an earlier answer, quote it in the
+next round, name the tell, and re-ask with options that exclude each other. A
+changed answer returns every decision that rested on it to the frontier. When
+one word covers two things or two words cover one thing, propose one term and
+use it from then on.
 
-Stop when every consequential decision is settled, challenged, or explicitly
-deferred — or when further questions would no longer change the direction.
-Conclude with a shared understanding readable in under half a minute:
+## Stop
 
-1. Two or three plain sentences stating the outcome and the agreed direction.
-2. Three to five bullets covering scope boundaries, shaping decisions,
-   accepted risks or remaining research, and the recommended next artifact.
-3. One simple diagram (Mermaid or ASCII) only when it clarifies the direction.
+Stop when the frontier is empty. Before writing the summary, list for yourself
+the steps a plan would contain and keep that list out of the conversation; a
+step with an open consequential choice reopens the frontier. If you catch
+yourself summarizing while a frontier question remains, ask it instead.
 
-State explicitly when nothing material remains open, and ask the user to
-confirm the shared understanding before the next step — whatever it is —
-begins.
+The summary is the shared understanding:
+
+1. One sentence stating that no consequential decision is open, naming any
+   that are deferred.
+2. Two or three sentences on the outcome and the agreed direction.
+3. Three to five bullets: scope boundaries, settled decisions with their
+   reasons, accepted risks and remaining research, the recommended next
+   artifact.
+4. One Mermaid or ASCII diagram only when the direction is a flow or structure
+   among three or more parts.
+
+Ask the user to confirm the shared understanding before any next step begins.

@@ -6,8 +6,9 @@ from task context; user-invoked skills start only by explicit human command.
 
 ## Model-invoked
 
-- **[aurelius](./aurelius/SKILL.md)** — Bring a trusted senior engineering
-  companion into systems, architecture, and consequential decisions.
+- **[aurelius](./aurelius/SKILL.md)** — Adopt a candid senior engineer who
+  recommends one option with its decisive tradeoff and owns the outcome inside
+  the approved scope.
 - **[ask-rich-hickey](./ask-rich-hickey/SKILL.md)** — Judge a software problem
   through Rich Hickey's engineering mindset.
 - **[ask-martin-fowler](./ask-martin-fowler/SKILL.md)** — Judge evolving
@@ -22,8 +23,8 @@ from task context; user-invoked skills start only by explicit human command.
   interfaces, and patches through Linus Torvalds's engineering mindset.
 - **[ask-donald-knuth](./ask-donald-knuth/SKILL.md)** — Judge algorithms and
   programs through Donald Knuth's engineering mindset.
-- **[challenge-me](./challenge-me/SKILL.md)** — Shape an unclear problem into a
-  shared, challenged understanding.
+- **[challenge-me](./challenge-me/SKILL.md)** — Stress-test an idea in rounds
+  until every consequential decision is settled.
 - **[plan-it](./plan-it/SKILL.md)** — Turn shared understanding into a durable,
   handoff-ready engineering plan.
 - **[scaffold-it](./scaffold-it/SKILL.md)** — Lay out the files, signatures,
@@ -35,12 +36,13 @@ from task context; user-invoked skills start only by explicit human command.
 - **[nextjs-feature-architecture](./nextjs-feature-architecture/SKILL.md)** —
   Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
-- **[brief-me](./brief-me/SKILL.md)** — Summarize a discussion, plan,
-  implementation, or reviewed delivery at the right level of detail.
+- **[brief-me](./brief-me/SKILL.md)** — Re-orient a reader on a discussion,
+  plan, implementation, or reviewed delivery in one read.
 - **[review-it](./review-it/SKILL.md)** — Review a code change or pull request
   diff and return findings that name what breaks, backed by the diff.
-- **[define-goal](./define-goal/SKILL.md)** — Turn a request into a concise,
-  verifiable goal and stopping condition.
+- **[define-goal](./define-goal/SKILL.md)** — Turn a request into one goal an
+  agent can work against alone, with its completion evidence and stop
+  condition.
 - **[to-issues](./to-issues/SKILL.md)** — Record actionable work in exactly one
   place: an authorized tracker, or local files.
 - **[conventional-commit](./conventional-commit/SKILL.md)** — Create coherent
