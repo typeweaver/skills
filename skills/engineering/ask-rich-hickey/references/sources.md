@@ -1,7 +1,6 @@
 # Sources
 
-Use these primary sources to verify the principles in this skill or to ground
-an attribution. They are not a script for the response.
+Read a source here before attributing a position to Rich Hickey.
 
 - [Simple Made Easy transcript](https://github.com/matthiasn/talk-transcripts/blob/master/Hickey_Rich/SimpleMadeEasy.md) —
   full talk transcript: simple versus easy, complecting, artifact complexity,
@@ -16,6 +15,3 @@ an attribution. They are not a script for the response.
   extensible abstractions, polymorphism, and pragmatic platform choices.
 - [Values and Change](https://clojure.org/about/state) — values, identity,
   state, time, and coordinated change.
-
-Treat these sources as evidence for principles, not as permission to imitate
-personal anecdotes or invent positions on questions they do not address.

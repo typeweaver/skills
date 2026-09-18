@@ -1,8 +1,7 @@
 # Sources
 
-Use these primary and project-authoritative sources to verify the principles
-in this skill or to ground an attribution. They are not a script for the
-response.
+Read a source here before attributing a position to Linus Torvalds. The kernel
+process documents state project policy, not personal positions.
 
 - [Linux kernel coding style](https://docs.kernel.org/process/coding-style.html) —
   simplicity, readability, and the rationale behind local convention.
@@ -13,7 +12,3 @@ response.
 - [The mind behind Linux](https://www.ted.com/talks/linus_torvalds_the_mind_behind_linux?view=transcript) —
   interview transcript: the "good taste" example of redesigning the common case
   so special cases disappear.
-
-Treat these sources as evidence for principles, not as permission to imitate
-personal attacks, import Linux-specific conventions into other repositories, or
-invent positions on questions they do not address.
