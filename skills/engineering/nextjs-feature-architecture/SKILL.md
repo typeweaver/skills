@@ -1,60 +1,63 @@
 ---
 name: nextjs-feature-architecture
-description: Design, implement, refactor, or review Next.js App Router
-  architectures using feature-oriented server composition. Use when deciding
-  route or page responsibilities, feature and UI boundaries, Server and Client
-  Components, state ownership, data access, Suspense, errors, mutations,
-  caching, or dependency direction. Use for redesigns or migrations only when
-  the task authorizes architectural change.
+description: Decide where each part of a Next.js App Router feature lives —
+  route contract, page composition, feature, shared UI, state owner, and the
+  Server/Client Component boundary. Use when adding or restructuring a feature,
+  page, layout, or route; when choosing between the URL, the server, a browser
+  query cache, or a client store for a state value; when wiring Server
+  Functions, Suspense, or cache invalidation across a feature; or when
+  reviewing an App Router change for ownership and dependency direction. Not
+  for Next.js version upgrades, styling, or debugging one failing component or
+  Server Function.
 ---
 
 # Next.js Feature Architecture
 
-Keep an App Router feature explainable as:
+Every decision here assigns an owner. Name the owner before adding the
+structure that holds it. If you catch yourself creating a store, provider,
+barrel, or directory before you have named the owner of the value it holds,
+stop and run step 1.
 
 ```text
 request -> route contract -> page composition -> feature -> data access
 ```
 
-Apply this as an ownership model, not a directory template. Follow the target
-repository and its installed Next.js version. Verify current documentation
-before choosing version-sensitive request, rendering, mutation, or caching
-APIs.
+This is an ownership model, not a directory template. A new `features/`,
+`widgets/`, or `shared-ui/` folder the repository does not already use is that
+template: stop and name owners in the existing tree. Follow the target
+repository and its installed Next.js version. Version-sensitive APIs
+(`error.tsx` props, cache primitives, request APIs) change between releases:
+verify against the installed version, and when you cannot, say so instead of
+asserting.
+
+Three terms, used exactly. A **Server Function** is a `'use server'` function a
+Client Component can call; this skill never says Server Action or adapter. A
+**feature operation** is the server-side entry point that owns one use case:
+authorization, orchestration, mapping, and cache policy. A **browser query
+cache** is the client-side cache of server data, such as TanStack Query.
 
 ## Set the architecture scope
 
-Judge the existing architecture on its merits. Do not preserve a boundary
-merely because it already exists, and do not impose this model unless the
-task authorizes architectural change.
+Do not preserve a boundary merely because it exists, and do not impose this
+model unless the task authorizes architectural change.
 
-- When implementation is limited to a feature or fix, keep the app working,
-  extract one capability from the existing route, and leave neighboring
-  routes alone. Surface leftover old boundaries as debt with a repayment
-  trigger instead of silently restructuring them.
-- When the task includes an authorized redesign or migration, define a
-  coherent target from these principles and move toward it in
-  behavior-preserving steps. Do not rewrite the application to match a
-  reference tree.
-- Invoking this skill selects an architectural lens; it does not expand the
-  requested scope.
-- When the task is a review or assessment, report per invariant with one
-  entry per finding: **Finding** (what violates which invariant), **Evidence**
-  (files and import lines), **Owner** (who should own it), **Repay when** (the
-  trigger that justifies the change). Order by the cost of leaving it. Propose;
-  do not restructure.
-
-## Read conditional guidance
-
-Read only the references that apply:
-
-- [example-structure.md](references/example-structure.md) when a feature grows
-  beyond one composition root or gains a named external compositor.
-- [state-coordination.md](references/state-coordination.md) when several
-  widgets coordinate URL, server, query-cache, local, or transient state.
-- [shadcn.md](references/shadcn.md) when shadcn and Tailwind boundaries matter.
-
-Worked scenarios live in `references/examples/`; load at most one, and only
-when its situation matches the task.
+- Implementation or fix: keep the app working, extract one capability from the
+  existing route, and leave neighboring routes alone. Surface leftover old
+  boundaries as debt with a repayment trigger instead of restructuring them.
+  This skill selects an architectural lens; it does not expand the scope.
+- Authorized redesign or migration: name the target owner for every piece you
+  will move and the order of the behavior-preserving steps before moving
+  anything. Do not rewrite the application to match a reference tree.
+- Review or assessment: report findings only; propose, do not restructure. Use
+  `review-it`'s severities. **Blocking** — wrong as written: a client module
+  imports a `server-only` operation, two places write one state value, or a
+  mutation invalidates a cache the shown UI never reads. **Important** — the
+  next change pays: a deep import into another feature's internals, a state
+  value with no named owner, or feature behavior in a page or layout.
+  **Follow-up** — boundary debt this change did not introduce. Every finding
+  names the invariant, quotes the file and import line, names the owner that
+  should exist, and states the trigger that justifies repaying it. Order by the
+  cost of leaving it.
 
 ## Preserve six invariants
 
@@ -66,229 +69,63 @@ when its situation matches the task.
 6. Dependencies cross explicit, environment-safe boundaries.
 
 When the product has a shared visual language, Shared UI owns that language.
-Add structure only when it protects one of these boundaries. Walk the sections
-below in order for every feature: ownership, boundaries, state, server
-composition, then loading, failure, and caching.
+Add structure only when it protects one of these boundaries.
 
-## Use ownership vocabulary
+## Run the procedure
 
-- A **feature** owns application behavior or a user capability. It may be
-  behavior-only, exposing operations or hooks and no widget.
-- A **widget** is an independently composable UI region exposed by a feature,
-  with its own data requirements and UX lifecycle. It is not another
-  architecture layer: a feature may expose several widgets, and a widget does
-  not require its own directory.
-- **Shared UI** owns reusable visual and interaction primitives without feature
-  behavior or authoritative product state.
-- A **shared product component** composes shared UI for several features but
-  owns neither application behavior nor authoritative state. It may read
-  product context; it never owns or mutates it.
-- **Shell regions** such as header, navigation, and footer belong to `app` or a
-  layout, not to a feature.
-- A **domain or platform module** owns reusable headless policy, data access, or
-  infrastructure capability below feature use cases. It exposes narrow
-  contracts and does not depend on route-facing features.
-
-Use this heuristic:
+Work the steps in order for every feature, classifying each piece of behavior,
+UI, and data with this heuristic:
 
 ```text
 Application behavior or user capability? -> feature
-Independently composable feature region?  -> widget
+Independently composable feature region? -> widget
 Reusable visual or interaction primitive? -> shared UI
 Reusable product composition, no natural feature owner? -> shared product component
-Reusable headless policy or capability?   -> domain or platform module
+Reusable headless policy or capability? -> domain or platform module
 Feature-specific behavior or composition? -> keep it in that feature
 ```
 
-Choose feature boundaries by the knowledge and changes they contain, not by
-screen rectangles. Keep behavior together when policy, state, failure, and
-lifecycle change together. Split when product policy, authorization, freshness,
-or consumers evolve independently and the resulting interface hides meaningful
-complexity. Treat team or deployment boundaries as additional evidence, not the
-sole reason for a feature.
+Read the reference a step names before deciding that step; skip it only when
+the step raises no decision.
 
-## Establish ownership
+1. **Name the owner of every part.**
+   [references/ownership.md](references/ownership.md) holds the vocabulary, the
+   feature-split test, and what routes, layouts, pages, and features own. When
+   the repository uses shadcn and Tailwind, read
+   [references/shadcn.md](references/shadcn.md) for the path mapping.
+2. **Fix the dependency direction and the public surface.** Read
+   [references/boundaries.md](references/boundaries.md) before adding a barrel,
+   an entry point, a directory, or an import rule.
+3. **Give every state value one owner.** A shallow URL update (`history.*`, and
+   the default of libraries such as nuqs) changes the URL and client hooks
+   only; Server Components and page `searchParams` do not re-render. Classify
+   every value in the table in
+   [references/state-coordination.md](references/state-coordination.md) before
+   choosing a library.
+4. **Compose from the server.** Read
+   [references/server-composition.md](references/server-composition.md) before
+   adding `"use client"` or choosing a mutation transport.
+5. **Define loading and failure.** Read
+   [references/loading-and-failure.md](references/loading-and-failure.md) when
+   placing a Suspense boundary, a fallback, or an error boundary.
+6. **Write the cache contract.** A server-render cache and a browser query
+   cache are separate representations: `queryClient.invalidateQueries` cannot
+   refresh a Server Component. Read
+   [references/caching.md](references/caching.md) before caching a feature
+   operation or invalidating one.
 
-- Treat `params`, `searchParams`, cookies, headers, locale, and other request
-  inputs as boundary data. The route owns their contract semantically but need
-  not resolve every value eagerly at the top of the tree.
-- Resolve request-time values at the narrowest boundary that needs them. Parse,
-  validate, normalize, and default each value there before feature behavior
-  uses it. Do not await `params`, `searchParams`, `cookies()`, or `headers()`
-  at the page top when the route has a static shell to protect; a fully
-  dynamic route may resolve them at the top. A Suspense fallback that can
-  never render on first load is theatrical: move the await below the boundary
-  or remove the boundary.
-- Verify identity and authorization on the server; never trust client-provided
-  claims merely because route inputs were parsed.
-- Pass normalized request values into cached or otherwise reusable work.
-- Keep layouts focused on the document or segment-wide shell, shared providers,
-  navigation, and presentation that truly persists across child routes. Do not
-  move one page's widget composition or feature behavior into a layout.
-- Keep pages as route composition roots: parse the route contract, compose
-  public feature surfaces, own route-level layout, and place loading and error
-  boundaries. Prefer one feature root for a page that presents one capability;
-  let that root hide its widget decomposition, data access, and internal layout.
-  Export an individual widget only when a named external compositor needs it,
-  such as a page interleaving independent features, a layout or parallel route,
-  or another route that consumes a subset.
-- Keep feature UI, contracts, operations, and actions together. Create
-  subdirectories only as responsibilities emerge.
-- Keep feature-specific components, hooks, operations, and utilities inside
-  their owner; do not turn global technical folders into dumping grounds.
-- Give a workflow that genuinely spans multiple features an explicit
-  orchestration owner. The orchestrator depends on public participant
-  operations or injected ports; participants do not import one another. Pass a
-  workflow command into participant UI when it must emit an intent, rather than
-  creating a reverse import. Do not hide cross-feature behavior in a participant
-  or generic shared folder.
-- Move product-aware code to a shared product component only when it has
-  multiple real consumers and no feature is its natural owner.
-- Let a feature operation own its use-case contract and orchestration. Reuse
-  central authorization, domain policy, data access, telemetry, and vendor
-  adapters through headless domain or platform modules when those concerns span
-  features. Recheck authorization at every trusted entry point; centralizing
-  policy does not make callers trusted.
-
-## Protect module and runtime boundaries
-
-Prefer UI dependencies that flow from `app` to `features` to shared product
-components to shared UI. Let server dependencies flow from feature operations
-through domain or platform contracts to infrastructure. These are ownership
-directions, not required folders. Hide storage, transport, credentials, and
-vendor details behind the narrowest meaningful contract.
-
-- Expose intentional feature entry points; reject deep imports into another
-  feature's internals.
-- Compose peer features in `app` or an explicit workflow instead of importing
-  one feature's UI or internals into another. When several features reuse a
-  headless capability, move that capability below them rather than choosing one
-  feature as the accidental owner.
-- Keep server-only, client-only, and environment-neutral exports distinct. Do
-  not re-export them through one ambiguous barrel.
-- Use entry points such as `feature`, `feature/server`, and `feature/client`
-  only when real consumers need those different runtime capabilities. Do not
-  add symmetric barrels by convention.
-- Mark sensitive modules with `server-only` and browser-bound modules with
-  `client-only` when that makes invalid imports fail early.
-- Give browser reads a browser-safe transport. A client query must not import a
-  server-only feature operation; let a Route Handler or the repository's
-  established client transport delegate to that operation.
-- Pass only the data a Client Component needs across the server/client
-  boundary, using an explicit serializable DTO or view model rather than raw
-  storage or vendor objects.
-- Prefer route-level composition when two features only need to appear or react
-  to the same route state together.
-- When the repository's scale makes boundary drift costly, enforce public
-  entry points and forbidden import directions with its package, lint, or
-  dependency checks. Do not introduce enforcement tooling merely because this
-  skill was invoked. Read an existing import allowlist as evidence: each
-  approved edge is a boundary decision, and edges that service a cycle are
-  debt.
-
-## Assign state deliberately
-
-Choose one authoritative owner for every state value:
-
-| State                               | Typical owner                       |
-| ----------------------------------- | ----------------------------------- |
-| Navigable or shareable view state   | URL                                 |
-| Transient interaction state         | Local Client Component              |
-| Persistent UI preference            | Cookie or browser storage           |
-| Authoritative entity data           | Server or data layer                |
-| Temporary optimistic projection     | Client with explicit reconciliation |
-| Continuously refreshed browser data | Client cache, when justified        |
-
-- Put state in the URL when opening a copied URL should restore the view.
-- Treat URL changes as navigation. Prefer links or forms where they fit, and
-  centralize parameter semantics and dependent resets such as pagination.
-- Know which URL changes reach the server. A shallow update (`history.*`, and
-  the default of libraries such as nuqs) changes the URL and client hooks only;
-  Server Components and page `searchParams` do not re-render.
-- Overlays, sheets, and dialogs selected by URL on one route are page
-  composition: a page-owned Client compositor reads the URL and mounts the
-  peer features. Do not let one feature mount its peers, and do not make the
-  update notify the server unless a Server Component must observe it.
-- Do not introduce Context, a global store, or a client query cache merely to
-  avoid deciding ownership.
-- Scope a client store to a provider at the smallest common boundary when it
-  is initialized from server data or holds per-user state; a module-global
-  store is shared across requests during server rendering. A browser-only
-  store for transient UI state may stay module-global.
-- Give a browser query cache a non-zero default freshness so hydrated data is
-  not refetched immediately, and declare freshness per query where it differs.
-- Allow derived or optimistic copies only when their source and reconciliation
-  behavior are explicit.
-
-## Compose from the server
-
-- Start with Server Components. Introduce a Client Component only for browser
-  APIs, effects, local interaction, event handlers, high-frequency updates, or
-  optimistic feedback.
-- Keep `"use client"` boundaries close to the interaction because every import
-  below that boundary enters the client module graph.
-- Let a server-rendered widget own what data it needs; let a feature operation
-  own how that data is obtained.
-- Start independent work independently. Keep sequential work only when one
-  result truly depends on another.
-- Mutate through Server Functions by default; they run on the server, return
-  updated UI in one round trip, and are dispatched one at a time. Keep an
-  existing Route Handler transport for mutations when a client query cache
-  owns reconciliation and the repository has one HTTP error contract. Use Route
-  Handlers for webhooks, callbacks, non-HTML responses, and external
-  consumers. Never read through Server Actions, and never fetch from a Route
-  Handler inside a Server Component.
-- Validate and authorize inside every trusted mutation boundary, then make
-  invalidation or refresh behavior explicit.
-- Prefer links and forms for navigation and form-like interactions when they
-  provide a useful baseline; add client behavior for material UX improvements.
-
-## Design loading, failure, and caching
-
-- Place Suspense around regions that can meaningfully load, stream, reveal, or
-  refresh independently. Use route-level loading files when the whole segment
-  shares that lifecycle.
-- Keep a widget-shaped skeleton or fallback with the feature that owns the
-  widget. Let the page place or compose that fallback; do not duplicate feature
-  geometry in a route-level loading file unless the whole segment deliberately
-  owns one coordinated shell.
-- Match each fallback to the visual shape it replaces. Reset a boundary with a
-  key only when the content identity truly changed.
-- Model empty results, validation failures, denied access, rejected mutations,
-  and known dependency failures as expected outcomes. Use `notFound()`,
-  `redirect()`, and the repository's forbidden/unauthorized helpers at those
-  boundaries.
-- Reserve error boundaries and route error handling for unexpected failures.
-  Define loading, empty, expected-failure, and unexpected-failure behavior
-  before declaring the feature complete.
-- Treat caching as part of each server operation's data contract, not as an
-  incidental optimization. Keep the policy near the operation and define what
-  is cached, what identifies the cache entry, how long it may be stale, what
-  invalidates it, who owns that invalidation, and how users or tenants remain
-  isolated.
-- Treat a server-render cache and a browser query cache as separate
-  representations. `queryClient.invalidateQueries` cannot refresh a Server
-  Component.
-- Detect whether the repository uses Cache Components. Separate invalidating
-  cached data from making the current UI observe it. With Cache Components, use
-  `updateTag` in a Server Action for immediate read-your-own-writes,
-  `revalidateTag(tag, "max")` for stale-while-revalidate, and `revalidatePath`
-  when the path is the intended invalidation scope. `refresh()` refreshes the
-  client router from a Server Action but does not invalidate cached data.
-  Without Cache Components, `fetch` is uncached by default; use the repo's
-  `unstable_cache` / `revalidateTag` / `revalidatePath` primitives. Never
-  assume historical `fetch` cache defaults still apply.
-- Never set or delete cookies during render; HTTP forbids it once streaming
-  starts. Persist server-trusted preferences in a Server Function or Route
-  Handler. A browser-side cookie is acceptable for a non-sensitive preference
-  that the server treats as untrusted input.
-- Version-sensitive APIs (`error.tsx` props, cache primitives, request APIs)
-  change between releases. Verify against the installed version; when you
-  cannot, say so instead of asserting.
+Load at most one worked scenario, and only when its situation matches:
+[search-page.md](references/examples/search-page.md) for URL-owned search;
+[operations-dashboard.md](references/examples/operations-dashboard.md) for
+mixed freshness across widgets of one feature;
+[editor-workflow.md](references/examples/editor-workflow.md) for an unsaved
+working copy; and
+[master-detail-workspace.md](references/examples/master-detail-workspace.md)
+for navigable selection across route slots.
 
 ## Finish
 
-Implement the smallest complete slice. Test route parsing and feature
-operations directly; test navigation, mutation, and cache wiring at their
-integration boundaries. Correct unclear ownership or dependency direction
-before adding another layer.
+The design is done when every state value has one named owner, every
+cross-feature import goes through a public entry point, every feature operation
+that caches names what invalidates it and who owns that invalidation, and
+loading, empty, expected-failure, and unexpected-failure behavior is defined.

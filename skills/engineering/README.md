@@ -42,8 +42,8 @@ from task context; user-invoked skills start only by explicit human command.
   TypeScript project that fail CI on detectable defects and complexity drift,
   and prove that each one fires.
 - **[nextjs-feature-architecture](./nextjs-feature-architecture/SKILL.md)** —
-  Design feature-oriented Next.js App Router systems with explicit ownership
-  across runtime boundaries and coordinated state.
+  Decide where each part of a Next.js App Router feature lives, from the route
+  contract to the state owner.
 - **[brief-me](./brief-me/SKILL.md)** — Re-orient a reader on a discussion,
   plan, implementation, or reviewed delivery in one read.
 - **[review-it](./review-it/SKILL.md)** — Review a code change or pull request

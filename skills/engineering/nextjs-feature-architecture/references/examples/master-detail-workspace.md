@@ -57,12 +57,12 @@ behavior in the route slot or a generic modal provider.
 | ----------------------------------------- | ----------------------------------------- |
 | Selected item                             | Canonical route param                     |
 | Confirmed list filters, sort, and page    | Normalized URL search params              |
-| List results                              | Server operation or browser query cache   |
-| Authoritative item detail                 | Server operation or browser query cache   |
+| List results                              | Feature operation or browser query cache  |
+| Authoritative item detail                 | Feature operation or browser query cache  |
 | Whether navigation presents modal or page | Router composition and navigation context |
 | Dialog focus, disclosure, and animation   | Local dialog state                        |
 | Unsaved detail form fields                | Local form or scoped edit workflow        |
-| Optimistic item update                    | Mutation lifecycle or query cache         |
+| Optimistic item update                    | Mutation lifecycle or browser query cache |
 
 The same selected item identity must authorize and cache consistently in the
 modal and full-page renderings. Presentation context does not create a second
@@ -101,7 +101,7 @@ filters and pagination when returning.
 ## Coordinate data and mutations
 
 Server-render detail by default. Introduce TanStack Query when the detail or
-list genuinely needs browser polling, optimistic mutation, focus refetch, or
+list needs browser polling, optimistic mutation, focus refetch, or
 cache reuse across soft navigation.
 
 When a detail mutation also changes a list row:
@@ -134,7 +134,7 @@ updates. Use route identity and feature query contracts.
 - **Back and Forward:** Browser history should restore both collection view and
   selected detail without a competing store copy.
 - **Deep links:** Copied item URLs must work without a previously rendered
-  collection or client cache.
+  collection or browser query cache.
 - **Deleted item:** Define the list correction, detail outcome, close path, and
   cache invalidation together.
 - **Mobile presentation:** A narrow viewport may navigate to the canonical full

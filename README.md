@@ -158,8 +158,8 @@ delivery checkpoint.
   checks in a TypeScript project that fail CI on detectable defects and
   complexity drift, and prove that each one fires.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
-  — Design feature-oriented Next.js App Router systems with explicit ownership
-  across runtime boundaries and coordinated state.
+  — Decide where each part of a Next.js App Router feature lives, from the
+  route contract to the state owner.
 - **[brief-me](skills/engineering/brief-me/SKILL.md)** — Re-orient a reader on
   a discussion, plan, implementation, or reviewed delivery in one read.
 - **[review-it](skills/engineering/review-it/SKILL.md)** — Review a code change
