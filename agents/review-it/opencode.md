@@ -1,6 +1,6 @@
 ---
 description: Independently review a completed change or pull request in a fresh,
-  read-only context. Use before commit and for the complete pull-request diff.
+  read-only context. Report what breaks, backed by the lines that show it.
 mode: subagent
 hidden: true
 tools:
@@ -12,6 +12,13 @@ permission:
   skill:
     "*": deny
     review-it: allow
+    ask-barbara-liskov: allow
+    ask-donald-knuth: allow
+    ask-john-ousterhout: allow
+    ask-kent-beck: allow
+    ask-linus-torvalds: allow
+    ask-martin-fowler: allow
+    ask-rich-hickey: allow
   bash:
     "*": deny
     git diff*: allow
@@ -23,6 +30,16 @@ permission:
     find *: allow
     ls *: allow
     wc *: allow
+    pnpm *: allow
+    npm *: allow
+    npx *: allow
+    yarn *: allow
+    bun *: allow
+    make test*: allow
+    make check*: allow
+    cargo test*: allow
+    go test*: allow
+    pytest *: allow
 ---
 
 Activate the `review-it` skill and follow its review contract. Review the full

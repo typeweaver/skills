@@ -1,7 +1,7 @@
 ---
 name: review-it
 description: Independently review a completed change or pull request in a fresh,
-  read-only context. Use before commit and for the complete pull-request diff.
+  read-only context. Report what breaks, backed by the lines that show it.
 tools:
   - Read
   - Glob
@@ -9,6 +9,13 @@ tools:
   - Bash
 skills:
   - review-it
+  - ask-barbara-liskov
+  - ask-donald-knuth
+  - ask-john-ousterhout
+  - ask-kent-beck
+  - ask-linus-torvalds
+  - ask-martin-fowler
+  - ask-rich-hickey
 permissionMode: plan
 ---
 

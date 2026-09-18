@@ -1,6 +1,6 @@
 name: review-it
 description: Independently review a completed change or pull request in a fresh,
-  read-only context. Use before commit and for the complete pull-request diff.
+  read-only context. Report what breaks, backed by the lines that show it.
 adapters:
   claude-code:
     frontmatter:
@@ -11,6 +11,13 @@ adapters:
         - Bash
       skills:
         - review-it
+        - ask-barbara-liskov
+        - ask-donald-knuth
+        - ask-john-ousterhout
+        - ask-kent-beck
+        - ask-linus-torvalds
+        - ask-martin-fowler
+        - ask-rich-hickey
       permissionMode: plan
   opencode:
     frontmatter:
@@ -25,6 +32,13 @@ adapters:
         skill:
           "*": deny
           review-it: allow
+          ask-barbara-liskov: allow
+          ask-donald-knuth: allow
+          ask-john-ousterhout: allow
+          ask-kent-beck: allow
+          ask-linus-torvalds: allow
+          ask-martin-fowler: allow
+          ask-rich-hickey: allow
         bash:
           "*": deny
           "git diff*": allow
@@ -36,8 +50,18 @@ adapters:
           "find *": allow
           "ls *": allow
           "wc *": allow
+          "pnpm *": allow
+          "npm *": allow
+          "npx *": allow
+          "yarn *": allow
+          "bun *": allow
+          "make test*": allow
+          "make check*": allow
+          "cargo test*": allow
+          "go test*": allow
+          "pytest *": allow
   codex:
     description: Independently review a completed change or pull request in a fresh,
-      read-only context.
+      read-only context. Report what breaks, backed by the lines that show it.
     frontmatter:
       sandbox_mode: read-only

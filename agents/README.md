@@ -26,8 +26,10 @@ the idea directly.
 
 ## review-it
 
-A fresh, read-only subagent that loads the `review-it` skill and returns its
-findings to the orchestrating agent.
+A fresh, read-only subagent that loads the `review-it` skill, may invoke
+`ask-*` perspectives, and returns its findings to the orchestrating agent.
+It does not edit the tree. Package-manager and test commands may write
+caches; source files stay read-only.
 
 - [Codex adapter](review-it/codex.toml)
 - [Claude Code adapter](review-it/claude.md)
