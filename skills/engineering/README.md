@@ -55,8 +55,8 @@ from task context; user-invoked skills start only by explicit human command.
   place: an authorized tracker, or local files.
 - **[conventional-commit](./conventional-commit/SKILL.md)** — Create coherent
   Git commit boundaries and Conventional Commit messages.
-- **[create-pull-request](./create-pull-request/SKILL.md)** — Verify completed
-  work and create or update a focused pull request.
+- **[create-pull-request](./create-pull-request/SKILL.md)** — Open or update a
+  branch's pull request with the context a reviewer needs.
 - **[pr-review-loop](./pr-review-loop/SKILL.md)** — Work an open pull request's
   review comments and checks until a human merges it.
 
