@@ -33,6 +33,8 @@ from task context; user-invoked skills start only by explicit human command.
   for an agreed outcome, with tests that fail without it.
 - **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
   without narrating what the code already says.
+- **[document-it](./document-it/SKILL.md)** — Write a document that answers its
+  reader's questions and passes a fresh-reader test.
 - **[nextjs-feature-architecture](./nextjs-feature-architecture/SKILL.md)** —
   Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
