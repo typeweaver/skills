@@ -107,37 +107,40 @@ for a complete engineering handoff. When explicitly invoked, `drive-it` resumes
 at the earliest incomplete phase and coordinates the flow until a human merges
 the pull request. Use `brief-me` at any point for a concise snapshot of the current
 plan, decisions, implementation status, or final delivery. Expert personas such
-as `ask-rich-hickey` may be invoked explicitly or selected when their distinct
-lens is likely to materially improve the outcome. They shape the reasoning
-without replacing the active workflow or its output structure. External issues
-are created only after separate user authorization at the delivery checkpoint.
+as `ask-rich-hickey` apply when the user names the person, or when at least two
+viable options differ in that persona's domain; each `ask-*` description
+carries the rule. They shape the reasoning without replacing the active
+workflow or its output structure. External issues are created only after
+separate user authorization at the delivery checkpoint.
 
 ## Skills
 
 ### Engineering
 
-- **[aurelius](skills/engineering/aurelius/SKILL.md)** — Bring a trusted senior
-  engineering companion into systems, architecture, and consequential decisions.
+- **[aurelius](skills/engineering/aurelius/SKILL.md)** — Adopt a candid senior
+  engineer who recommends one option with its decisive tradeoff and owns the
+  outcome inside the approved scope.
 - **[drive-it](skills/engineering/drive-it/SKILL.md)** — Orchestrate the full
   engineering workflow from an idea to a merged pull request.
+- **[retro-it](skills/engineering/retro-it/SKILL.md)** — Trace every correction
+  in a finished session to its cause and propose the exact instruction change.
 - **[ask-rich-hickey](skills/engineering/ask-rich-hickey/SKILL.md)** — Judge a
-  software problem through Rich Hickey's engineering mindset.
+  design decision through Rich Hickey's engineering mindset.
 - **[ask-martin-fowler](skills/engineering/ask-martin-fowler/SKILL.md)** — Judge
-  evolving software through Martin Fowler's engineering mindset.
+  a change to existing software through Martin Fowler's engineering mindset.
 - **[ask-kent-beck](skills/engineering/ask-kent-beck/SKILL.md)** — Judge a
   change through Kent Beck's feedback-oriented engineering mindset.
 - **[ask-john-ousterhout](skills/engineering/ask-john-ousterhout/SKILL.md)** —
-  Judge software complexity through John Ousterhout's engineering mindset.
+  Judge a software design through John Ousterhout's engineering mindset.
 - **[ask-barbara-liskov](skills/engineering/ask-barbara-liskov/SKILL.md)** —
-  Judge abstractions and contracts through Barbara Liskov's engineering
-  mindset.
+  Judge an abstraction through Barbara Liskov's engineering mindset.
 - **[ask-linus-torvalds](skills/engineering/ask-linus-torvalds/SKILL.md)** —
   Judge code, interfaces, and patches through Linus Torvalds's engineering
   mindset.
 - **[ask-donald-knuth](skills/engineering/ask-donald-knuth/SKILL.md)** — Judge
-  algorithms and programs through Donald Knuth's engineering mindset.
-- **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Shape an unclear
-  problem into a shared, challenged understanding.
+  an algorithm or a program through Donald Knuth's engineering mindset.
+- **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Stress-test an
+  idea in rounds until every consequential decision is settled.
 - **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
   into a durable, handoff-ready engineering plan.
 - **[scaffold-it](skills/engineering/scaffold-it/SKILL.md)** — Lay out the
@@ -145,26 +148,32 @@ are created only after separate user authorization at the delivery checkpoint.
   implementing.
 - **[craft-it](skills/engineering/craft-it/SKILL.md)** — Build the smallest
   complete change for an agreed outcome, with tests that fail without it.
+- **[debug-it](skills/engineering/debug-it/SKILL.md)** — Diagnose a defect from
+  a red reproduction loop to a confirmed cause and a regression test.
+
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
+- **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
+  that answers its reader's questions and passes a fresh-reader test.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
-- **[brief-me](skills/engineering/brief-me/SKILL.md)** — Summarize a discussion,
-  plan, implementation, or reviewed delivery at the right level of detail.
+- **[brief-me](skills/engineering/brief-me/SKILL.md)** — Re-orient a reader on
+  a discussion, plan, implementation, or reviewed delivery in one read.
 - **[review-it](skills/engineering/review-it/SKILL.md)** — Review a code change
   or pull request diff and return findings that name what breaks, backed by
   the diff.
 - **[define-goal](skills/engineering/define-goal/SKILL.md)** — Turn a request
-  into a concise, verifiable goal and stopping condition.
+  into one goal an agent can work against alone, with its completion evidence
+  and stop condition.
 - **[to-issues](skills/engineering/to-issues/SKILL.md)** — Record actionable
-  work locally and synchronize it externally when authorized.
+  work in exactly one place: an authorized tracker, or local files.
 - **[conventional-commit](skills/engineering/conventional-commit/SKILL.md)** —
   Create coherent Git commit boundaries and Conventional Commit messages.
 - **[create-pull-request](skills/engineering/create-pull-request/SKILL.md)** —
   Open or update a branch's pull request with the context a reviewer needs.
-- **[pr-review-loop](skills/engineering/pr-review-loop/SKILL.md)** — Handle
-  review feedback and checks until a pull request is merged or blocked.
+- **[pr-review-loop](skills/engineering/pr-review-loop/SKILL.md)** — Work an
+  open pull request's review comments and checks until a human merges it.
 
 See the [engineering catalog](skills/engineering/README.md) for invocation
 details.
