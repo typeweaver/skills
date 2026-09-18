@@ -53,8 +53,8 @@ from task context; user-invoked skills start only by explicit human command.
   condition.
 - **[to-issues](./to-issues/SKILL.md)** — Record actionable work in exactly one
   place: an authorized tracker, or local files.
-- **[conventional-commit](./conventional-commit/SKILL.md)** — Create coherent
-  Git commit boundaries and Conventional Commit messages.
+- **[conventional-commit](./conventional-commit/SKILL.md)** — Create
+  Conventional Commits whose split and message follow from the diff.
 - **[create-pull-request](./create-pull-request/SKILL.md)** — Open or update a
   branch's pull request with the context a reviewer needs.
 - **[pr-review-loop](./pr-review-loop/SKILL.md)** — Work an open pull request's

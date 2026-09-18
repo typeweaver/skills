@@ -172,7 +172,7 @@ separate user authorization at the delivery checkpoint.
 - **[to-issues](skills/engineering/to-issues/SKILL.md)** — Record actionable
   work in exactly one place: an authorized tracker, or local files.
 - **[conventional-commit](skills/engineering/conventional-commit/SKILL.md)** —
-  Create coherent Git commit boundaries and Conventional Commit messages.
+  Create Conventional Commits whose split and message follow from the diff.
 - **[create-pull-request](skills/engineering/create-pull-request/SKILL.md)** —
   Open or update a branch's pull request with the context a reviewer needs.
 - **[pr-review-loop](skills/engineering/pr-review-loop/SKILL.md)** — Work an
