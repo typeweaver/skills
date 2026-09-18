@@ -9,6 +9,10 @@ allowlisted_hosts=("dl.acm.org")
 status=0
 checked=0
 
+if ! node "$repo_dir/scripts/check-relative-links.mjs"; then
+  exit 1
+fi
+
 is_allowlisted() {
   for host in "${allowlisted_hosts[@]}"; do
     case "$1" in
