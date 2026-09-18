@@ -1,4 +1,6 @@
 import { assert, it } from "@effect/vitest";
+import { readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 import type { AgentSpec } from "../src/agent-adapters.js";
 import {
   renderClaudeCode,
@@ -63,4 +65,21 @@ it("codex profile prepends its description to the shared instructions", () => {
 it("rendering is deterministic", () => {
   assert.equal(renderClaudeCode(spec), renderClaudeCode(spec));
   assert.equal(renderCodex(spec), renderCodex(spec));
+});
+
+it("aurelius-drive starts drive-it from agent selection on every harness", () => {
+  const root = resolve(import.meta.dirname, "../..");
+  const read = (relative: string): string => readFileSync(join(root, relative), "utf8");
+  const instructions = read("agents/aurelius-drive/instructions.md");
+  const claude = read("agents/aurelius-drive/claude.md");
+
+  assert.match(instructions, /Do not call the Skill tool with\s+`drive-it`/u);
+  assert.match(instructions, /Start a subagent only/u);
+  assert.match(claude, /initialPrompt: \/drive-it/u);
+  assert.match(claude, /skills:\n {2}- aurelius\n {2}- drive-it/u);
+  assert.match(read("agents/aurelius-drive/opencode.md"), /mode: primary/u);
+  assert.match(
+    read("agents/aurelius-drive/codex-profile.toml"),
+    /Do not call the Skill tool with\s+`drive-it`/u,
+  );
 });
