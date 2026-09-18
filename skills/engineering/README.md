@@ -31,6 +31,9 @@ from task context; user-invoked skills start only by explicit human command.
   and test cases of a plan for structure approval before implementing.
 - **[craft-it](./craft-it/SKILL.md)** — Build the smallest complete change
   for an agreed outcome, with tests that fail without it.
+- **[debug-it](./debug-it/SKILL.md)** — Diagnose a defect from a red
+  reproduction loop to a confirmed cause and a regression test.
+
 - **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
   without narrating what the code already says.
 - **[document-it](./document-it/SKILL.md)** — Write a document that answers its

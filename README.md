@@ -146,6 +146,9 @@ separate user authorization at the delivery checkpoint.
   implementing.
 - **[craft-it](skills/engineering/craft-it/SKILL.md)** — Build the smallest
   complete change for an agreed outcome, with tests that fail without it.
+- **[debug-it](skills/engineering/debug-it/SKILL.md)** — Diagnose a defect from
+  a red reproduction loop to a confirmed cause and a regression test.
+
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
 - **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
