@@ -141,8 +141,8 @@ separate user authorization at the delivery checkpoint.
   an algorithm or a program through Donald Knuth's engineering mindset.
 - **[challenge-me](skills/engineering/challenge-me/SKILL.md)** — Stress-test an
   idea in rounds until every consequential decision is settled.
-- **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn shared understanding
-  into a durable, handoff-ready engineering plan.
+- **[plan-it](skills/engineering/plan-it/SKILL.md)** — Turn a settled approach
+  into ordered steps, each with a check that proves it done.
 - **[scaffold-it](skills/engineering/scaffold-it/SKILL.md)** — Lay out the
   files, signatures, and test cases of a plan for structure approval before
   implementing.
