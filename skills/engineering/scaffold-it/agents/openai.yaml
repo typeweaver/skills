@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scaffold It"
+  short_description: "Lay out files, signatures, and test cases before implementing"
+  default_prompt: "Use $scaffold-it to lay out the files, public signatures, and pending test cases of this plan without implementing behavior, and report the tree."

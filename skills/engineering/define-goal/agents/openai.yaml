@@ -1,4 +1,4 @@
 interface:
   display_name: "Define Goal"
-  short_description: "Turn a request into a verifiable goal"
-  default_prompt: "Use $define-goal to turn this request into a concise, verifiable goal."
+  short_description: "Turn a request into a goal an agent can work against alone"
+  default_prompt: "Use $define-goal to turn this into one goal an agent can work against on its own, with the evidence that proves it done."

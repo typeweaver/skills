@@ -1,88 +1,79 @@
 ---
 name: review-it
-description: Independently review a completed code change or pull request and
-  return prioritized, evidence-backed findings. Use before commit, after pull
-  request updates, or when the user requests code review; stay read-only.
+description: Review a code change or pull request diff and report what breaks,
+  backed by the lines that show it. Use when asked to review, check, or look
+  over a diff, branch, commit, or pull request, or before a commit. Not for
+  acting on review comments or for reviewing documents and plans.
 ---
 
 # Review It
 
-Provide an independent, evidence-backed review of the complete intended change.
-Stay read-only: do not edit, stage, commit, push, or create issues. Expert
-perspectives may sharpen judgment but never replace this scope, severity model,
-or output.
+Find what the change breaks and what it makes the next change pay for, and
+prove each from the diff. Put findings in the report only: do not edit, stage,
+commit, push, or create issues.
 
-## Preserve independence
-
-When coordinating a review after authoring or orchestrating the change:
-
-1. Read and complete
-   [references/review-handoff.md](references/review-handoff.md).
-2. Start a fresh subagent without inherited conversation context when possible.
-3. Pass the handoff and repository access, and activate `review-it` there.
-
-When already acting as that fresh reviewer, do not delegate again. Treat the
-handoff as challengeable context, never as an expected verdict or scope limit.
-
-Apply user-required perspectives, exclude forbidden ones, and select at most one
-additional perspective only when its distinct lens materially improves the
-review. Disclose unavailable required perspectives; never silently substitute.
-
-If no fresh reviewer is available, perform the strongest local fallback, label
-it non-independent, and reduce confidence. Report a blocker only when applicable
-instructions require independence.
+Review from a context that did not author the change. If you authored or
+orchestrated it, delegate by following
+[references/review-handoff.md](references/review-handoff.md). As the delegated
+reviewer, do not delegate again; treat the handoff as claims to check, not as
+the verdict or the scope.
 
 ## Establish the review scope
 
-1. Inspect repository instructions, Git state, the plan or goal, and the exact
-   candidate diff.
-2. Isolate the intended commit from unrelated work. Consider unrelated code
-   only when its interaction with the change matters.
-3. Reconstruct the outcome, decisions, and requested focus from evidence. Label
-   inference and never invent rationale.
-4. Inspect relevant callers, consumers, tests, public interfaces, dependency
-   declarations, and documentation; run useful read-only checks.
-5. Verify unfamiliar or version-sensitive library use against the installed
-   version and primary documentation.
+1. Read the repository instructions, the goal, plan, or handoff when given,
+   and the exact diff: base and head, staged changes, or a named file set.
+   Leave unrelated working-tree changes out.
+2. State the intended outcome from that evidence; mark what you inferred.
+3. For every changed signature, export, schema, config key, or default, list
+   its callers, consumers, and tests and check that each still holds. Read
+   outside the diff only along a call, import, or data flow the diff touches.
+4. For every parameter, option, field, or default the diff adds or changes,
+   work out the result at its boundaries from the code: absent, empty, zero,
+   negative, oversized. If you catch yourself taking its contract from the one
+   test the diff ships, go back to the code.
+5. Run the repository's read-only checks. Check a library call you cannot cite
+   against the installed version's documentation.
 
-## Review lenses
+Scope is set when you can name the diff you reviewed (refs, staged, or files),
+every changed public name with its uses, the boundary results from step 4, and
+the checks you ran.
 
-- **Behavior and safety:** Find correctness defects, missed edge cases, broken
-  contracts, unsafe failure behavior, data risks, concurrency issues, and
-  regressions.
-- **Security and dependencies:** Examine trust boundaries, authorization,
-  validation, privacy, secrets, supply-chain risk, dependency necessity, and
-  supported library patterns.
-- **Architecture and repository fit:** Evaluate ownership, dependency direction,
-  cohesion, coupling, cycles, module boundaries, shared semantics, change
-  amplification, and repository conventions. Accept deliberate improvements;
-  classify broader convergence as Follow-up work.
-- **Interfaces, documentation, and comments:** Prefer small, stable public
-  interfaces that hide implementation details. Require consumer-facing
-  contracts and comments only for durable, non-obvious rationale or constraints.
-- **Testability and tests:** Prefer a functional core with an imperative shell:
-  pure transformations, explicit effect boundaries, and small fakes. Accept
-  mocks or spies only when interaction is the contract. Judge regression value,
-  refactoring resistance, speed, and maintainability.
-- **Growth and operability:** Check whether the design supports the next
-  plausible change or scale step and exposes relevant failure modes without
-  speculative architecture.
+## Find and classify
 
-Assess every lens, but report only evidence-backed findings with a credible
-failure or maintenance consequence—never style nits or checklist narration.
+Read the diff for these tells; the tell sets the severity.
 
-## Classify findings
+- **Blocking**, the change is wrong as written: a caller, consumer, or test
+  still assumes the old signature, shape, error type, or default; an input you
+  can name produces a wrong result; a failure path swallows the error or
+  returns a value callers cannot tell from success; unchecked input from
+  outside the trust boundary reaches a query, shell, path, or template; a
+  secret in the diff; data already written is lost or misread. Name the input
+  or call that fails.
+- **Important**, a design, test, documentation, or maintainability problem
+  introduced by the change whose cost lands on the next change to this code:
+  a caller must know the implementation to call it; a test breaks on a
+  behavior-preserving refactor because it asserts private state, call order,
+  or call counts that are not the contract; new behavior has no test that
+  fails without it in a repository that tests that layer; a README, doc
+  comment, type, or changelog line is now false; a rule in the repository's
+  instructions is broken.
+- **Follow-up**, a defect or cost the change did not introduce, or new
+  behavior the repository has no test layer for; do not ask for it to be
+  fixed here.
 
-- **Blocking:** A correctness, security, data-loss, or contract problem that
-  makes the candidate unsafe to advance.
-- **Important:** A material design, test, documentation, or maintainability
-  problem introduced by the change that must be fixed before it advances.
-- **Follow-up:** A valid broader, pre-existing, or future-facing improvement
-  that does not need to expand the current change.
+Every finding names file and line and the failure or cost; Blocking and
+Important quote the changed line. No line or no named failure: drop it. A
+rename, reorder, or reformat with no failure named is a style note, also when
+asked for as a separate formatting commit: drop it.
 
-Use `Changes required` when any Blocking or Important finding remains,
-`Review passed with follow-ups` when only Follow-ups remain, and `Review passed`
-when no material finding remains.
+Honor required and forbidden perspectives from the user or the handoff. To
+invoke one, call the Skill tool with the matching `ask-*` skill. A perspective adds findings to this
+report; it does not change the severities or the template. Say in the report
+when a required perspective is unavailable instead of substituting one.
+
+Verdict: `Changes required` while a Blocking or Important finding remains,
+`Review passed with follow-ups` when only Follow-ups remain, `Review passed`
+when there are no findings.
 
 ## Report
 
@@ -94,19 +85,19 @@ when no material finding remains.
 ### Review context
 
 - **Outcome:** <what the change achieves>
-- **Decisions:** <material implementation decisions>
+- **Decisions:** <implementation decisions taken; mark inferred ones>
 - **Review focus:** <where explicit reviewer feedback is valuable>
-- **Expert perspectives:** <used perspectives and why; omit when unused>
+- **Expert perspectives:** <perspectives invoked or unavailable; omit when none>
 
 ### Findings
 
 1. **[Blocking | Important] <finding>** — `<file:line>`
-   - **Impact:** <concrete consequence>
-   - **Recommendation:** <smallest sound improvement>
+   - **Impact:** <the failure, with the quoted line>
+   - **Recommendation:** <smallest change that removes the failure>
 
 ### Follow-ups
 
-- **<topic>** — <why it matters outside the current change>
+- **<topic>** — `<file:line>`, <the failure or cost outside the current change>
 
 ### Validation and confidence
 
@@ -114,5 +105,5 @@ when no material finding remains.
 - **Not verified:** <remaining evidence gaps>
 ```
 
-Order findings by impact. Omit empty sections, but state when no material
-findings remain.
+Order findings by severity, then by how many callers the failure reaches. Omit
+empty sections; with no findings, say so in the bottom line.
