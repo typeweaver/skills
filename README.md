@@ -155,6 +155,9 @@ separate user authorization at the delivery checkpoint.
   source-code comments without narrating what the code already says.
 - **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
   that answers its reader's questions and passes a fresh-reader test.
+- **[guard-it](skills/engineering/guard-it/SKILL.md)** — Set up machine-enforced
+  checks in a TypeScript project that fail CI on detectable defects and
+  complexity drift, and prove that each one fires.
 - **[nextjs-feature-architecture](skills/engineering/nextjs-feature-architecture/SKILL.md)**
   — Design feature-oriented Next.js App Router systems with explicit ownership
   across runtime boundaries and coordinated state.
