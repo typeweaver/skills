@@ -1,4 +1,4 @@
 interface:
   display_name: "Ask Linus Torvalds"
-  short_description: "Judge code through Torvalds's mindset"
-  default_prompt: "Use $ask-linus-torvalds to judge this change through Linus Torvalds's engineering mindset."
+  short_description: "Judge code, an interface, or a patch through Linus Torvalds's mindset"
+  default_prompt: "Use $ask-linus-torvalds to judge this code, interface, or patch through Linus Torvalds's engineering mindset."

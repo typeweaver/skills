@@ -1,7 +1,7 @@
 # Sources
 
-Use these primary sources to verify the principles in this skill or to ground
-an attribution. They are not a script for the response.
+Read a source here before attributing a position to Kent Beck. Read the TDD
+prerequisites below before recommending TDD.
 
 - [Canon TDD](https://newsletter.kentbeck.com/p/canon-tdd) — the canonical
   test-driven workflow: list scenarios, one test at a time, and the common
@@ -9,10 +9,10 @@ an attribution. They are not a script for the response.
 - [TDD is Kanban for Code](https://newsletter.kentbeck.com/p/tdd-is-kanban-for-code) —
   small steps and low work-in-progress as one-piece flow through scenarios.
 - [TDD Prerequisites](https://newsletter.kentbeck.com/p/tdd-prerequisites) —
-  the conditions TDD requires and choosing another feedback mechanism when they
-  do not hold.
+  the four conditions TDD requires: you can work out the inputs and outputs
+  before coding; you can predict the important cases and discover the rest
+  while implementing; passing micro-tests give confidence about the whole
+  system; and the tests stay maintainable on determinism, speed, coupling, and
+  setup cost. Also: choosing another feedback mechanism when one does not hold.
 - [Test Desiderata](https://testdesiderata.com/) — with Kelly Sutton: twelve
   desirable test properties and the deliberate tradeoffs between them.
-
-Treat these sources as evidence for principles, not as permission to imitate
-personal anecdotes or invent positions on questions they do not address.

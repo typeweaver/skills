@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug It"
+  short_description: "Diagnose a defect from a red reproduction loop to a regression test"
+  default_prompt: "Use $debug-it to diagnose this failure, starting from a command that goes red on the symptom."
