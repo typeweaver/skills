@@ -2,7 +2,7 @@
 
 ## Context
 
-<Why this work matters and where it originated.>
+<Why this work exists and where it came from.>
 
 ## Goal
 
@@ -10,8 +10,10 @@
 
 ## Acceptance criteria
 
-- <Observable completion criterion.>
+- <Something an observer can check: a command that passes, a file that exists,
+  a behavior that holds.>
 
 ## References
 
-- <Only the plans, code, reviews, or sources needed to resume the work.>
+- <Only the plans, code, reviews, or sources needed to resume the work, by
+  location rather than pasted content.>
