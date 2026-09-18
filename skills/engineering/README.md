@@ -61,3 +61,5 @@ from task context; user-invoked skills start only by explicit human command.
 
 - **[drive-it](./drive-it/SKILL.md)** — Orchestrate the full engineering workflow
   from an idea to a merged pull request.
+- **[retro-it](./retro-it/SKILL.md)** — Trace every correction in a finished
+  session to its cause and propose the exact instruction change.

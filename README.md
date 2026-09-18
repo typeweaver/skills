@@ -122,6 +122,8 @@ separate user authorization at the delivery checkpoint.
   outcome inside the approved scope.
 - **[drive-it](skills/engineering/drive-it/SKILL.md)** — Orchestrate the full
   engineering workflow from an idea to a merged pull request.
+- **[retro-it](skills/engineering/retro-it/SKILL.md)** — Trace every correction
+  in a finished session to its cause and propose the exact instruction change.
 - **[ask-rich-hickey](skills/engineering/ask-rich-hickey/SKILL.md)** — Judge a
   design decision through Rich Hickey's engineering mindset.
 - **[ask-martin-fowler](skills/engineering/ask-martin-fowler/SKILL.md)** — Judge
