@@ -6,51 +6,63 @@ from task context; user-invoked skills start only by explicit human command.
 
 ## Model-invoked
 
-- **[aurelius](./aurelius/SKILL.md)** — Bring a trusted senior engineering
-  companion into systems, architecture, and consequential decisions.
-- **[ask-rich-hickey](./ask-rich-hickey/SKILL.md)** — Judge a software problem
+- **[aurelius](./aurelius/SKILL.md)** — Adopt a candid senior engineer who
+  recommends one option with its decisive tradeoff and owns the outcome inside
+  the approved scope.
+- **[ask-rich-hickey](./ask-rich-hickey/SKILL.md)** — Judge a design decision
   through Rich Hickey's engineering mindset.
-- **[ask-martin-fowler](./ask-martin-fowler/SKILL.md)** — Judge evolving
-  software through Martin Fowler's engineering mindset.
+- **[ask-martin-fowler](./ask-martin-fowler/SKILL.md)** — Judge a change to
+  existing software through Martin Fowler's engineering mindset.
 - **[ask-kent-beck](./ask-kent-beck/SKILL.md)** — Judge a change through Kent
   Beck's feedback-oriented engineering mindset.
-- **[ask-john-ousterhout](./ask-john-ousterhout/SKILL.md)** — Judge software
-  complexity through John Ousterhout's engineering mindset.
-- **[ask-barbara-liskov](./ask-barbara-liskov/SKILL.md)** — Judge abstractions
-  and contracts through Barbara Liskov's engineering mindset.
+- **[ask-john-ousterhout](./ask-john-ousterhout/SKILL.md)** — Judge a software
+  design through John Ousterhout's engineering mindset.
+- **[ask-barbara-liskov](./ask-barbara-liskov/SKILL.md)** — Judge an
+  abstraction through Barbara Liskov's engineering mindset.
 - **[ask-linus-torvalds](./ask-linus-torvalds/SKILL.md)** — Judge code,
   interfaces, and patches through Linus Torvalds's engineering mindset.
-- **[ask-donald-knuth](./ask-donald-knuth/SKILL.md)** — Judge algorithms and
-  programs through Donald Knuth's engineering mindset.
-- **[challenge-me](./challenge-me/SKILL.md)** — Shape an unclear problem into a
-  shared, challenged understanding.
+- **[ask-donald-knuth](./ask-donald-knuth/SKILL.md)** — Judge an algorithm or a
+  program through Donald Knuth's engineering mindset.
+- **[challenge-me](./challenge-me/SKILL.md)** — Stress-test an idea in rounds
+  until every consequential decision is settled.
 - **[plan-it](./plan-it/SKILL.md)** — Turn shared understanding into a durable,
   handoff-ready engineering plan.
 - **[scaffold-it](./scaffold-it/SKILL.md)** — Lay out the files, signatures,
   and test cases of a plan for structure approval before implementing.
 - **[craft-it](./craft-it/SKILL.md)** — Build the smallest complete change
   for an agreed outcome, with tests that fail without it.
+- **[debug-it](./debug-it/SKILL.md)** — Diagnose a defect from a red
+  reproduction loop to a confirmed cause and a regression test.
+
 - **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
   without narrating what the code already says.
+- **[document-it](./document-it/SKILL.md)** — Write a document that answers its
+  reader's questions and passes a fresh-reader test.
+- **[guard-it](./guard-it/SKILL.md)** — Set up machine-enforced checks in a
+  TypeScript project that fail CI on detectable defects and complexity drift,
+  and prove that each one fires.
 - **[nextjs-feature-architecture](./nextjs-feature-architecture/SKILL.md)** —
   Decide where each part of a Next.js App Router feature lives, from the route
   contract to the state owner.
-- **[brief-me](./brief-me/SKILL.md)** — Summarize a discussion, plan,
-  implementation, or reviewed delivery at the right level of detail.
+- **[brief-me](./brief-me/SKILL.md)** — Re-orient a reader on a discussion,
+  plan, implementation, or reviewed delivery in one read.
 - **[review-it](./review-it/SKILL.md)** — Review a code change or pull request
   diff and return findings that name what breaks, backed by the diff.
-- **[define-goal](./define-goal/SKILL.md)** — Turn a request into a concise,
-  verifiable goal and stopping condition.
-- **[to-issues](./to-issues/SKILL.md)** — Record actionable work locally and
-  synchronize it externally when authorized.
+- **[define-goal](./define-goal/SKILL.md)** — Turn a request into one goal an
+  agent can work against alone, with its completion evidence and stop
+  condition.
+- **[to-issues](./to-issues/SKILL.md)** — Record actionable work in exactly one
+  place: an authorized tracker, or local files.
 - **[conventional-commit](./conventional-commit/SKILL.md)** — Create coherent
   Git commit boundaries and Conventional Commit messages.
-- **[create-pull-request](./create-pull-request/SKILL.md)** — Verify completed
-  work and create or update a focused pull request.
-- **[pr-review-loop](./pr-review-loop/SKILL.md)** — Handle review feedback and
-  checks until a pull request is merged or blocked.
+- **[create-pull-request](./create-pull-request/SKILL.md)** — Open or update a
+  branch's pull request with the context a reviewer needs.
+- **[pr-review-loop](./pr-review-loop/SKILL.md)** — Work an open pull request's
+  review comments and checks until a human merges it.
 
 ## User-invoked
 
 - **[drive-it](./drive-it/SKILL.md)** — Orchestrate the full engineering workflow
   from an idea to a merged pull request.
+- **[retro-it](./retro-it/SKILL.md)** — Trace every correction in a finished
+  session to its cause and propose the exact instruction change.

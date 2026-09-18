@@ -1,49 +1,52 @@
 ---
 name: create-pull-request
-description: Create or update a focused, reviewable pull request from completed
-  work. Use when an implementation is ready to be presented for review.
+description: Open or update the pull request for a finished branch, with the
+  title, description, and review comments it needs. Use when asked to open,
+  create, or raise a pull request or PR, to update an existing one, or to put
+  finished work up for review. Not for reviewing a diff, for handling review
+  comments on an open pull request, or for committing work.
 ---
 
 # Create Pull Request
 
-Present one coherent change with enough context to review it efficiently.
-
-Write all pull request content in English, including the title, description,
-comments, and review guidance. Never merge the pull request.
+Present one finished change so a reviewer can judge it from the pull request
+alone. Write the title, description, and comments in English. Hand the pull
+request back for a human to merge; never merge it yourself.
 
 ## Process
 
-1. Inspect the complete diff against the target branch and applicable
-   repository instructions.
-2. Confirm one coherent purpose. Remove unrelated work, debug artifacts,
-   temporary changes, and comments that justify change history.
-3. Run relevant checks and report only validation that actually passed.
-4. Push when necessary, then create or update the branch's existing pull
-   request—never create a duplicate.
-5. Verify that the final title, description, diff, and validation agree.
-6. Return to the active workflow for independent review, delivery, or feedback
-   handling.
+1. Read the complete diff against the target branch and the repository's
+   instructions.
+2. Confirm every hunk supports the one outcome the Summary will state. Report
+   each hunk that does not — debug output, an unrelated edit, a comment
+   narrating the change history — and ask whether to drop it or split it out.
+   Do not amend or rewrite an existing commit to do so unless asked.
+3. Run the check command CI runs or the verification commands the repository
+   documents.
+4. Before pushing, scan the diff and the title, description, and comments you
+   will publish for credentials, tokens, private keys, `.env` contents, and
+   internal hostnames the repository does not already publish. Stop and report
+   what you found instead of pushing.
+5. Push the branch, then update the pull request it already has; open one only
+   when it has none. Post the comments below that the pull request does not
+   already carry. Request the reviewer the user named through the platform's
+   review-request mechanism; when none was named, ask once who should review,
+   unless the pull request already has a reviewer or an orchestrating workflow
+   defers the choice.
+6. Confirm the title, the description, and the diff you pushed agree, and that
+   any review request you made registered.
 
-## Review requests
+Follow-up work you discover stays out of this pull request; list it in your
+report. Create external issues only with explicit authorization for that
+action.
 
-Honor reviewer selection deferred by an active workflow. Otherwise ask one
-concise question after creating or updating the pull request unless the user
-already named a reviewer. Use and verify the platform's formal review-request
-mechanism.
+## Title
 
-## Pull request title
+`<type>(<scope>): <description>` in Conventional Commits format. For a
+single-commit pull request the title is that commit's subject; for several,
+write the subject covering them all, in the type and scope those commits use.
 
-Use the Conventional Commits format:
-
-`<type>(<scope>): <description>`
-
-Omit `(<scope>)` when no meaningful scope exists.
-
-Choose type and scope from the actual changes.
-
-## Pull request description
-
-Use this concise structure:
+## Description
 
 ```markdown
 ### Summary
@@ -52,32 +55,27 @@ Use this concise structure:
 
 ### Changes
 
-- <important change at a useful review level>
+- <behavior or decision changed, at the level a reviewer judges it; not a
+  file-by-file narration>
 
 ### Validation
 
-- <check or observation that actually passed>
+- <check you ran, with the result you saw; omit a check you did not run and
+  do not report a failed check as passed>
 
 ### Related
 
 - <issue, plan, or specification; omit this section when empty>
 ```
 
-Summarize behavior and decisions; do not narrate every file.
+The whole description stays under about 150 words. Analysis, rejected
+alternatives, and the reasoning behind each finding belong in the diff, a plan
+file, or a comment a reviewer asked for, not here.
 
-## Review focus
+## Comments
 
-When a material decision deserves explicit feedback, post a separate comment
-with:
-
-- the decision,
-- why that approach was chosen,
-- what feedback or confirmation is requested.
-
-Do not manufacture questions. For a structurally complex PR, a separate comment
-may also suggest a review order and the important entry points; omit it for a
-straightforward diff.
-
-If meaningful follow-up work is discovered, keep its implementation outside
-the pull request and return enough context for the active workflow to preserve
-it locally. Publish it externally only after explicit authorization.
+Post one comment for a decision a reviewer can see in the diff and could
+reasonably have made the other way: name the decision, why you chose it, and
+what you want confirmed. Post one comment naming the reading order when a
+reviewer starting in the wrong file has to backtrack. If neither applies, post
+nothing.
