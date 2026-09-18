@@ -85,7 +85,7 @@ the companion mindset throughout. Hexagons are human checkpoints.
 ```mermaid
 flowchart TD
     idea([Idea]) --> challenge[challenge-me]
-    challenge -.->|skip when outcome is already clear| plan[plan-it]
+    challenge -.->|skip when no consequential decision is open| plan[plan-it]
     challenge --> plan
     plan --> approve{{brief-me: approve the plan}}
     approve -.->|structure checkpoint| scaffold[scaffold-it]
@@ -107,11 +107,10 @@ for a complete engineering handoff. When explicitly invoked, `drive-it` resumes
 at the earliest incomplete phase and coordinates the flow until a human merges
 the pull request. Use `brief-me` at any point for a concise snapshot of the current
 plan, decisions, implementation status, or final delivery. Expert personas such
-as `ask-rich-hickey` apply when the user names the person, or when at least two
-viable options differ in that persona's domain; each `ask-*` description
-carries the rule. They shape the reasoning without replacing the active
-workflow or its output structure. External issues are created only after
-separate user authorization at the delivery checkpoint.
+as `ask-rich-hickey` apply where their own description says they do. They shape
+the reasoning without replacing the active workflow or its output structure.
+External issues are created only after separate user authorization at the
+delivery checkpoint.
 
 ## Skills
 
