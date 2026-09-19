@@ -6,7 +6,7 @@
     "format:check": "oxfmt --check .",
     "generate": "pnpm --filter equip-it run build && node cli/dist/src/bin.js generate --repo .",
     "generate:check": "pnpm --filter equip-it run build && node cli/dist/src/bin.js generate --repo . --check",
-    "test": "pnpm --filter equip-it test",
+    "test": "pnpm --filter equip-it test && node --test scripts/test/*.test.mjs",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "typecheck": "pnpm --filter equip-it typecheck",
@@ -21,7 +21,8 @@
     "oxfmt": "^0.64.0",
     "oxlint": "1.78.0",
     "oxlint-tsgolint": "7.0.2001",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "yaml": "catalog:"
   },
   "engines": {
     "node": ">=22"
