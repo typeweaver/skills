@@ -1,11 +1,13 @@
 ---
 name: comment-it
 description: >-
-  Write, revise, or review source-code comments that preserve context unavailable
-  from the code. Use for module comments, inline explanations, API documentation,
-  TODOs, deprecations, suppressions, or workaround notes during implementation or
-  review. Do not use for standalone user documentation, general prose, commit
-  messages, or review discussion.
+  Write, revise, or audit source-code comments. Use when comments are the primary
+  task or when implementation requires choosing a comment or directive's audience,
+  scope, rationale, or removal condition, including API documentation, TODOs,
+  deprecations, suppressions, and workaround notes. Skip implementation work that
+  needs no such choice; craft-it governs its routine comments. Do not use for
+  standalone user documentation, general prose, commit messages, or review
+  discussion.
 ---
 
 # Comment It
@@ -62,8 +64,10 @@ thereby wrong; check it against the code first.
   now, the condition for removal, and a link to a stable issue, upstream source,
   or specification when the cause is external. Do not create an external record
   unless the task authorizes it.
-- **Suppression:** on the line or symbol that triggers the diagnostic, never on
-  the file. Name the rule, why it does not apply, and when it comes out.
+- **Suppression:** at the narrowest scope the diagnostic and repository support.
+  Use file scope only when the mechanism or affected scope requires it. Name the
+  rule, why it does not apply or why the exception is accepted, and, when
+  temporary, the condition for removing it.
 - **Deprecation:** the supported replacement and the removal horizon or
   condition when known.
 
