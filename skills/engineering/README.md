@@ -34,8 +34,8 @@ from task context; user-invoked skills start only by explicit human command.
 - **[debug-it](./debug-it/SKILL.md)** — Diagnose a defect from a red
   reproduction loop to a confirmed cause and a regression test.
 
-- **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
-  without narrating what the code already says.
+- **[comment-it](./comment-it/SKILL.md)** — Audit and improve source-code
+  comments and directives that need dedicated judgment.
 - **[document-it](./document-it/SKILL.md)** — Write a document that answers its
   reader's questions and passes a fresh-reader test.
 - **[guard-it](./guard-it/SKILL.md)** — Set up machine-enforced checks in a
