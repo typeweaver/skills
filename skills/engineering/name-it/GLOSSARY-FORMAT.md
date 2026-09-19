@@ -36,5 +36,5 @@ _Avoid_: Client, buyer, account
 - **Group under subheadings** when clusters appear. A flat list is fine when
   they do not.
 - **Relationships** record identity and containment, not call graphs.
-- **Flagged ambiguities** record a collision that was asked and then either
-  resolved or left live. A live one stays until a term is chosen.
+- **Flagged ambiguities** record a collision that was asked and left open.
+  It stays until a term is chosen.

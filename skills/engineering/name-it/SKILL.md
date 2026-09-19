@@ -20,8 +20,9 @@ is not this skill.
 ## Find the file
 
 The glossary is `GLOSSARY.md` at the repository root, not `CONTEXT.md`.
-Create it when the first term is settled, not before. If the file exists,
-read it before the first question.
+Create it when the first term is settled or the first asked collision is
+left open, not before. If the file exists, read it before the first
+question.
 
 ## Challenge the language
 
@@ -51,9 +52,9 @@ terms to dump at the end, stop and write the ones that already settled.
 Follow [GLOSSARY-FORMAT.md](GLOSSARY-FORMAT.md). A glossary entry defines
 what the thing **is**, in one or two sentences. List `_Avoid_` only for
 synonyms that were actually in play. Write any settled relationship the
-term participates in, and any collision that was asked and left open under
-Flagged ambiguities. It is not a spec, a scratch pad, an ADR, or a
-procedure.
+term participates in under Relationships, and any collision that was asked
+and left open under Flagged ambiguities. It is not a spec, a scratch pad,
+an ADR, or a procedure.
 
 Before adding a term, check whether it is unique to this project's domain.
 A general programming concept stays out even when the project uses it
@@ -72,9 +73,9 @@ pointer.
 ## Stop
 
 Stop when every settled term from this session is in the file, every settled
-relationship it participates in is under Relationships, and every
-code/language clash was either settled or asked and then recorded under
-Flagged ambiguities.
+relationship it participates in is under Relationships, and every collision
+that was asked and left open is under Flagged ambiguities. Do not record a
+collision under Flagged ambiguities until you have asked.
 
-Report the path, the terms added, changed, or removed, and whether a
-pointer was added.
+Report the path, the terms added, changed, or removed, collisions left
+open, and whether a pointer was added.
