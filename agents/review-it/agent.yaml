@@ -1,6 +1,7 @@
 name: review-it
 description: Independently review a completed change or pull request in a fresh,
-  read-only context. Report what breaks, backed by the lines that show it.
+  read-only context. Report what breaks, backed by the lines that show it. Provide
+  the exact patch when the adapter has no shell access.
 adapters:
   claude-code:
     frontmatter:
@@ -8,27 +9,25 @@ adapters:
         - Read
         - Glob
         - Grep
-        - Bash
+        - Skill
       skills:
         - review-it
-        - ask-barbara-liskov
-        - ask-donald-knuth
-        - ask-john-ousterhout
-        - ask-kent-beck
-        - ask-linus-torvalds
-        - ask-martin-fowler
-        - ask-rich-hickey
       permissionMode: plan
   opencode:
     frontmatter:
       mode: subagent
       hidden: true
-      tools:
-        write: false
-        edit: false
-        task: false
-        skill: true
       permission:
+        "*": deny
+        read:
+          "*": allow
+          "*.env": deny
+          "*.env.*": deny
+          "*.env.example": allow
+        glob: allow
+        grep: allow
+        webfetch: allow
+        task: deny
         skill:
           "*": deny
           review-it: allow
@@ -41,25 +40,6 @@ adapters:
           ask-rich-hickey: allow
         bash:
           "*": deny
-          "git diff*": allow
-          "git status*": allow
-          "git log*": allow
-          "git show*": allow
-          "git blame*": allow
-          "rg *": allow
-          "find *": allow
-          "ls *": allow
-          "wc *": allow
-          "pnpm *": allow
-          "npm *": allow
-          "npx *": allow
-          "yarn *": allow
-          "bun *": allow
-          "make test*": allow
-          "make check*": allow
-          "cargo test*": allow
-          "go test*": allow
-          "pytest *": allow
   codex:
     description: Independently review a completed change or pull request in a fresh,
       read-only context. Report what breaks, backed by the lines that show it.
