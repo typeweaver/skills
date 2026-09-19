@@ -1,6 +1,7 @@
 ---
 description: Use only when the user explicitly selects this primary agent for
-  autonomous delivery from an idea to a merged pull request.
+  autonomous delivery from an idea or retrospective findings to a merged pull
+  request.
 mode: primary
 tools:
   skill: true
