@@ -66,10 +66,10 @@ Important quote the changed line. No line or no named failure: drop it. A
 rename, reorder, or reformat with no failure named is a style note, also when
 asked for as a separate formatting commit: drop it.
 
-Honor required and forbidden perspectives from the user or the handoff. To
-invoke one, call the Skill tool with the matching `ask-*` skill. A perspective adds findings to this
-report; it does not change the severities or the template. Say in the report
-when a required perspective is unavailable instead of substituting one.
+Honor required and forbidden lenses from the user or the handoff. To invoke
+one, call the Skill tool with the matching `ask-*` skill. A lens adds findings
+to this report; it does not change the severities or the template. Say in the
+report when a required lens is unavailable instead of substituting one.
 
 Verdict: `Changes required` while a Blocking or Important finding remains,
 `Review passed with follow-ups` when only Follow-ups remain, `Review passed`
@@ -87,7 +87,7 @@ when there are no findings.
 - **Outcome:** <what the change achieves>
 - **Decisions:** <implementation decisions taken; mark inferred ones>
 - **Review focus:** <where explicit reviewer feedback is valuable>
-- **Expert perspectives:** <perspectives invoked or unavailable; omit when none>
+- **Expert lenses:** <lenses invoked or unavailable; omit when none>
 
 ### Findings
 

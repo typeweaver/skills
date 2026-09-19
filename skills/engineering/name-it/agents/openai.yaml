@@ -1,0 +1,4 @@
+interface:
+  display_name: "Name It"
+  short_description: "Sharpen domain terms and persist them in GLOSSARY.md"
+  default_prompt: "Use $name-it to sharpen this project's domain language and write settled terms to GLOSSARY.md."

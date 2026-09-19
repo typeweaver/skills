@@ -106,7 +106,7 @@ The skills stay useful independently. The workflow only shows how they compose
 for a complete engineering handoff. When explicitly invoked, `drive-it` resumes
 at the earliest incomplete phase and coordinates the flow until a human merges
 the pull request. Use `brief-me` at any point for a concise snapshot of the current
-plan, decisions, implementation status, or final delivery. Expert personas such
+plan, decisions, implementation status, or final delivery. Expert lenses such
 as `ask-rich-hickey` apply where their own description says they do. They shape
 the reasoning without replacing the active workflow or its output structure.
 External issues are created only after separate user authorization at the
@@ -154,6 +154,8 @@ delivery checkpoint.
   source-code comments without narrating what the code already says.
 - **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
   that answers its reader's questions and passes a fresh-reader test.
+- **[name-it](skills/engineering/name-it/SKILL.md)** — Sharpen domain terms
+  and persist them in `GLOSSARY.md`.
 - **[guard-it](skills/engineering/guard-it/SKILL.md)** — Set up machine-enforced
   checks in a TypeScript project that fail CI on detectable defects and
   complexity drift, and prove that each one fires.
