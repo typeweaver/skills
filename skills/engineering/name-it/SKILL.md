@@ -29,8 +29,9 @@ question.
 When the user uses a term that conflicts with the glossary, stop and quote
 both. Ask which is right before continuing.
 
-When one word covers two things, or two words cover one thing, propose one
-canonical term and the rejected synonyms. Do not proceed with both in play.
+When two words cover one thing, propose one canonical term and the rejected
+synonyms. When one word covers two things, propose a distinct canonical term
+for each meaning. Do not proceed while either collision remains in play.
 
 When a relationship is claimed, invent one concrete scenario that would fall
 on the wrong side of the boundary if the claim were loose. Ask which side it
@@ -51,14 +52,14 @@ terms to dump at the end, stop and write the ones that already settled.
 
 Follow [GLOSSARY-FORMAT.md](GLOSSARY-FORMAT.md). A glossary entry defines
 what the thing **is**, in one or two sentences. List `_Avoid_` only for
-synonyms that were actually in play. Write any settled relationship the
-term participates in under Relationships, and any collision that was asked
-and left open under Flagged ambiguities. It is not a spec, a scratch pad,
-an ADR, or a procedure.
+synonyms that were actually in play. Write any settled domain relationship
+the term participates in under Relationships, and any collision that was
+asked and left open under Flagged ambiguities. It is not a spec, a scratch
+pad, an ADR, or a procedure.
 
-Before adding a term, check whether it is unique to this project's domain.
-A general programming concept stays out even when the project uses it
-heavily.
+Before adding a term, check whether it belongs to this project's problem
+domain. A general programming concept stays out even when the project uses
+it heavily; a domain term need not be unique to this project.
 
 If you catch yourself writing how it is implemented, why it was chosen, or
 a type or file name into the glossary, stop. Delete that sentence.

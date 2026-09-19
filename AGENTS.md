@@ -39,7 +39,7 @@ scope, triggering, structure, writing, safety, and validation.
   supported harness.
 - Give every `agents/openai.yaml` a `display_name`, `short_description`, and
   `default_prompt`. Declare invocation policy only when it deviates from the
-  harness default of implicit invocation, mirroring the frontmatter convention.
+  harness default of model invocation, mirroring the frontmatter convention.
 
 ## Writing agents
 

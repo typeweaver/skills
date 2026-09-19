@@ -27,14 +27,14 @@ _Avoid_: Client, buyer, account
 ## Flagged ambiguities
 
 - **"Account"** — previously used for Customer, login, and billing account.
-  Canonical: **Customer**. Login and billing stay out of this glossary until
-  they earn their own terms.
+  The canonical term for each meaning has not been chosen.
 ```
 
 ## Rules
 
 - **Group under subheadings** when clusters appear. A flat list is fine when
   they do not.
-- **Relationships** record identity and containment, not call graphs.
+- **Relationships** record stable domain relationships such as identity,
+  containment, creation, or responsibility, not call graphs or runtime steps.
 - **Flagged ambiguities** record a collision that was asked and left open.
-  It stays until a term is chosen.
+  It stays until every meaning has a canonical term.

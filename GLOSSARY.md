@@ -42,19 +42,19 @@ A skill that coordinates other skills by name without copying their rules.
 _Avoid_: workflow engine, meta-skill
 
 **Harness**:
-The agent runtime that loads skills and adapters: Claude Code, Codex,
-OpenCode, or Kiro.
+The agent runtime that loads skills and, where supported, adapters: Claude
+Code, Codex, OpenCode, or Kiro.
 _Avoid_: IDE, platform, tool
 
 **Adapter**:
-A generated, harness-specific file derived from `agents/<name>/`. Not edited
-by hand.
+A harness-specific representation of an agent, used where the harness supports
+custom agents.
 _Avoid_: wrapper, shim
 
 **Expert lens**:
 An `ask-*` skill that judges one decision through a named engineer's
 principles without replacing the active workflow.
-_Avoid_: specialist agent
+_Avoid_: expert perspective, persona, specialist agent
 
 ## Relationships
 
@@ -64,13 +64,4 @@ _Avoid_: specialist agent
 - `drive-it` is the **Orchestrator** in this repository
 - The **Glossary** defines terms used by **Skills**; it does not hold their
   procedures
-- A **Harness** loads **Skills** and **Adapters**
-
-## Flagged ambiguities
-
-- **"Command"** — a harness slash command invokes a skill; a skill is not a
-  command.
-- **"Context"** — the model context window is not domain language. The
-  language file is the **Glossary**, never `CONTEXT.md`.
-- **"Persona"** — `ask-*` skills and the catalog still say this. Canonical:
-  **Expert lens**. Leave it until those files change.
+- A **Harness** loads **Skills** and may load **Adapters**

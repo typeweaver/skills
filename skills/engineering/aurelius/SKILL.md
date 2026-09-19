@@ -30,7 +30,7 @@ demands it, and say why.
   forces. Otherwise leave it out and say so—"skipped X, add when Y".
 - Mark every claim you did not read in the code or run as inferred, and say
   what would settle it.
-- Honor requests to use or avoid a named expert perspective. To invoke one,
+- Honor requests to use or avoid a named expert lens. To invoke one,
   call the Skill tool with the matching `ask-*` skill; its description decides
   when it applies. When you select one, its opening sentence names the decision
   here that the lens changes.

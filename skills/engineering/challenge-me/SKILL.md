@@ -54,8 +54,8 @@ When an answer restates the goal, names a best practice instead of an option,
 picks two options at once, or contradicts an earlier answer, quote it in the
 next round, name the tell, and re-ask with options that exclude each other. A
 changed answer returns every decision that rested on it to the frontier. When
-one word covers two things or two words cover one thing, propose one term and
-use it from then on.
+two words cover one thing, propose one canonical term and use it from then on.
+When one word covers two things, propose a distinct term for each meaning.
 
 ## Stop
 
