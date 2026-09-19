@@ -14,7 +14,9 @@ change, and the contract the reviewer receives.
    expected verdict, and your defense of the change.
 3. Start a subagent that inherits no conversation history (the `review-it`
    agent where installed), give it the repository path and the contract, and
-   tell it to call the Skill tool with `review-it`.
+   tell it to call the Skill tool with `review-it`. When that agent has no
+   shell access, include the exact patch in the handoff instead of expecting it
+   to resolve refs or staged changes itself.
 4. When the harness offers no such subagent, review in the current context and
    write `Reviewed in author context` under Not verified. When repository
    instructions require an independent reviewer, report that none is available
@@ -29,6 +31,7 @@ apply; state evidence gaps.
 
 - **Repository:** <repository or worktree>
 - **Change:** <exact base and head, staged changes, or a named file set>
+- **Patch:** <exact patch; required when the reviewer has no shell access>
 - **Excluded:** <unrelated working-tree changes>
 - **Instructions:** <applicable repository guidance>
 
