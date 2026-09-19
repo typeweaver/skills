@@ -1,8 +1,8 @@
 ---
 name: aurelius-drive
 description: Use only when the user explicitly selects this main-session agent
-  for autonomous delivery from an idea to a merged pull request. Do not delegate
-  to it automatically.
+  for autonomous delivery from an idea or retrospective findings to a merged
+  pull request. Do not delegate to it automatically.
 initialPrompt: /drive-it
 ---
 

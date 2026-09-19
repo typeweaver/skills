@@ -22,7 +22,8 @@ opencode --agent aurelius-drive
 
 Selecting the primary agent or profile is the explicit human invocation of the
 user-only `drive-it` workflow. The first normal prompt can therefore describe
-the idea directly.
+an idea, identify a completed session for retrospective analysis, or provide
+existing retrospective findings.
 
 ## review-it
 
