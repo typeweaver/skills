@@ -1,4 +1,4 @@
 interface:
   display_name: "Document It"
-  short_description: "Write a document that answers its reader's questions and passes a fresh-reader test"
-  default_prompt: "Use $document-it to write or rewrite this document so a named reader gets every question answered."
+  short_description: "Write a document that answers its reader's questions, place it, and keep the docs map current"
+  default_prompt: "Use $document-it to write or rewrite this document so a named reader can find it and get every question answered."
