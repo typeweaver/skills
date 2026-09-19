@@ -25,6 +25,10 @@ Install every native agent adapter in this repository into its harness
 directory. Claude Code and OpenCode use symlinks. Codex profiles and custom
 agents use managed copies.
 
+Install the repository skills first with scripts/link-skills.sh or
+`equip-it install`. Agents route to those skills at runtime; this script
+installs agent adapters only and never their skill dependencies.
+
 By default, existing files and directories are preserved. Existing symlinks
 are preserved unless they already point to the desired adapter or
 --replace-symlinks is supplied.
