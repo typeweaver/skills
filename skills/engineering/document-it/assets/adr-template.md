@@ -2,7 +2,7 @@
 
 ## Status
 
-<proposed | accepted | superseded by ADR-NNNN>
+<proposed | accepted | deprecated | superseded by ADR-NNNN>
 
 ## Context
 

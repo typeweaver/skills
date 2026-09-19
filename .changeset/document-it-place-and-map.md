@@ -2,4 +2,7 @@
 "equip-it": patch
 ---
 
-Revise `document-it`: place each document in the repository's layout or a default tree, record Decisions as ADRs, keep one fact in one home, and update the docs map so developers and agents can find it.
+Revise `document-it`: place each document by an explicit fallback order, record
+architecturally significant Decisions as maintainable ADRs, keep facts
+authoritative without removing needed local context, and update the repository's
+native documentation navigation so developers and agents can find the document.

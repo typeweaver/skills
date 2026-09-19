@@ -13,9 +13,11 @@ description: Write or rewrite a standalone document that answers the questions
 
 A document answers named reader questions, lives at the path that reader
 opens, and a fresh reader proves it. A section the reader did not ask a
-question about does not belong in this document. A fact that already has a
-home is a link, not a second copy. Write one document for developers and
-agents; a parallel agent-only copy is that second home.
+question about does not belong in this document. Keep each fact authoritative
+in one home. Elsewhere, link to that home and include only the context this
+reader needs to understand or act; do not copy volatile detail. Write one
+document for developers and agents; a parallel agent-only copy is a second
+home.
 
 Read the target repository's style guide, documentation layout, and neighboring
 documents first, and follow them; carry no conventions from elsewhere. This
@@ -36,9 +38,11 @@ two, write two documents and link them.
 - **Reference** — exact behavior, ordered for lookup, no teaching.
 - **Explanation** — why it is this way: the mental model and the forces that
   produced it. Not a record of one named choice.
-- **Decision** — one choice the project made, the alternative it beat, the
-  consequences. Immutable once accepted; a reversal is a new document that
-  supersedes it.
+- **Decision** — one architecturally significant choice that affects structure,
+  interfaces, dependencies, construction techniques, or non-functional
+  characteristics; the alternative it beat and the consequences. Preserve the
+  accepted choice and rationale; a reversal is a new document that supersedes
+  it.
 
 Tells that the types are mixed: a rationale paragraph between numbered steps;
 every option listed inside a walkthrough; a first-success path that branches on
@@ -48,16 +52,26 @@ type owns it.
 
 ## 2. Place it
 
-Do not restructure the repository's documentation layout. When a layout exists,
-put the document with the neighboring file of the same type. When none exists,
-put it at the home [references/layout.md](references/layout.md) names for the
-question. A Decision lives in the repository's ADR directory, or in
-`docs/decisions/` when none exists; number it monotonically and write it from
-[assets/adr-template.md](assets/adr-template.md). Do not rewrite an accepted
-Decision; change only its status line to `superseded by ADR-NNNN` and write the
-replacement. The repository README is a landing: what the project is, how to
-get a first success, and a link to the map — not the home of architecture,
-reference, or Decisions.
+Do not restructure the repository's documentation layout. Evidence of a layout
+is a docs index or configuration, a linked documentation tree, or neighboring
+documents. Place the document by this precedence: an explicit repository path
+or convention; a neighboring file of the same type; the existing docs root and
+its naming convention. If a docs root exists but has no same-type neighbor,
+name the file for its question there. Only when no layout exists, use the home
+[references/layout.md](references/layout.md) names for the question.
+
+A Decision follows the repository's existing ADR path, name, template, and
+lifecycle. When no ADR convention exists, put it in `decisions/` under the
+detected docs root; only when no documentation layout exists, use
+`docs/decisions/`. In those fallback cases, number it monotonically and write
+it from [assets/adr-template.md](assets/adr-template.md). Preserve an accepted
+Decision's choice and historical rationale. Correcting spelling, broken links,
+or factual transcription without changing meaning is allowed. A reversal gets
+a replacement Decision and changes the old status to `superseded by ADR-NNNN`
+or the repository's equivalent.
+The repository README is a landing: what the project is, how to get a first
+success, and a link to the map — not the home of architecture, reference, or
+Decisions.
 
 If you catch yourself writing the body before the path is chosen, creating a
 directory no document will live in, moving existing documents to match the
@@ -76,9 +90,10 @@ question becomes one section, and that section's first paragraph is the answer.
 Detail, caveats, and background follow it. Where a rule exists, show the example
 before the rule.
 
-For a Decision, the questions map onto Status, Context, Decision, and
-Consequences in that order; cut any other section. Do not move the choice into
-Context to satisfy answer-first.
+Without a repository ADR template, a Decision's questions map onto Status,
+Context, Decision, and Consequences in that order; cut any other section. When
+a repository template exists, keep its required metadata and sections. Do not
+move the choice into Context to satisfy answer-first.
 
 If you catch yourself writing a section before the question list exists, stop
 and write the list.
@@ -99,18 +114,22 @@ the first paragraph, with no preamble before the answer.
 
 ## 5. Keep the map
 
-The map is the docs index the repository already uses, or `docs/README.md`
-when the document lives under `docs/` and no index exists. Add one line for
-this document: a link and the question it answers. Do not create `docs/` only
-to hold an empty index. Do not invent a second map.
+The map is the repository's existing discovery mechanism: a docs index,
+navigation file, sidebar configuration, or equivalent. When its scope includes
+this document, add the entry in its native format and naming convention,
+regardless of the document's path. When no mechanism exists, create
+`docs/README.md` only for a document under `docs/` and add one line with a link
+and the question it answers. Do not create `docs/` only to hold an empty index,
+and do not invent a second map.
 
 Do not copy the document into `AGENTS.md`. Keep an existing pointer accurate.
 Add a pointer there only when the document is a constraint an agent must load
 every session.
 
-Done when a document under `docs/` has one map line with a link to this file
-and the question it answers, and `AGENTS.md` did not gain a copy of the
-document. Skip the map line when this document is not under `docs/`.
+Done when the relevant discovery mechanism contains this document in its native
+format, or the no-mechanism fallback map contains its link and question, and
+`AGENTS.md` did not gain a copy of the document. Skip creating a map for a
+document outside `docs/` when no discovery mechanism exists.
 
 ## 6. Delete
 
@@ -126,12 +145,13 @@ unanswered.
 ## 7. Run the reader test
 
 Give the document alone — no repository, no conversation — to a fresh reader
-and ask it the step 3 questions. With subagents: spawn one in a clean context
-whose only input is the document text. Without subagents: start a new session,
-or run a separate agent invocation, with the document pasted as its only
-context. Do not answer from your own memory of writing it; you cannot unsee the
-material. When neither is available, say so, list the questions you could not
-test, and hand the document back for a reader check.
+and ask it the step 3 questions. A blocking question must be answerable from the
+document; a link may own deeper or volatile detail. With subagents: spawn one
+in a clean context whose only input is the document text. Without subagents:
+start a new session, or run a separate agent invocation, with the document
+pasted as its only context. Do not answer from your own memory of writing it;
+you cannot unsee the material. When neither is available, say so, list the
+questions you could not test, and hand the document back for a reader check.
 
 A wrong or hedged answer is a gap in the document, not in the reader. Fix the
 section that should have answered it and run the test again, at most twice.
