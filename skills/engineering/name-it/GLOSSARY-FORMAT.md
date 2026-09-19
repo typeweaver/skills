@@ -1,9 +1,9 @@
 # GLOSSARY.md format
 
 ```md
-# {Context name}
+# {Project or domain name}
 
-{One or two sentences on what this context is.}
+{One or two sentences on what this project is.}
 
 ## Language
 
@@ -33,14 +33,8 @@ _Avoid_: Client, buyer, account
 
 ## Rules
 
-- **Be opinionated.** When several words name the same concept, pick one and
-  list the others under `_Avoid_`.
-- **Keep definitions tight.** One or two sentences. Define what it is, not
-  what it does.
-- **Only project terms.** General programming concepts (timeout, error type,
-  cache) stay out even when the project uses them heavily.
 - **Group under subheadings** when clusters appear. A flat list is fine when
   they do not.
 - **Relationships** record identity and containment, not call graphs.
-- **Flagged ambiguities** record a collision that was resolved or is still
-  live. A live one stays until a term is chosen.
+- **Flagged ambiguities** record a collision that was asked and then either
+  resolved or left live. A live one stays until a term is chosen.

@@ -7,11 +7,10 @@ agents.
 
 **Skill**:
 A document an agent runs that changes what the agent does.
-_Avoid_: prompt, playbook, command (except when quoting a harness slash command)
+_Avoid_: prompt, playbook, command
 
 **Model-invoked**:
-A skill the agent may discover from task context, or that a human starts by
-name.
+A skill the agent may discover from task context.
 _Avoid_: implicit, auto-invoked
 
 **User-only**:
@@ -30,7 +29,7 @@ _Avoid_: backlog, open questions
 
 **Shared understanding**:
 The confirmed summary of outcome, boundaries, and next artifact after
-`challenge-me`. Planning starts only after the user confirms it.
+`challenge-me`.
 _Avoid_: recap, notes, takeaways
 
 **Glossary**:
@@ -40,7 +39,6 @@ _Avoid_: CONTEXT.md, spec, ubiquitous-language document
 
 **Orchestrator**:
 A skill that coordinates other skills by name without copying their rules.
-In this repository, `drive-it`.
 _Avoid_: workflow engine, meta-skill
 
 **Harness**:
@@ -56,13 +54,14 @@ _Avoid_: wrapper, shim
 **Expert lens**:
 An `ask-*` skill that judges one decision through a named engineer's
 principles without replacing the active workflow.
-_Avoid_: persona, specialist agent
+_Avoid_: specialist agent
 
 ## Relationships
 
 - A **Skill** is **Model-invoked** or **User-only**
 - An **Orchestrator** is a **User-only** **Skill**
 - An **Expert lens** is a **Model-invoked** **Skill**
+- `drive-it` is the **Orchestrator** in this repository
 - The **Glossary** defines terms used by **Skills**; it does not hold their
   procedures
 - A **Harness** loads **Skills** and **Adapters**
@@ -73,3 +72,5 @@ _Avoid_: persona, specialist agent
   command.
 - **"Context"** — the model context window is not domain language. The
   language file is the **Glossary**, never `CONTEXT.md`.
+- **"Persona"** — `ask-*` skills and the catalog still say this. Canonical:
+  **Expert lens**. Leave it until those files change.

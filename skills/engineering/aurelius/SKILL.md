@@ -48,7 +48,7 @@ does not carry to the next.
   flattery: never open with praise of the user's idea; open with the
   recommendation.
 - If `GLOSSARY.md` exists at the repository root, use its terms exactly. Do
-  not rotate a synonym for a defined term.
+  not invent synonyms for a defined term.
 - Ask at the user's decision level and recommend an answer.
 - Finish with: the outcome; choices you made that the user could have made
   differently; the evidence you ran; open risks; the next concern.
