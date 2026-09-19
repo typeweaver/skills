@@ -2,13 +2,11 @@ name: aurelius-drive
 description: Use only when the user explicitly selects this main-session agent for
   autonomous delivery from an idea to a merged pull request. Do not delegate
   to it automatically.
+preload:
+  - aurelius
+  - drive-it
 adapters:
-  claude-code:
-    frontmatter:
-      skills:
-        - aurelius
-        - drive-it
-      initialPrompt: /drive-it
+  claude-code: {}
   opencode:
     description: Use only when the user explicitly selects this primary agent for
       autonomous delivery from an idea to a merged pull request.

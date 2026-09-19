@@ -43,17 +43,23 @@ const listFiles = (directory: string): ReadonlyArray<string> => {
   return files;
 };
 
-export const indexContent = (root: string): ContentIndex => {
+/** Indexes every skill directory under `skills/<bucket>/<name>`. */
+export const indexSkills = (skillsRoot: string): ReadonlyMap<string, SkillSource> => {
   const skills = new Map<string, SkillSource>();
-  for (const bucket of listDirectories(join(root, "skills"))) {
-    for (const name of listDirectories(join(root, "skills", bucket))) {
-      const directory = join(root, "skills", bucket, name);
+  for (const bucket of listDirectories(skillsRoot)) {
+    for (const name of listDirectories(join(skillsRoot, bucket))) {
+      const directory = join(skillsRoot, bucket, name);
       if (skills.has(name)) {
         throw new Error(`Duplicate bundled skill name: ${name}`);
       }
       skills.set(name, { directory, files: listFiles(directory) });
     }
   }
+  return skills;
+};
+
+export const indexContent = (root: string): ContentIndex => {
+  const skills = indexSkills(join(root, "skills"));
   const agents = new Map<string, AgentSource>();
   for (const name of listDirectories(join(root, "agents"))) {
     const directory = join(root, "agents", name);
