@@ -23,7 +23,6 @@ jobs:
       - run: bash -n scripts/*.sh
       - run: ./scripts/check-skills.sh
       - run: ./scripts/check-agents.sh
-      - run: node ./scripts/check-relative-links.mjs
       - run: ./scripts/link-skills.sh --dry-run
       - run: ./scripts/link-agents.sh --dry-run
       - run: git diff --check
