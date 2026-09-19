@@ -22,6 +22,9 @@ small, explicit, and portable across supported agent harnesses.
   changes.
 - Use `scripts/` only for repository-wide maintenance helpers.
 
+`GLOSSARY.md` at the repository root is the canonical domain language. Use
+those terms exactly. Do not invent synonyms for a defined term.
+
 ## Writing skills
 
 [Read and apply the skill philosophy](docs/skill-philosophy.md) before adding,
