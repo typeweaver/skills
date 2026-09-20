@@ -3,12 +3,12 @@ packages:
 
 catalog:
   "@changesets/cli": 3.0.1
-  "@effect/tsgo": 0.36.5
+  "@effect/tsgo": 0.45.0
   "@effect/language-service": 0.87.2
-  "@effect/platform-node": ^4.0.0-rc.112
-  "@effect/vitest": ^4.0.0-rc.112
+  "@effect/platform-node": ^4.0.0-rc.115
+  "@effect/vitest": ^4.0.0-rc.115
   "@types/node": 24.13.3
-  effect: ^4.0.0-rc.112
+  effect: ^4.0.0-rc.115
   tsdown: 0.23.0
   typescript: 7.0.2
   vitest: 4.1.11
