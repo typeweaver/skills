@@ -44,6 +44,10 @@ silently.
 Agent adapters are always copied into each harness's native configuration
 location. Kiro receives skills only.
 
+Agents route to repository skills at runtime, so selecting an agent requires
+the skills too. `install` rejects `--skills none` when any agent is selected;
+use `--skills all` or name the skills the agent needs.
+
 ## Commands
 
 | Command     | Purpose                                                        |

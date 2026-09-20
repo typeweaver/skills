@@ -1,18 +1,40 @@
 import type { PlatformError } from "effect";
 import { Console, Effect, FileSystem } from "effect";
 import { join } from "node:path";
-import YAML from "yaml";
-import type { AdapterSpec, AgentSpec } from "../agent-adapters.js";
+import type { AgentSpec } from "../agent-adapters.js";
 import { ADAPTER_FILES } from "../agent-adapters.js";
-import { isRecord } from "../domain.js";
+import type { SkillSources } from "../agent-source.js";
+import { parseAgentSource } from "../agent-source.js";
+import { indexSkills } from "../content-index.js";
 import { AgentSourceError, GeneratorDriftError } from "../errors.js";
 
-const asRecord = (value: unknown): Record<string, unknown> | undefined =>
-  isRecord(value) ? value : undefined;
+const readSkillSources = (
+  repoDir: string,
+): Effect.Effect<
+  SkillSources,
+  AgentSourceError | PlatformError.PlatformError,
+  FileSystem.FileSystem
+> =>
+  Effect.gen(function* () {
+    const fs = yield* FileSystem.FileSystem;
+    const skills = yield* Effect.try({
+      try: () => indexSkills(join(repoDir, "skills")),
+      catch: (error) =>
+        new AgentSourceError({
+          message: error instanceof Error ? error.message : String(error),
+        }),
+    });
+    const sources = new Map<string, string>();
+    for (const [name, source] of skills) {
+      sources.set(name, yield* fs.readFileString(join(source.directory, "SKILL.md")));
+    }
+    return sources;
+  });
 
 const loadAgentSpec = (
   agentDir: string,
   name: string,
+  skills: SkillSources,
 ): Effect.Effect<
   AgentSpec,
   AgentSourceError | PlatformError.PlatformError,
@@ -20,53 +42,9 @@ const loadAgentSpec = (
 > =>
   Effect.gen(function* () {
     const fs = yield* FileSystem.FileSystem;
-    const raw = yield* fs.readFileString(join(agentDir, "agent.yaml"));
+    const source = yield* fs.readFileString(join(agentDir, "agent.yaml"));
     const instructions = yield* fs.readFileString(join(agentDir, "instructions.md"));
-    const source = asRecord(YAML.parse(raw));
-    const declaredName = source?.["name"];
-    const description = source?.["description"];
-    const adapters = asRecord(source?.["adapters"]);
-    const hasRequiredFields =
-      typeof declaredName === "string" && typeof description === "string" && adapters !== undefined;
-    if (source === undefined || !hasRequiredFields) {
-      return yield* new AgentSourceError({
-        message: `agents/${name}/agent.yaml must declare name, description, and adapters`,
-      });
-    }
-    if (declaredName !== name) {
-      return yield* new AgentSourceError({
-        message: `agents/${name}/agent.yaml declares name '${declaredName}'`,
-      });
-    }
-    return {
-      name: declaredName,
-      description,
-      instructions,
-      adapters: yield* parseAdapters(adapters, name),
-    };
-  });
-
-const parseAdapters = (
-  value: Record<string, unknown>,
-  agentName: string,
-): Effect.Effect<AgentSpec["adapters"], AgentSourceError> =>
-  Effect.gen(function* () {
-    const adapters: Record<string, AdapterSpec> = {};
-    for (const [key, entry] of Object.entries(value)) {
-      const mapping = asRecord(entry);
-      if (mapping === undefined) {
-        return yield* new AgentSourceError({
-          message: `agents/${agentName}/agent.yaml: adapter '${key}' must be a mapping`,
-        });
-      }
-      const description = mapping["description"];
-      const frontmatter = mapping["frontmatter"];
-      adapters[key] = {
-        ...(typeof description === "string" ? { description } : {}),
-        ...(isRecord(frontmatter) ? { frontmatter } : {}),
-      };
-    }
-    return adapters;
+    return yield* parseAgentSource(source, name, instructions, skills);
   });
 
 type RenderedAdapter = {
@@ -124,6 +102,7 @@ export const runGenerate = Effect.fn("commands.generate")(function* (
   const fs = yield* FileSystem.FileSystem;
   const agentsDir = join(repoDir, "agents");
   const drifted: Array<string> = [];
+  const skills = yield* readSkillSources(repoDir);
   let written = 0;
 
   for (const entry of yield* fs.readDirectory(agentsDir)) {
@@ -131,7 +110,7 @@ export const runGenerate = Effect.fn("commands.generate")(function* (
     if (!(yield* isAgentSourceDirectory(fs, agentDir))) {
       continue;
     }
-    const spec = yield* loadAgentSpec(agentDir, entry);
+    const spec = yield* loadAgentSpec(agentDir, entry, skills);
     for (const rendered of renderAgent(agentDir, spec)) {
       if (yield* syncAdapter(fs, rendered, check, drifted)) {
         written += 1;

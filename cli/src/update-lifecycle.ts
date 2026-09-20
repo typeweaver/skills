@@ -8,7 +8,7 @@ import {
   prepareLifecycle,
 } from "./lifecycle.js";
 import { planComponents } from "./planner.js";
-import { readReceiptState } from "./receipt.js";
+import { agentsRequireSkills, hasAgentWithoutSkill, readReceiptState } from "./receipt.js";
 
 const desiredForUpdate = (
   prepared: PreparedLifecycle,
@@ -42,7 +42,19 @@ const buildUpdate = (
   packageVersion: string,
 ): BuiltMutation => {
   const receipt = requireManagedReceipt(prepared.roots);
+  if (hasAgentWithoutSkill(receipt.components)) {
+    throw new Error(
+      `This installation records agents but no skills. ${agentsRequireSkills} ` +
+        "Run `equip-it install --skills all`, then retry update.",
+    );
+  }
   const desired = desiredForUpdate(prepared, receipt);
+  if (hasAgentWithoutSkill(desired)) {
+    throw new Error(
+      `This update would leave agents without any installed skill. ${agentsRequireSkills} ` +
+        "Run `equip-it install --skills all` to add the repository skills, then retry update.",
+    );
+  }
   const next = buildNextReceipt(packageVersion, [], desired);
   return {
     plan: planComponents({
