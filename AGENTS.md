@@ -74,6 +74,7 @@ Run these checks after changing the repository:
 bash -n scripts/*.sh
 ./scripts/check-skills.sh
 ./scripts/check-agents.sh
+node ./scripts/check-relative-links.mjs
 ./scripts/link-skills.sh --dry-run
 ./scripts/link-agents.sh --dry-run
 pnpm check

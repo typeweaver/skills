@@ -3,7 +3,7 @@ import { diskMatchesNode, inspectNode } from "./filesystem.js";
 import type { MutationBase, PreparedLifecycle } from "./lifecycle.js";
 import { prepareLifecycle } from "./lifecycle.js";
 import { nodesFromReceipt } from "./planner.js";
-import { readReceiptState } from "./receipt.js";
+import { agentsRequireSkills, hasAgentWithoutSkill, readReceiptState } from "./receipt.js";
 import { transactionStatus } from "./transaction.js";
 
 export type DoctorIssue = {
@@ -105,6 +105,13 @@ export const doctorLifecycle = (
   const state = readReceiptState(prepared.roots);
   if (state.kind !== "valid") {
     return reportWithoutReceipt(packageVersion, state, issues, transaction);
+  }
+  if (hasAgentWithoutSkill(state.receipt.components)) {
+    issues.push({
+      message:
+        `Receipt records agents but no skills. ${agentsRequireSkills} ` +
+        "Run `equip-it install --skills all` to add them.",
+    });
   }
   return {
     packageVersion,
