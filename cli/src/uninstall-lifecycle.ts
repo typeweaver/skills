@@ -15,7 +15,7 @@ import {
   prepareLifecycle,
 } from "./lifecycle.js";
 import { desiredComponentFromReceipt, planComponents } from "./planner.js";
-import { readReceiptState } from "./receipt.js";
+import { hasAgentWithoutSkill, readReceiptState } from "./receipt.js";
 import { buildReceiptlessUninstall } from "./uninstall-receiptless.js";
 
 export type UninstallRequest = MutationBase & {
@@ -114,6 +114,13 @@ const buildManagedUninstall = (
 ): BuiltMutation => {
   const { desired, retained } = scopedUninstall(request, receipt);
   const remainingCount = retained.length + desired.length;
+  if (remainingCount > 0 && hasAgentWithoutSkill([...retained, ...desired])) {
+    throw new Error(
+      "This uninstall would leave agents without any installed skill. " +
+        "Agents route to other repository skills at runtime. " +
+        "Uninstall the agents too (`--agents all`), or keep at least one skill.",
+    );
+  }
   const next = remainingCount === 0 ? null : buildNextReceipt(packageVersion, retained, desired);
   const previous = selectedPrevious(receipt, retained);
   const plan = planComponents({

@@ -59,7 +59,6 @@ it("installs native agent adapters as harness-specific copies", () => {
     {
       ...installRequest(env),
       harnesses: ["claude-code", "codex", "opencode"],
-      skills: { kind: "none" },
       agents: { kind: "names", names: ["review-it"] },
     },
     "1.0.0",
