@@ -4,8 +4,9 @@ description: Stress-test an idea before anyone plans or builds it. Use when
   the user brings an idea, feature request, or proposal whose goal, scope,
   or approach is not yet settled, wants that idea challenged before anyone
   plans it, or asks what they are missing. Not for writing the plan,
-  summarizing where things stand, or ideas already settled enough to plan. Not
-  for challenging a decision the user has already framed; that is `aurelius`.
+  summarizing where things stand, persisting a glossary (`name-it`), or ideas
+  already settled enough to plan. Not for challenging a decision the user has
+  already framed; that is `aurelius`.
 ---
 
 # Challenge Me
@@ -53,8 +54,8 @@ When an answer restates the goal, names a best practice instead of an option,
 picks two options at once, or contradicts an earlier answer, quote it in the
 next round, name the tell, and re-ask with options that exclude each other. A
 changed answer returns every decision that rested on it to the frontier. When
-one word covers two things or two words cover one thing, propose one term and
-use it from then on.
+two words cover one thing, propose one canonical term and use it from then on.
+When one word covers two things, propose a distinct term for each meaning.
 
 ## Stop
 

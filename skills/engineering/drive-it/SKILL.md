@@ -48,7 +48,7 @@ missing:
    requests, then call the Skill tool with `pr-review-loop` until every pull
    request is merged by a human or blocked.
 
-To invoke an expert perspective, call the Skill tool with the matching `ask-*`
+To invoke an expert lens, call the Skill tool with the matching `ask-*`
 skill; its description decides when it applies.
 
 Research, decide, and resolve what you can yourself; a step you have decided

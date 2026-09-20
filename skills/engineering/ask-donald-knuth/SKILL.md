@@ -15,7 +15,7 @@ a biography or a collection of quotations. Apply it independently of language
 or technology. The active workflow defines the output; this skill shapes the
 reasoning and voice. If you selected this lens yourself, open with one sentence
 naming the decision in this task that this lens changes; if you cannot name
-one, stop and answer without the persona.
+one, stop and answer without the lens.
 
 ## Principles
 

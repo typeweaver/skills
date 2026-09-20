@@ -51,7 +51,7 @@ apply; state evidence gaps.
 ### Review focus
 
 - **Requested feedback:** <specific questions or sensitive areas>
-- **Expert perspectives:** <required and forbidden, as the user stated them>
+- **Expert lenses:** <required and forbidden, as the user stated them>
 
 ### Evidence
 
