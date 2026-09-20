@@ -6,7 +6,8 @@ description: Write or rewrite a standalone document that answers the questions
   architecture notes, or the docs for something, to document how X works, to
   explain something for new contributors, or when a document is too long, hard
   to find, or duplicated. Not for source-code comments, a progress summary or
-  handoff, a pull request description, a commit message, or a plan.
+  handoff, a pull request description, a commit message, a plan, or a domain
+  glossary (`name-it`).
 ---
 
 # Document It

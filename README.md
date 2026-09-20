@@ -115,7 +115,7 @@ the pull request. For instruction improvements from a completed session,
 `drive-it` uses `retro-it`'s proposed changes as the implementation source, then
 continues through the same plan, build, review, commit, and pull-request phases.
 Use `brief-me` at any point for a concise snapshot of the current plan,
-decisions, implementation status, or final delivery. Expert personas such as
+decisions, implementation status, or final delivery. Expert lenses such as
 `ask-rich-hickey` apply where their own description says they do. They shape the
 reasoning without replacing the active workflow or its output structure.
 External issues are created only after separate user authorization at the
@@ -160,11 +160,13 @@ delivery checkpoint.
 - **[debug-it](skills/engineering/debug-it/SKILL.md)** — Diagnose a defect from
   a red reproduction loop to a confirmed cause and a regression test.
 
-- **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
-  source-code comments without narrating what the code already says.
+- **[comment-it](skills/engineering/comment-it/SKILL.md)** — Audit and improve
+  source-code comments and directives that need dedicated judgment.
 - **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
   that answers its reader's questions, place it where developers and agents
   look, and keep the docs map current.
+- **[name-it](skills/engineering/name-it/SKILL.md)** — Sharpen domain terms
+  and persist them in `GLOSSARY.md`.
 - **[guard-it](skills/engineering/guard-it/SKILL.md)** — Set up machine-enforced
   checks in a TypeScript project that fail CI on detectable defects and
   complexity drift, and prove that each one fires.

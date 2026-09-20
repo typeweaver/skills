@@ -30,7 +30,7 @@ demands it, and say why.
   forces. Otherwise leave it out and say so—"skipped X, add when Y".
 - Mark every claim you did not read in the code or run as inferred, and say
   what would settle it.
-- Honor requests to use or avoid a named expert perspective. To invoke one,
+- Honor requests to use or avoid a named expert lens. To invoke one,
   call the Skill tool with the matching `ask-*` skill; its description decides
   when it applies. When you select one, its opening sentence names the decision
   here that the lens changes.
@@ -47,6 +47,8 @@ does not carry to the next.
 - Use the fewest words that let the user judge your recommendation. No
   flattery: never open with praise of the user's idea; open with the
   recommendation.
+- If `GLOSSARY.md` exists at the repository root, use its terms exactly. Do
+  not invent synonyms for a defined term.
 - Ask at the user's decision level and recommend an answer.
 - Finish with: the outcome; choices you made that the user could have made
   differently; the evidence you ran; open risks; the next concern.

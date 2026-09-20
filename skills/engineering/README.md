@@ -2,7 +2,7 @@
 
 Stable skills for daily software-engineering work. Every skill can be invoked
 explicitly by the user. Model-invoked skills may additionally be discovered
-from task context; user-invoked skills start only by explicit human command.
+from task context; user-only skills start only by explicit human command.
 
 ## Model-invoked
 
@@ -36,11 +36,13 @@ from task context; user-invoked skills start only by explicit human command.
 - **[retro-it](./retro-it/SKILL.md)** — Trace every correction in a finished
   session to its cause and propose the exact instruction change.
 
-- **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
-  without narrating what the code already says.
+- **[comment-it](./comment-it/SKILL.md)** — Audit and improve source-code
+  comments and directives that need dedicated judgment.
 - **[document-it](./document-it/SKILL.md)** — Write a document that answers its
   reader's questions, place it where developers and agents look, and keep the
   docs map current.
+- **[name-it](./name-it/SKILL.md)** — Sharpen domain terms and persist them in
+  `GLOSSARY.md`.
 - **[guard-it](./guard-it/SKILL.md)** — Set up machine-enforced checks in a
   TypeScript project that fail CI on detectable defects and complexity drift,
   and prove that each one fires.
@@ -63,7 +65,7 @@ from task context; user-invoked skills start only by explicit human command.
 - **[pr-review-loop](./pr-review-loop/SKILL.md)** — Work an open pull request's
   review comments and checks until a human merges it.
 
-## User-invoked
+## User-only
 
 - **[drive-it](./drive-it/SKILL.md)** — Orchestrate the full engineering workflow
   from an idea or retrospective findings to a merged pull request.
