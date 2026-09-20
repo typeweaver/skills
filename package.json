@@ -6,11 +6,12 @@
     "format:check": "oxfmt --check .",
     "generate": "pnpm --filter equip-it run build && node cli/dist/src/bin.js generate --repo .",
     "generate:check": "pnpm --filter equip-it run build && node cli/dist/src/bin.js generate --repo . --check",
-    "test": "pnpm --filter equip-it test && node --test scripts/test/*.test.mjs",
+    "test": "node --test \"scripts/**/*.test.mjs\" && pnpm --filter equip-it test",
+    "check:links": "node ./scripts/check-relative-links.mjs",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "typecheck": "pnpm --filter equip-it typecheck",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm generate:check",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm check:links && pnpm test && pnpm generate:check",
     "postinstall": "effect-tsgo patch --typescript --oxlint",
     "changeset": "changeset",
     "release": "node scripts/release.mjs"
@@ -18,6 +19,8 @@
   "devDependencies": {
     "@changesets/cli": "catalog:",
     "@effect/tsgo": "catalog:",
+    "entities": "8.1.0",
+    "marked": "18.0.13",
     "oxfmt": "^0.64.0",
     "oxlint": "1.78.0",
     "oxlint-tsgolint": "7.0.2001",
