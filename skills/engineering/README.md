@@ -37,7 +37,8 @@ from task context; user-only skills start only by explicit human command.
 - **[comment-it](./comment-it/SKILL.md)** — Write durable source-code comments
   without narrating what the code already says.
 - **[document-it](./document-it/SKILL.md)** — Write a document that answers its
-  reader's questions and passes a fresh-reader test.
+  reader's questions, place it where developers and agents look, and keep the
+  docs map current.
 - **[name-it](./name-it/SKILL.md)** — Sharpen domain terms and persist them in
   `GLOSSARY.md`.
 - **[guard-it](./guard-it/SKILL.md)** — Set up machine-enforced checks in a

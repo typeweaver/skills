@@ -14,7 +14,7 @@ import {
   prepareLifecycle,
 } from "./lifecycle.js";
 import { planComponents } from "./planner.js";
-import { readReceiptState } from "./receipt.js";
+import { agentsRequireSkills, readReceiptState } from "./receipt.js";
 
 const uniqueHarnesses = (harnesses: InstallRequest["harnesses"]) =>
   HARNESSES.filter((harness) => harnesses.includes(harness));
@@ -69,6 +69,11 @@ const selectedInstallComponents = (
   const agentNames = resolveSelection(request.agents, prepared.index.agents.keys(), "agents");
   if (skillNames.length === 0 && agentNames.length === 0) {
     throw new Error("The install selection is empty; choose at least one skill or agent.");
+  }
+  if (agentNames.length > 0 && skillNames.length === 0) {
+    throw new Error(
+      `${agentsRequireSkills} Use --skills all (or name the skills) instead of --skills none.`,
+    );
   }
   const previous = new Map(
     (receipt?.components ?? []).map((component) => [component.key, component]),
