@@ -157,7 +157,8 @@ delivery checkpoint.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Write durable
   source-code comments without narrating what the code already says.
 - **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
-  that answers its reader's questions and passes a fresh-reader test.
+  that answers its reader's questions, place it where developers and agents
+  look, and keep the docs map current.
 - **[guard-it](skills/engineering/guard-it/SKILL.md)** — Set up machine-enforced
   checks in a TypeScript project that fail CI on detectable defects and
   complexity drift, and prove that each one fires.
