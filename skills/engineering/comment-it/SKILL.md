@@ -15,7 +15,7 @@ description: >-
 Keep a comment only when deleting it loses information the code cannot express.
 Your reader has the code and the tests, not the conversation, the diff, or the
 review. No comment carries credentials, tokens, private keys, `.env` contents,
-and internal hostnames the repository does not already publish, and none
+or internal hostnames the repository does not already publish, and none
 carries a customer name or pasted ticket content; state the constraint without
 the value.
 
