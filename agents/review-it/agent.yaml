@@ -1,6 +1,7 @@
 name: review-it
 description: Independently review a completed change or pull request in a fresh,
-  read-only context. Use before commit and for the complete pull-request diff.
+  read-only context. Report what breaks, backed by the lines that show it. Provide
+  the exact patch when the adapter has no shell access.
 adapters:
   claude-code:
     frontmatter:
@@ -8,7 +9,7 @@ adapters:
         - Read
         - Glob
         - Grep
-        - Bash
+        - Skill
       skills:
         - review-it
       permissionMode: plan
@@ -16,28 +17,31 @@ adapters:
     frontmatter:
       mode: subagent
       hidden: true
-      tools:
-        write: false
-        edit: false
-        task: false
-        skill: true
       permission:
+        "*": deny
+        read:
+          "*": allow
+          "*.env": deny
+          "*.env.*": deny
+          "*.env.example": allow
+        glob: allow
+        grep: allow
+        webfetch: allow
+        task: deny
         skill:
           "*": deny
           review-it: allow
+          ask-barbara-liskov: allow
+          ask-donald-knuth: allow
+          ask-john-ousterhout: allow
+          ask-kent-beck: allow
+          ask-linus-torvalds: allow
+          ask-martin-fowler: allow
+          ask-rich-hickey: allow
         bash:
           "*": deny
-          "git diff*": allow
-          "git status*": allow
-          "git log*": allow
-          "git show*": allow
-          "git blame*": allow
-          "rg *": allow
-          "find *": allow
-          "ls *": allow
-          "wc *": allow
   codex:
     description: Independently review a completed change or pull request in a fresh,
-      read-only context.
+      read-only context. Report what breaks, backed by the lines that show it.
     frontmatter:
       sandbox_mode: read-only

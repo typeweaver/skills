@@ -62,8 +62,12 @@ must not be activated again.
 
 ## review-it
 
-A fresh, read-only subagent that loads the `review-it` skill and returns its
-findings to the orchestrating agent.
+A fresh, read-only subagent that loads the `review-it` skill, may invoke
+`ask-*` perspectives, and returns its findings to the orchestrating agent.
+It does not edit the tree. OpenCode denies shell execution because its approval
+mode can auto-approve commands that write; unavailable checks are reported as
+not verified. Claude is limited to read and search tools because parent modes
+can override subagent approvals. Codex runs checks in its read-only sandbox.
 
 - [Codex adapter](review-it/codex.toml)
 - [Claude Code adapter](review-it/claude.md)
