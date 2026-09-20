@@ -55,9 +55,12 @@ Leave the change verified; do not plan, review, commit, or deliver it here.
   express: a rationale, a rejected alternative, a constraint the types cannot
   state. When a rename, a type, or a test can carry that information, make that
   change instead of the comment.
-- Put a lint or type suppression on the line that triggers it, never on the
-  file, and name the rule and the condition for removing it. Delete
-  documentation your change made false. When the agreed outcome needs a
+- Put a routine lint or type suppression on the line or symbol that triggers
+  it. Name the diagnostic, why the exception is accepted, and, when temporary,
+  the condition for removing it. When the mechanism requires broader scope or
+  the exception needs a dedicated rationale or removal decision, call the Skill
+  tool with `comment-it`. Delete documentation your change made false. When the
+  agreed outcome needs a
   standalone document — a README, a guide, an ADR — call the Skill tool with
   `document-it` for that document.
 

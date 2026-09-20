@@ -4,4 +4,5 @@
 
 Collapse `comment-it` onto the deletion test and reserve it for explicit comment
 writing, revision, audit, and specialized directive decisions; `craft-it`
-continues to own routine implementation comments.
+continues to own routine implementation comments and routes exceptional
+suppression decisions to `comment-it`.

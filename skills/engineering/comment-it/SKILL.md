@@ -2,10 +2,11 @@
 name: comment-it
 description: >-
   Write, revise, or audit source-code comments. Use when comments are the primary
-  task or when implementation requires choosing a comment or directive's audience,
-  scope, rationale, or removal condition, including API documentation, TODOs,
-  deprecations, suppressions, and workaround notes. Skip implementation work that
-  needs no such choice; craft-it governs its routine comments. Do not use for
+  task or when implementation requires choosing a published audience, a directive
+  scope broader than one line or symbol, or a rationale or removal condition that
+  the task and repository do not make explicit. This includes API documentation,
+  TODOs, deprecations, exceptional suppressions, and workaround notes. Skip routine
+  implementation comments and suppressions governed by craft-it. Do not use for
   standalone user documentation, general prose, commit messages, or review
   discussion.
 ---
