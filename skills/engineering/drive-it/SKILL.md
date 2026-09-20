@@ -10,8 +10,9 @@ disable-model-invocation: true
 
 Take one idea to a merged pull request by routing to the focused skills. Each
 skill owns its rules; call it instead of redoing its work here. Call the Skill
-tool with `aurelius` first and keep that mindset throughout. Resume at the
-earliest phase whose output is missing:
+tool with `aurelius` first and keep that mindset throughout, unless `aurelius`
+is already loaded in this session. Resume at the earliest phase whose output is
+missing:
 
 - Understand: a shared understanding the user confirmed
 - Plan: a plan

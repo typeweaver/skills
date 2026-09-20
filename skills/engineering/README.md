@@ -37,7 +37,8 @@ from task context; user-invoked skills start only by explicit human command.
 - **[comment-it](./comment-it/SKILL.md)** — Audit and improve source-code
   comments and directives that need dedicated judgment.
 - **[document-it](./document-it/SKILL.md)** — Write a document that answers its
-  reader's questions and passes a fresh-reader test.
+  reader's questions, place it where developers and agents look, and keep the
+  docs map current.
 - **[guard-it](./guard-it/SKILL.md)** — Set up machine-enforced checks in a
   TypeScript project that fail CI on detectable defects and complexity drift,
   and prove that each one fires.

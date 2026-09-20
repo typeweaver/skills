@@ -85,6 +85,51 @@ it("installs one canonical skill plus a Claude projection and removes all owned 
   assert.isFalse(existsSync(rootPaths(env).state));
 });
 
+it("rejects selecting an agent without installing the repository skills", () => {
+  const env = temporaryEnv();
+  assert.throws(() => {
+    installLifecycle(
+      {
+        env,
+        contentDirectory: repository,
+        harnesses: ["claude-code"],
+        skills: { kind: "none" },
+        agents: { kind: "names", names: ["aurelius-drive"] },
+        mode: "symlink",
+        force: false,
+        dryRun: false,
+      },
+      "1.0.0",
+    );
+  }, /install the repository skills too/u);
+  assert.isFalse(existsSync(join(env.home, ".claude", "agents", "aurelius-drive.md")));
+  assert.isFalse(existsSync(join(env.home, ".agents", "skills", "aurelius")));
+});
+
+it("installs routed skills alongside the agent in a normal selection", () => {
+  const env = temporaryEnv();
+  const report = installLifecycle(
+    {
+      env,
+      contentDirectory: repository,
+      harnesses: ["claude-code"],
+      skills: { kind: "all" },
+      agents: { kind: "all" },
+      mode: "symlink",
+      force: false,
+      dryRun: false,
+    },
+    "1.0.0",
+  );
+
+  assert.isTrue(report.componentCount > 1);
+  assert.isTrue(existsSync(join(env.home, ".agents", "skills", "challenge-me")));
+  assert.isTrue(existsSync(join(env.home, ".agents", "skills", "aurelius")));
+  const adapter = join(env.home, ".claude", "agents", "aurelius-drive.md");
+  assert.isTrue(existsSync(adapter));
+  assert.match(readFileSync(adapter, "utf8"), /<!-- BEGIN preloaded skill: drive-it -->/u);
+});
+
 it("adopts an exact skills.sh-style copy and symlink without rewriting them", () => {
   const env = temporaryEnv();
   const canonical = join(env.home, ".agents", "skills", skillName);

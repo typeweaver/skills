@@ -58,9 +58,12 @@ links are active.
 ## Agents
 
 Install the native agent adapters from a checkout of this repository (the same
-path serves local development):
+path serves local development). Install the skills first: agents route to
+repository skills at runtime, and `link-agents.sh` installs adapters only.
 
 ```bash
+./scripts/link-skills.sh --dry-run
+./scripts/link-skills.sh
 ./scripts/link-agents.sh --dry-run
 ./scripts/link-agents.sh
 ```
@@ -69,9 +72,10 @@ Claude Code and OpenCode receive live symlinks. Codex profiles and custom agents
 are copied; rerun the linker after a Codex adapter changes.
 
 - **[aurelius-drive](agents/aurelius-drive/codex-profile.toml)** — Explicit primary mode
-  that adopts Aurelius and starts the complete Drive It workflow. Claude Code
-  and OpenCode provide native primary-agent selection; Codex provides an
-  equivalent profile selected with `codex --profile aurelius-drive`.
+  that adopts Aurelius and starts the complete Drive It workflow. Every harness
+  receives the canonical `aurelius` and `drive-it` content inline as startup
+  context, then routes to the installed repository skills. Codex selects it with
+  `codex --profile aurelius-drive`.
 - **[review-it](agents/review-it/codex.toml)** — Fresh, read-only reviewer used
   by the orchestrator before commits and over the complete pull-request diff.
 
@@ -153,7 +157,8 @@ delivery checkpoint.
 - **[comment-it](skills/engineering/comment-it/SKILL.md)** — Audit and improve
   source-code comments and directives that need dedicated judgment.
 - **[document-it](skills/engineering/document-it/SKILL.md)** — Write a document
-  that answers its reader's questions and passes a fresh-reader test.
+  that answers its reader's questions, place it where developers and agents
+  look, and keep the docs map current.
 - **[guard-it](skills/engineering/guard-it/SKILL.md)** — Set up machine-enforced
   checks in a TypeScript project that fail CI on detectable defects and
   complexity drift, and prove that each one fires.
