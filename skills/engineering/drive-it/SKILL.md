@@ -1,28 +1,32 @@
 ---
 name: drive-it
-description: Run the complete engineering workflow from an idea to a merged
-  pull request — understand, plan, build, ship, and handle review until a
-  human merges.
+description: Run the complete engineering workflow from an idea or
+  retrospective findings to a merged pull request — understand, plan, build,
+  ship, and handle review until a human merges.
 disable-model-invocation: true
 ---
 
 # Drive It
 
-Take one idea to a merged pull request by routing to the focused skills. Each
-skill owns its rules; call it instead of redoing its work here. Call the Skill
+Take one outcome to a merged pull request by routing to the focused skills.
+Each skill owns its rules; call it instead of redoing its work here. Call the
 tool with `aurelius` first and keep that mindset throughout, unless `aurelius`
 is already loaded in this session. Resume at the earliest phase whose output is
 missing:
 
-- Understand: a shared understanding the user confirmed
+- Understand: a shared understanding the user confirmed, or a retrospective
+  report for instruction improvements
 - Plan: a plan
 - Scaffold: the approved scaffold, when step 3 applies
 - Build: a branch with the milestone's commits
 - Ship: a pull request
 - Deliver: a merged pull request
 
-1. **Understand** — call the Skill tool with `challenge-me`. Skip it only when
-   no consequential decision about the idea is open.
+1. **Understand** — when the outcome is to improve agent instructions from a
+   completed session, call the Skill tool with `retro-it` and use its proposed
+   instruction changes as the implementation source. Otherwise call the Skill
+   tool with `challenge-me`; skip it only when no consequential decision about
+   the idea is open.
 2. **Plan** — call the Skill tool with `plan-it`, present the plan by calling
    the Skill tool with `brief-me`, and ask once, with a recommended answer,
    for approval to execute the whole plan autonomously. Default to one pull

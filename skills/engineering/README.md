@@ -33,6 +33,8 @@ from task context; user-only skills start only by explicit human command.
   for an agreed outcome, with tests that fail without it.
 - **[debug-it](./debug-it/SKILL.md)** — Diagnose a defect from a red
   reproduction loop to a confirmed cause and a regression test.
+- **[retro-it](./retro-it/SKILL.md)** — Trace every correction in a finished
+  session to its cause and propose the exact instruction change.
 
 - **[comment-it](./comment-it/SKILL.md)** — Audit and improve source-code
   comments and directives that need dedicated judgment.
@@ -66,6 +68,4 @@ from task context; user-only skills start only by explicit human command.
 ## User-only
 
 - **[drive-it](./drive-it/SKILL.md)** — Orchestrate the full engineering workflow
-  from an idea to a merged pull request.
-- **[retro-it](./retro-it/SKILL.md)** — Trace every correction in a finished
-  session to its cause and propose the exact instruction change.
+  from an idea or retrospective findings to a merged pull request.

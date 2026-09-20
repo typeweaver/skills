@@ -1,8 +1,10 @@
 ---
 name: retro-it
-description: "Analyze a finished session: trace every correction to its cause
-  and propose the exact instruction change."
-disable-model-invocation: true
+description: Analyze a completed agent session and turn each user correction or
+  detour into an exact instruction change. Use when improving agent skills,
+  repository instructions, memory, or harness settings from a session that went
+  wrong or needed repeated redirection. Not for reviewing the code produced by
+  the session or for a team process retrospective.
 ---
 
 # Retro It
@@ -11,8 +13,11 @@ Every user correction has a cause: the instructions the agent was running, or a
 requirement that changed. The output of this retrospective is the exact text
 change that removes the cause: the file, the line as it reads today, and the
 line that replaces it. The subject is the session, not the code it produced.
-Read and propose. Edit a file, create an issue record, stage, commit, or push
-only when the user asks for that specific change.
+Read and propose; do not edit files, create issue records, stage, commit, or
+push. When an orchestrator invoked this skill to deliver instruction
+improvements, return the report to it as the implementation source; the
+orchestrator owns editing, review, commits, and delivery. Otherwise hand the
+report back and stop.
 
 ## Locate the session record
 
@@ -113,6 +118,3 @@ two defensible fixes — each naming its finding and the option you recommend.
 A stylistic preference, a question the agent asked and the user answered, or a
 step the user accepted is not a correction. When there were none, say so and
 stop after the arc and the detours; an empty findings list is correct.
-
-When the user asks to keep the findings as tracked work, call the Skill tool
-with `to-issues`.

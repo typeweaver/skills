@@ -165,7 +165,7 @@ it("aurelius-drive inlines canonical aurelius and drive-it content on opencode a
     assert.match(out, /<!-- BEGIN preloaded skill: aurelius -->/u);
     assert.match(out, /<!-- BEGIN preloaded skill: drive-it -->/u);
     assert.match(out, /You are Aurelius, a senior engineer\./u);
-    assert.match(out, /Take one idea to a merged pull request/u);
+    assert.match(out, /Take one outcome to a merged pull request/u);
     assert.notMatch(out, /^---\nname: aurelius/mu);
   }
 });

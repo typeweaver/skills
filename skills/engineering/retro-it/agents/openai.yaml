@@ -2,5 +2,3 @@ interface:
   display_name: "Retro It"
   short_description: "Trace every correction in a finished session to its exact instruction change"
   default_prompt: "Use $retro-it to analyze this session and propose the exact instruction changes."
-policy:
-  allow_implicit_invocation: false

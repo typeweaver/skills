@@ -89,6 +89,8 @@ the companion mindset throughout. Hexagons are human checkpoints.
 ```mermaid
 flowchart TD
     idea([Idea]) --> challenge[challenge-me]
+    session([Completed session]) --> retro[retro-it]
+    retro --> plan
     challenge -.->|skip when no consequential decision is open| plan[plan-it]
     challenge --> plan
     plan --> approve{{brief-me: approve the plan}}
@@ -109,10 +111,13 @@ flowchart TD
 The skills stay useful independently. The workflow only shows how they compose
 for a complete engineering handoff. When explicitly invoked, `drive-it` resumes
 at the earliest incomplete phase and coordinates the flow until a human merges
-the pull request. Use `brief-me` at any point for a concise snapshot of the current
-plan, decisions, implementation status, or final delivery. Expert lenses such
-as `ask-rich-hickey` apply where their own description says they do. They shape
-the reasoning without replacing the active workflow or its output structure.
+the pull request. For instruction improvements from a completed session,
+`drive-it` uses `retro-it`'s proposed changes as the implementation source, then
+continues through the same plan, build, review, commit, and pull-request phases.
+Use `brief-me` at any point for a concise snapshot of the current plan,
+decisions, implementation status, or final delivery. Expert lenses such as
+`ask-rich-hickey` apply where their own description says they do. They shape the
+reasoning without replacing the active workflow or its output structure.
 External issues are created only after separate user authorization at the
 delivery checkpoint.
 
@@ -124,7 +129,8 @@ delivery checkpoint.
   engineer who recommends one option with its decisive tradeoff and owns the
   outcome inside the approved scope.
 - **[drive-it](skills/engineering/drive-it/SKILL.md)** — Orchestrate the full
-  engineering workflow from an idea to a merged pull request.
+  engineering workflow from an idea or retrospective findings to a merged pull
+  request.
 - **[retro-it](skills/engineering/retro-it/SKILL.md)** — Trace every correction
   in a finished session to its cause and propose the exact instruction change.
 - **[ask-rich-hickey](skills/engineering/ask-rich-hickey/SKILL.md)** — Judge a
