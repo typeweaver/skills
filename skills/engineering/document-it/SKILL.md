@@ -69,6 +69,7 @@ Decision's choice and historical rationale. Correcting spelling, broken links,
 or factual transcription without changing meaning is allowed. A reversal gets
 a replacement Decision and changes the old status to `superseded by ADR-NNNN`
 or the repository's equivalent.
+
 The repository README is a landing: what the project is, how to get a first
 success, and a link to the map — not the home of architecture, reference, or
 Decisions.
