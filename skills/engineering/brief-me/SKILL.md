@@ -1,56 +1,60 @@
 ---
 name: brief-me
-description: Condense a discussion, plan, active implementation, or reviewed
-  delivery into a decision-ready brief that starts from the reader's context.
-  Use when the user asks where things stand, wants catching up after a pause,
-  needs a progress check or a pull-request handoff, or says an explanation did
-  not land. Not for writing a durable document, a pull request description, or
-  a commit message.
+description: Condense a discussion, plan, implementation, or review into the
+smallest brief that gives the reader the context, current state, and decisions
+they need. Use for catch-ups, progress checks, handoffs, or when an explanation
+did not land. Not for durable documentation, pull request descriptions, or
+commit messages.
 ---
 
 # Brief Me
 
-Brief a reader without your context: start where they are, then say where
-things stand, in one read. Verify against the repository and durable
-artifacts; prefer verified state over earlier narrative.
+Bring a reader without your context to the current understanding in one read.
 
-## Output
+Verify the current state against the repository and durable artifacts.
+Prefer verified state over earlier discussion.
+Separate facts from assumptions and done from planned.
 
-1. **Where we are** — one or two sentences of context: which problem, which
-   part of the system, why it matters now. Use the repository's own names.
-2. **Bottom line** — two or three sentences: where it stands and what that
-   means.
-3. **Three to five bullets** — the detail this situation needs: agreed and
-   open points, commitments, achieved and next, how to see it working, and the
-   weaknesses, risks, or shortcuts the reader should know. Include the one or
-   two decisions that ruled out an alternative the reader would most likely
-   have expected.
-4. **Smallest view that makes it clear** — at most one: pseudocode, call tree,
-   component tree, shallow file tree, Mermaid flow or sequence, or a
-   diff-shaped sketch of what changes. Add it only when the bullets would
-   otherwise have to describe a sequence or structure the reader must hold in
-   mind. Place it next to the sentence it supports.
+## Method
 
-End with exactly one recommended choice when a user decision is needed.
+Start with the context the reader needs to understand why this matters,
+then give the bottom line.
 
-## When it did not land
+Include only details that change their understanding:
+important decisions, what is done or next, relevant risks or shortcuts,
+and alternatives that were deliberately ruled out.
 
-If the user says they are lost, do not summarize again. Re-pitch: context
-first, simpler words, one view, and only the additional context needed to
-explain the same conclusion.
+Reference plans, issues, commits, diffs, or files instead of repeating
+what already lives there.
 
-## Language
+Do not omit relevant risks, weaknesses, or shortcuts just to keep the brief clean.
 
-- Point to what lives in a plan, issue, commit, or diff by its path, number,
-  or hash; do not repeat it. Keep credentials, tokens, private keys, `.env` contents, and
-  internal hostnames the repository does not already publish out of the brief;
-  name where they live.
-- When a literal phrase exists, use it. Define a repository or domain term in a
-  short clause the first time it appears.
-- Filler is a sentence that evaluates the work — "solid", "clean",
-  "successfully" — instead of stating what is true or what remains. Delete it
-  or replace it with the fact.
-- A brief after work has landed with no weakness, risk, or shortcut bullet has
-  dropped an inconvenient fact. Add one or say that none is known.
-- Distinguish fact from inference, done from planned.
-- Stop after the view; do not restart analysis or implementation.
+If the explanation did not land, do not repeat it.
+Reframe it from the reader's context with simpler words and less information.
+
+## Presentation
+
+Design the brief for scanning, not reading.
+
+Use structure creatively to maximize information density:
+short headings, bullets, numbering, **bold**, _emphasis_, tables,
+compact code blocks, or simple text diagrams.
+
+Prefer showing structure or flow over describing it in prose.
+Use the smallest visual that makes the idea obvious:
+a tree, call flow, ASCII sketch, table, pseudocode or diff-shaped view.
+
+Use visuals only when they replace more explanation than they add.
+
+Do not decorate for its own sake.
+Every formatting choice should make the brief faster to understand,
+especially for someone who is not deep in the current context.
+
+## Finish
+
+Be concise and stop when the reader has enough context to continue.
+
+Use the repository's own language and explain unfamiliar terms only when needed.
+Replace evaluative filler with concrete facts.
+
+If a decision from the reader is required, end with one clear recommendation.
