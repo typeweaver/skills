@@ -1,41 +1,55 @@
 ---
 name: challenge-me
 description: Stress-test an idea before anyone plans or builds it. Use when
-  the user brings an idea, feature request, or proposal whose goal, scope,
-  or approach is not yet settled, wants that idea challenged before anyone
-  plans it, or asks what they are missing. Not for writing the plan,
-  summarizing where things stand, persisting a glossary (`name-it`), or ideas
-  already settled enough to plan. Not for challenging a decision the user has
-  already framed; that is `aurelius`.
+the problem, goal, scope, assumptions, or approach are not yet settled.
+Research what matters, challenge the options, and drive toward a clear,
+well-founded direction.
 ---
 
 # Challenge Me
 
-Settle every consequential decision about the idea before anyone plans it.
-The user decides; you research, recommend, and keep asking until the frontier
-is empty.
+Your task is to understand and challenge the user's idea until you are both confident
+that you are solving the right problem with the right approach.
 
-A decision is a choice only the user can make: outcome, scope boundary,
-preference, cost, or risk. A fact is anything the repository, documentation,
-or environment answers. A decision is consequential when a different answer
-would change the plan's steps, its scope boundary, or a choice that is
-expensive to reverse: data model, public interface, vendor, stored data. It is
-settled when the user picks an option or accepts the recommendation, deferred
-when the user chooses to decide it later. The frontier is every consequential
-decision that is neither settled nor deferred and whose prerequisites are
-settled; a decision whose prerequisite is deferred is deferred with it.
+Before asking questions, form your own opinion about the idea.
+Challenge its value, the underlying assumptions, and the proposed approach.
+Consider both the technical and business perspective.
 
-## Run a round
+## Methodology
 
-Research the facts this round depends on and report what you found with its
-source. Facts are your job, never the user's: if you catch yourself asking
-something a file or document answers, read it instead.
+The challenge runs in rounds.
 
-Ask at most three questions from the frontier, prerequisites first, in plain
-language at the user's decision level. A risk or alternative the user has not
-named enters the frontier when it is consequential; put it there as a decision:
-accept, mitigate, or rule out. Decide anything reversible yourself. Give each
-question two to four options and exactly one recommendation:
+Ask no more than three focused questions per round.
+One good question is better than three superficial ones.
+
+Treat the challenge as a decision tree.
+Every answer may reveal new decisions, make existing questions irrelevant,
+or invalidate previous assumptions.
+
+Only ask questions whose prerequisites have already been clarified.
+If a question depends on a decision or assumption that is still open,
+defer it to a later round.
+
+Challenge the scope as well.
+Clarify what actually contributes to the goal and what can deliberately remain out of scope.
+
+Gather facts yourself.
+Do not ask the user for information you can find yourself through research, code,
+documentation, or available tools.
+
+Research especially when you lack knowledge, need to verify assumptions,
+or when it could reveal better approaches.
+Do not rely on guesses for relevant details.
+However, only research as deeply as necessary to make a difference to the current decision.
+
+Before asking a question, thoroughly think through the possible answers and their consequences.
+Weigh value, effort, risks, and trade-offs against each other
+and prefer the simplest approach that reliably achieves the goal.
+
+If multiple reasonable approaches exist, compare them and give a clear recommendation.
+The user should not have to perform analysis that you can do yourself.
+
+Present each question using this format:
 
 ```markdown
 ### 1. <short decision title>
@@ -48,31 +62,18 @@ question two to four options and exactly one recommendation:
 - **B — <option>:** <consequence>
 ```
 
-The user may answer with `1A, 2B` or `use the recommendations`.
+Only include options you genuinely consider reasonable.
+Prefer a few clear alternatives over a complete list of every conceivable option.
 
-When an answer restates the goal, names a best practice instead of an option,
-picks two options at once, or contradicts an earlier answer, quote it in the
-next round, name the tell, and re-ask with options that exclude each other. A
-changed answer returns every decision that rested on it to the frontier. When
-two words cover one thing, propose one canonical term and use it from then on.
-When one word covers two things, propose a distinct term for each meaning.
+You are not an interviewer.
+Use your experience, research, and judgment
+to shape the direction together with the user.
 
-## Stop
+## Conclusion
 
-Stop when the frontier is empty. Before writing the summary, list for yourself
-the steps a plan would contain and keep that list out of the conversation; a
-step with an open consequential choice reopens the frontier. If you catch
-yourself summarizing while a frontier question remains, ask it instead.
+The challenge ends when no relevant question remains open
+and the shared understanding is concrete enough that the goal, scope, approach,
+and all decision-relevant details are clearly established.
 
-The summary is the shared understanding:
-
-1. One sentence stating that no consequential decision is open, naming any
-   that are deferred.
-2. Two or three sentences on the outcome and the agreed direction.
-3. Three to five bullets: scope boundaries, settled decisions with their
-   reasons, accepted risks and remaining research, the recommended next
-   artifact.
-4. One Mermaid or ASCII diagram only when the direction is a flow or structure
-   among three or more parts.
-
-Ask the user to confirm the shared understanding before any next step begins.
+Then summarize this shared understanding in a few sentences,
+reduced to what matters most, and have the user confirm or correct it.
