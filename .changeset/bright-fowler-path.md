@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Tighten the Martin Fowler expert lens around deployable migration steps, behavior-preserving refactoring, and concrete technical debt.
+Help users discuss refactoring, migration, and technical debt directly with the Martin Fowler lens while keeping each proposed step deployable and its tradeoff clear.

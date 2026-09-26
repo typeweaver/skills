@@ -1,4 +1,4 @@
 interface:
   display_name: "Ask Martin Fowler"
-  short_description: "Judge a change through Martin Fowler's mindset"
-  default_prompt: "Use $ask-martin-fowler to judge this change through Martin Fowler's engineering mindset."
+  short_description: "Judge change paths through Martin Fowler's lens"
+  default_prompt: "Use $ask-martin-fowler to judge this change as Martin Fowler, starting with the next safe step and its tradeoff."
