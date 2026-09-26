@@ -1,134 +1,69 @@
 # Skill philosophy
 
-A skill is a document an agent runs. It earns its place in the agent's context
-only by changing what the agent does. Everything below follows from that.
+A skill gives an agent a useful way to approach a recurring task. It should
+change the agent's decisions or actions while leaving room for judgment.
 
-## A skill changes behavior or it does not ship
+## Give each skill a clear job
 
-- A capable agent already knows generic engineering advice. A sentence the
-  agent would follow anyway is a no-op: it costs attention and buys nothing.
-  Test every sentence against the agent's default, and delete whole sentences
-  that fail, not words.
-- Teach only what moves the agent off its default: a specialized mindset, a
-  domain fact, a judgment rule, a constraint, a fragile sequence, or an output
-  contract.
-- Judge the test by running the skill, not by debating it. Two people who
-  disagree about a no-op disagree about the default.
+State the task and desired outcome first. Keep everything in the skill relevant
+to that job. When another task needs its own trigger and outcome, give it its
+own skill. An orchestrator may guide a longer workflow by calling focused
+skills; each focused skill should also work on its own.
 
-## One responsibility per skill, said first
+Describe when the skill applies in words the user would use. Distinguish it
+from neighboring skills where confusion is likely. Use model invocation when
+the agent should discover the skill from context. Reserve user-only invocation
+for workflows that should start exclusively through an explicit request, and
+encode that choice for every supported harness.
 
-- Give each skill one behavioral responsibility: one family of triggers leading
-  to one expected outcome. Name it in the first lines. Every instruction must
-  support it.
-- Add a skill only when no existing skill owns its trigger and outcome. Move a
-  rule to another skill when it serves a different trigger or outcome. Use a
-  reference file to disclose supporting detail, not to hide another
-  responsibility.
+## Trust the agent's judgment
 
-## Tests, not adjectives
+Give the agent a goal, the considerations that change its decisions, and the
+constraints it must respect. Avoid generic advice, exhaustive edge cases, and
+instructions it would follow anyway. Use a fixed sequence or format when the
+task depends on one. Otherwise let the agent choose how to reach the outcome.
 
-- When an evaluative word such as material, appropriate, sound, coherent, or
-  genuine controls a decision or completion, define the evidence or decision
-  rule behind it. Keep contextual judgment where the work requires it, and name
-  the factors the agent must weigh.
-- Give every anti-pattern its tell: the observable symptom in the agent's own
-  output that says it has happened. A test that breaks on a refactor that
-  changed no behavior. An abstraction whose deletion moves no complexity back
-  into callers.
-- Give costly, fragile, or drift-prone steps a completion criterion. Make it
-  clear enough to tell done from not done and demanding enough to force the
-  required legwork. Vague bounds invite the agent to end the step early.
-- When test runs show the agent starting X before Y exists, add the
-  self-interrupt at that point: "If you catch yourself doing X before Y exists,
-  stop."
+Make decision rules concrete enough to use. When several approaches could
+work, ask the agent to weigh their value, effort, and risks and recommend one.
+When a step is easy to end too early, say what must be true before moving on.
+Keep verification proportional to the change and focus on the outcome the
+skill is meant to produce.
 
-## Words the agent thinks with
+## Write for action
 
-- Define a few terms and use them exactly. Do not rotate synonyms: the agent
-  should not have to infer whether two words mean the same thing. Define each
-  term once instead of repeating its explanation.
-- Prefer words the model already knows over coined ones. A known word recruits
-  what the model already knows about it; a coined word must be paid for in
-  definition.
-- Prohibit only as a hard gate, and pair every prohibition with the target
-  behavior so attention lands on what to do.
+Use plain, direct English. Prefer short sentences and familiar words. Speak to
+the agent in the imperative, and lead with what matters most. Keep explanations
+that help the agent decide in cases the rule does not name. Cut repetition,
+filler, and commentary about the writing itself.
 
-## Descriptions say what the user says
+Use a term consistently once it has a defined meaning. Follow the repository's
+`GLOSSARY.md`. Prefer a positive instruction that names the desired behavior;
+state a prohibition when it is needed to protect a real boundary.
 
-- The frontmatter description names the outcome and the trigger contexts that
-  distinguish the skill from neighboring skills, using words a user or task
-  would use. It does not summarize the body.
-- Model-invoked skills get rich triggers because the agent must find them
-  from context. User-only skills get a one-line summary a human reads while
-  browsing commands, and the choice is encoded for every supported harness.
-- Operative routing names the mechanism: "Call the Skill tool with
-  `review-it`", not a bare skill name left for the model to interpret.
-  Routing lives in orchestrators; a focused skill stays useful alone.
+Keep the main `SKILL.md` as short as the task allows. Put guidance every run
+needs there, beside the action it supports. Move substantial details used only
+in certain cases to a linked reference. Add scripts or assets only when they
+make the work more reliable or easier to repeat.
 
-## Procedure and reference material stay apart
+## Preserve ownership and boundaries
 
-- Procedure is what the agent does, in order. Reference material is what it
-  consults when a step needs it. Mixing them buries the procedure and makes the
-  agent less likely to attend to each rule.
-- Keep the procedure in the main file. Keep reference material every path needs
-  beside it under one heading, so a concept's definition, rules, and caveats are
-  read together. Move branch-specific reference material into a clearly named
-  file and link it from the relevant step.
-- Match specificity to risk. Principles for contextual judgment; exact
-  sequences only for fragile or consistency-critical work.
-- Long is a failure mode even when every line is live. Attention thins across
-  the excess. Move branch-specific reference material out first. Split by
-  responsibility or sequence when one execution path must cross material it
-  does not use. Compress wording only after the hierarchy is right.
+The agent should research facts it can find and make reversible decisions
+within the agreed scope. Bring the user choices that change the outcome, scope,
+or a decision that is difficult to reverse, with a recommendation they can
+accept or correct.
 
-## The skill demonstrates its own voice
+Authorization is specific to the action. A skill must not treat approval to
+implement as approval to push, publish, deploy, create external records, or
+merge. Harness adapters must preserve the same boundary. Learn the target
+repository's conventions at execution time; keep organization-specific policy
+out of reusable skills.
 
-- Use plain, literal, imperative English in short sentences. Say what you mean.
-  Avoid decorative metaphors, rhetorical setup, introductions, conclusions,
-  and repeated checklists.
-- A rule about output is written in the form it demands. A skill that asks for
-  a brief is brief.
-- A reason stays only when it lets the agent handle cases the rule does not
-  name. A reason that merely justifies the rule to a reader is cut.
+## Revise with evidence
 
-## The human keeps the wheel
-
-- Ask at the user's decision level and recommend an answer they can accept or
-  reject directly. Research facts yourself; ask only for missing choices that
-  change the outcome.
-- Authorization is action-specific. Approval to commit does not authorize
-  pushing, publishing, deploying, creating external records, or merging. No
-  harness adaptation or workflow automation weakens an approval gate.
-- Discover the target repository's conventions and policy at execution time.
-  Skills carry no organization-, team-, or person-specific policy.
-
-## Evidence over opinion
-
-- Forward-test new skills and behavior-sensitive revisions in clean contexts
-  against a no-skill or previous-version baseline. Define the expected behavior
-  change before the run. Compare representative tasks under the same harness
-  and model settings, and repeat cases whose outcome varies. A difference that
-  repeats is evidence of value. When a run shows no difference, say so and take
-  one of three exits before the change is ready. Handing the choice back
-  untaken is not one of the three.
-- **Harder scenario** — build the case that would separate the arms and run
-  it.
-- **Keep for another value** — record what the instruction buys other than
-  behavior: a named step instead of an improvisation, or an auditable
-  justification.
-- **Delete it.**
-- Read what the agent did, not what the skill says it should do, and revise
-  from the difference. Read the transcript, not only the result: a skill that
-  produces the right output while wasting the run on detours is still wrong.
-- Test the description with prompts that should trigger it and with near
-  misses that share its words but need something else. Use substantial tasks;
-  an agent does not consult a skill for work it can do in one step.
-- Generalize from feedback. A fix that only serves the test cases at hand
-  overfits; when a problem resists, change the framing before adding another
-  constraint. When every run rewrites the same helper, ship it as a script.
-- When a session goes wrong, trace each user correction back to its cause: a
-  wrong assumption, missing context, a rule that did not fire, or a rule that
-  is a no-op. The output of that trace is the exact text change, not a
-  request to improve something.
-- Treat existing skill behavior as deliberate until a revision says otherwise,
-  and run a separate compression pass only after behavior is right.
+Read the existing skill and the behavior it protects before changing it.
+Simplify wording and structure without silently dropping a useful decision,
+constraint, or safety boundary. Check that the description triggers the right
+tasks and that the instructions lead to the intended result. For a substantial
+or uncertain revision, try representative tasks and inspect what the agent
+actually does. Use observed failures to sharpen the skill instead of adding
+rules for hypothetical ones.
