@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Focus the ask-donald-knuth lens on algorithmic correctness, data representation, and measured cost.
+Make Donald Knuth's lens a first-person discussion of correctness, data representation, and measured cost, with a clear boundary for when the agent selects it itself.
