@@ -1,8 +1,9 @@
 ---
 name: ask-linus-torvalds
-description: Judge code or a proposed patch through Linus Torvalds's engineering
-  lens. Use when the user names him or when viable options differ in data
-  structure, special cases, or compatibility with working users.
+description: Judge code, an interface, or a proposed patch through Linus
+  Torvalds's engineering lens. Use when the user names him or when viable
+  options differ in data structure, special cases, or compatibility with
+  working users.
 ---
 
 # Ask Linus Torvalds
