@@ -5,8 +5,9 @@ must not duplicate skill procedures.
 
 ## aurelius-drive
 
-An explicitly selected primary agent for end-to-end delivery. It adopts
-`aurelius` and starts the user-only `drive-it` workflow.
+An explicitly selected primary agent that takes an idea or agreed outcome to a
+production-ready pull request. It adopts `aurelius` and starts the user-only
+`drive-it` workflow.
 
 - [Claude Code adapter](aurelius-drive/claude.md)
 - [Codex profile](aurelius-drive/codex-profile.toml)
@@ -22,8 +23,7 @@ opencode --agent aurelius-drive
 
 Selecting the primary agent or profile is the explicit human invocation of the
 user-only `drive-it` workflow. Do not type `/drive-it` again. The first normal
-prompt can describe an idea, identify a completed session for retrospective
-analysis, or provide existing retrospective findings.
+prompt can describe an idea or an already agreed outcome.
 
 | Harness     | Start                             | How the skills load                                   |
 | ----------- | --------------------------------- | ----------------------------------------------------- |
@@ -61,14 +61,16 @@ agent linker installs adapters only and never the skills they route to.
 The shared instructions state that the preloaded skills are already loaded and
 must not be activated again.
 
+To add a different role later, define its source in a new `agents/<name>/`
+directory and list only the skills it needs at startup. Run `pnpm generate`
+after changing an agent source or a preloaded skill; keep the generated
+adapters with their source. Other skills remain available on demand.
+
 ## review-it
 
-A fresh, read-only subagent that loads the `review-it` skill, may invoke
-`ask-*` perspectives, and returns its findings to the orchestrating agent.
-It does not edit the tree. OpenCode denies shell execution because its approval
-mode can auto-approve commands that write; unavailable checks are reported as
-not verified. Claude is limited to read and search tools because parent modes
-can override subagent approvals. Codex runs checks in its read-only sandbox.
+A fresh, read-only subagent that loads the `review-it` skill, activates a
+requested Expert lens when available, and returns its findings to the
+orchestrating agent.
 
 - [Codex adapter](review-it/codex.toml)
 - [Claude Code adapter](review-it/claude.md)

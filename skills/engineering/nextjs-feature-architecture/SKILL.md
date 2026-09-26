@@ -48,8 +48,8 @@ model unless the task authorizes architectural change.
 - Authorized redesign or migration: name the target owner for every piece you
   will move and the order of the behavior-preserving steps before moving
   anything. Do not rewrite the application to match a reference tree.
-- Review or assessment: report findings only; propose, do not restructure. Use
-  `review-it`'s severities. **Blocking** — wrong as written: a client module
+- Review or assessment: report findings only; propose, do not restructure.
+  **Blocking** — wrong as written: a client module
   imports a `server-only` operation, two places write one state value, or a
   mutation invalidates a cache the shown UI never reads. **Important** — the
   next change pays: a deep import into another feature's internals, a state

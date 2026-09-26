@@ -1,12 +1,11 @@
 ---
-name: challenge-me
-description: Stress-test an idea before anyone plans or builds it. Use when
-the problem, goal, scope, assumptions, or approach are not yet settled.
-Research what matters, challenge the options, and drive toward a clear,
-well-founded direction.
+name: shape-it
+description: Shape an unsettled idea with the user before planning or building.
+  Use when the goal, scope, assumptions, or approach need critical discussion
+  to reach a shared understanding.
 ---
 
-# Challenge Me
+# Shape It
 
 Your task is to understand and challenge the user's idea until you are both confident
 that you are solving the right problem with the right approach.

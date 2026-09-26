@@ -24,10 +24,10 @@ Then guide the user and your agent team through the following phases:
 One of the most important first steps is to fully understand and discuss the request down to the smallest relevant detail.
 The goal is to establish a shared understanding and agree on both the ideal technical solution and the desired outcome.
 
-Use the `challenge-me` skill to achieve this.
+Use the `shape-it` skill to achieve this.
 
 Once you are confident that you are aligned,
-summarize the shared understanding with the `brief-me` skill and present it to the user.
+summarize the shared understanding with the `summarize-it` skill and present it to the user.
 
 If the user confirms the understanding and has nothing further to add, move on to the next phase.
 
@@ -38,7 +38,7 @@ required to turn the shared understanding into a concrete implementation.
 
 Use the `plan-it` skill for this.
 
-Then use the `brief-me` skill to summarize the key points of the plan
+Then use the `summarize-it` skill to summarize the key points of the plan
 and ask for approval to carry out the entire plan autonomously with your agent team.
 
 As part of this briefing, give your recommendation on the following points:
@@ -86,7 +86,7 @@ Commits follow the standard defined by the `conventional-commit` skill to ensure
 Pull requests are created using the `create-pull-request` skill
 and build on one another if that was defined in the plan.
 
-Once the final pull request is complete, inform the user using the `brief-me` skill:
+Once the final pull request is complete, inform the user using the `summarize-it` skill:
 
 - Explain what was achieved and what is now possible.
 - Mention whether everything went smoothly or whether follow-up issues were created.

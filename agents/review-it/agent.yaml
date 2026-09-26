@@ -1,7 +1,6 @@
 name: review-it
 description: Independently review a completed change or pull request in a fresh,
-  read-only context. Report what breaks, backed by the lines that show it. Provide
-  the exact patch when the adapter has no shell access.
+  read-only context. Report what breaks, backed by the lines that show it.
 adapters:
   claude-code:
     frontmatter:
@@ -9,6 +8,7 @@ adapters:
         - Read
         - Glob
         - Grep
+        - Bash
         - Skill
       skills:
         - review-it
@@ -38,8 +38,7 @@ adapters:
           ask-linus-torvalds: allow
           ask-martin-fowler: allow
           ask-rich-hickey: allow
-        bash:
-          "*": deny
+        bash: ask
   codex:
     description: Independently review a completed change or pull request in a fresh,
       read-only context. Report what breaks, backed by the lines that show it.

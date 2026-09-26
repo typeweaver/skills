@@ -143,7 +143,7 @@ it("update does not install omitted bundled skills", () => {
   installLifecycle(installRequest(env), "1.0.0");
   updateLifecycle({ env, contentDirectory: repository, force: false, dryRun: false }, "1.1.0");
   assert.isTrue(existsSync(join(env.home, ".agents", "skills", skillName, "SKILL.md")));
-  assert.isFalse(existsSync(join(env.home, ".agents", "skills", "brief-me")));
+  assert.isFalse(existsSync(join(env.home, ".agents", "skills", "not-bundled")));
 });
 
 it("scoped uninstall does not rewrite remaining content from a newer package", () => {

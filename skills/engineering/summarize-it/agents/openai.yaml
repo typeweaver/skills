@@ -1,0 +1,4 @@
+interface:
+  display_name: "Summarize It"
+  short_description: "Get context and a decision-ready summary in one read"
+  default_prompt: "Use $summarize-it to bring me up to date on the current work or delivery."

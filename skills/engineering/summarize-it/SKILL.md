@@ -1,13 +1,13 @@
 ---
-name: brief-me
+name: summarize-it
 description: Condense a discussion, plan, implementation, or review into the
-smallest brief that gives the reader the context, current state, and decisions
-they need. Use for catch-ups, progress checks, handoffs, or when an explanation
-did not land. Not for durable documentation, pull request descriptions, or
-commit messages.
+  smallest summary that gives the reader the context, current state, and
+  decisions they need. Use for catch-ups, progress checks, handoffs, or when an
+  explanation did not land. Not for durable documentation, pull request
+  descriptions, or commit messages.
 ---
 
-# Brief Me
+# Summarize It
 
 Bring a reader without your context to the current understanding in one read.
 

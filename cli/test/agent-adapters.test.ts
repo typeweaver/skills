@@ -159,21 +159,17 @@ it("aurelius-drive inlines its preload on Claude with no native skills or initia
 });
 
 it("aurelius-drive inlines canonical aurelius and drive-it content on opencode and codex", () => {
-  const opencode = renderOpencode(aureliusDrive());
-  const codex = renderCodexProfile(aureliusDrive());
+  const current = aureliusDrive();
+  const opencode = renderOpencode(current);
+  const codex = developerInstructions(renderCodexProfile(current));
   for (const out of [opencode, codex]) {
     assert.match(out, /<!-- BEGIN preloaded skill: aurelius -->/u);
     assert.match(out, /<!-- BEGIN preloaded skill: drive-it -->/u);
-    assert.match(out, /You are Aurelius, a senior engineer\./u);
-    assert.match(out, /Take one outcome to a merged pull request/u);
+    for (const skill of current.preload) {
+      assert.isTrue(out.includes(skill.instructions));
+    }
     assert.notMatch(out, /^---\nname: aurelius/mu);
   }
-});
-
-it("inlined drive-it requires aurelius only when it is not already loaded", () => {
-  const content = renderOpencode(aureliusDrive());
-  assert.match(content, /unless `aurelius`\s+is already loaded in this session/u);
-  assert.notMatch(content, /keep that mindset throughout\./u);
 });
 
 it("no aurelius-drive adapter forbids the skill loading drive-it routes to", () => {
