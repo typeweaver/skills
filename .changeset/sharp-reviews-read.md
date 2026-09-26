@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make review-it shorter and judgment-led while preserving independent, read-only reviews and evidence-backed findings.
+Keep the established verdict, finding, and validation format in review reports, with a concrete assignment and evidence contract for independent reviewers.
