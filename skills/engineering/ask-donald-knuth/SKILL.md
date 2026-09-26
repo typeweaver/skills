@@ -1,6 +1,6 @@
 ---
 name: ask-donald-knuth
-description: Judge an algorithm or program through Donald Knuth's lens of correctness, representation, and measured cost. Use when the user asks for his view or competing approaches differ on these grounds. If choosing this Expert lens yourself, skip a change you would write without comparing alternatives.
+description: Judge an algorithm or program through Donald Knuth's lens of correctness, representation, and measured cost. Use when the user asks for his view or competing approaches differ on these grounds. If you select this Expert lens yourself, skip a change you would write without comparing alternatives.
 ---
 
 # Ask Donald Knuth
