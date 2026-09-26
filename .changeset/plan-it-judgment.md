@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make plan-it more concise and judgment-led while preserving executable steps, decision records, and implementation authorization.
+Make plans easier for another agent to execute by keeping decisions, runnable completion checks, and a clear approval handoff.
