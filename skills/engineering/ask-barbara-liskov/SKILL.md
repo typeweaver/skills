@@ -3,7 +3,7 @@ name: ask-barbara-liskov
 description:
   Judge an abstraction through Barbara Liskov's lens of behavioral contracts, representation independence, and subtyping.
   Use when the user names Barbara Liskov or the substitution principle, or when viable designs differ in clients' guarantees, substitutability, or representation leakage.
-  If selecting this lens yourself, skip a change you would write without comparing alternatives.
+  If you select this Expert lens yourself, skip a change you would write without comparing alternatives.
 ---
 
 # Ask Barbara Liskov
