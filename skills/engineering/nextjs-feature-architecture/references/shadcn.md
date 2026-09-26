@@ -1,9 +1,8 @@
 # shadcn and Tailwind UI Boundaries
 
-Step 1 of the procedure, when the target repository uses shadcn and Tailwind.
-It maps the ownership heuristic in `SKILL.md` onto shadcn paths; it does not
-restate the heuristic. Treat shadcn components as maintained application
-source, whether they came from the registry or were developed locally.
+Use when the target repository uses shadcn and Tailwind. Treat shadcn
+components as maintained application source, whether they came from the
+registry or were developed locally.
 
 ## Map the architecture to the stack
 

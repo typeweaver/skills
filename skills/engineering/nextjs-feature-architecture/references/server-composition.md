@@ -1,6 +1,6 @@
 # Server Composition and Mutation Transport
 
-Step 4 of the procedure.
+Use when placing a Client Component boundary or choosing mutation transport.
 
 - Start with Server Components. Introduce a Client Component only for browser
   APIs, effects, local interaction, event handlers, high-frequency updates, or

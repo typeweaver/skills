@@ -1,6 +1,6 @@
 # Loading, Empty, and Failure Behavior
 
-Step 5 of the procedure.
+Use when placing Suspense, fallbacks, or error boundaries.
 
 - Place Suspense around a region that has its own data read and can render
   before or after its siblings. A boundary around a region with no independent
