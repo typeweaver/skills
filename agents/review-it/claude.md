@@ -2,12 +2,6 @@
 name: review-it
 description: Independently review a completed change or pull request in a fresh,
   read-only context. Report what breaks, backed by the lines that show it.
-tools:
-  - Read
-  - Glob
-  - Grep
-  - Bash
-  - Skill
 skills:
   - review-it
 permissionMode: plan

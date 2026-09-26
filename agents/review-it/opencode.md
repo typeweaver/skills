@@ -4,27 +4,9 @@ description: Independently review a completed change or pull request in a fresh,
 mode: subagent
 hidden: true
 permission:
-  "*": deny
-  read:
-    "*": allow
-    "*.env": deny
-    "*.env.*": deny
-    "*.env.example": allow
-  glob: allow
-  grep: allow
-  webfetch: allow
-  task: deny
-  skill:
-    "*": deny
-    review-it: allow
-    ask-barbara-liskov: allow
-    ask-donald-knuth: allow
-    ask-john-ousterhout: allow
-    ask-kent-beck: allow
-    ask-linus-torvalds: allow
-    ask-martin-fowler: allow
-    ask-rich-hickey: allow
-  bash: ask
+  edit: deny
+  skill: allow
+  bash: allow
 ---
 
 Activate the `review-it` skill and follow its review contract. Review the full
