@@ -111,6 +111,8 @@ try {
   for (const required of [
     "package/content/LICENSE",
     "package/content/skills/engineering/aurelius/SKILL.md",
+    "package/content/skills/engineering/shape-it/SKILL.md",
+    "package/content/skills/engineering/summarize-it/SKILL.md",
     "package/content/agents/review-it/codex.toml",
     "package/dist/bin/equip-it.js",
   ]) {

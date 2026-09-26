@@ -66,10 +66,9 @@ Important quote the changed line. No line or no named failure: drop it. A
 rename, reorder, or reformat with no failure named is a style note, also when
 asked for as a separate formatting commit: drop it.
 
-Honor required and forbidden lenses from the user or the handoff. To invoke
-one, call the Skill tool with the matching `ask-*` skill. A lens adds findings
-to this report; it does not change the severities or the template. Say in the
-report when a required lens is unavailable instead of substituting one.
+Apply Expert lenses requested by the user or handoff. They may add findings
+without changing the severities or the template. Report an unavailable
+requested lens.
 
 Verdict: `Changes required` while a Blocking or Important finding remains,
 `Review passed with follow-ups` when only Follow-ups remain, `Review passed`

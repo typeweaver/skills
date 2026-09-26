@@ -123,7 +123,7 @@ it("installs routed skills alongside the agent in a normal selection", () => {
   );
 
   assert.isTrue(report.componentCount > 1);
-  assert.isTrue(existsSync(join(env.home, ".agents", "skills", "challenge-me")));
+  assert.isTrue(existsSync(join(env.home, ".agents", "skills", "shape-it")));
   assert.isTrue(existsSync(join(env.home, ".agents", "skills", "aurelius")));
   const adapter = join(env.home, ".claude", "agents", "aurelius-drive.md");
   assert.isTrue(existsSync(adapter));

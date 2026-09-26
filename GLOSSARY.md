@@ -22,14 +22,9 @@ _Avoid_: user-invoked
 A skill sentence the agent would follow if the sentence were deleted.
 _Avoid_: filler, redundancy
 
-**Frontier**:
-In `challenge-me`, every consequential decision that is neither settled nor
-deferred and whose prerequisites are settled.
-_Avoid_: backlog, open questions
-
 **Shared understanding**:
 The confirmed summary of outcome, boundaries, and next artifact after
-`challenge-me`.
+`shape-it`.
 _Avoid_: recap, notes, takeaways
 
 **Glossary**:

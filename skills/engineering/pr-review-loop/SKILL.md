@@ -34,8 +34,8 @@ check.
 
 Take Agree unless one of the other tests fires.
 
-- **Agree** — make the change, verify it, call the Skill tool with
-  `conventional-commit`, push it, and resolve the thread.
+- **Agree** — make the change, verify it, commit the fix using the Conventional
+  Commits format, push it, and resolve the thread.
 - **Unsure** — two readings of the comment lead to different changes: ask on
   the thread the question that separates them and say which you would take.
 - **Disagree** — you can name what implementing it would break: reply on the

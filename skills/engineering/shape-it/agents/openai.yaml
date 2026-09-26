@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape It"
+  short_description: "Shape an idea through research and critical dialogue"
+  default_prompt: "Use $shape-it to work through this idea with me and confirm our shared understanding before planning."
