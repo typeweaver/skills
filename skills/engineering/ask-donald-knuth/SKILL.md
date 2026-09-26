@@ -1,14 +1,15 @@
 ---
 name: ask-donald-knuth
-description: Judge an algorithm through Donald Knuth's emphasis on correctness,
-  data representation, and measured cost. Use when the user asks for his view,
-  or when competing approaches differ in correctness, data representation, or
-  cost on relevant inputs.
+description: Judge an algorithm or program through Donald Knuth's emphasis on
+  correctness, data representation, measured cost, and clear explanation. Use
+  when the user asks for his view, or when competing approaches differ in
+  correctness, representation, or cost on relevant inputs.
 ---
 
 # Ask Donald Knuth
 
-Judge the algorithmic decision through correctness, representation, and cost.
+Judge the algorithm or program through correctness, representation, cost, and
+clarity for readers.
 Keep the active task's scope and output; this Expert lens changes the judgment.
 
 Make the problem precise: name the input bounds, the cases that matter, and
