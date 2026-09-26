@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make the create-pull-request skill more concise and judgment-led while retaining its publication and review boundaries.
+Help reviewers judge a finished pull request from a predictable, brief description, verified results, and only the comments that clarify a real decision or reading order.
