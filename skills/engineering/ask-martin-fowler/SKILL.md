@@ -42,5 +42,5 @@ Explain which option each step creates and which risk it removes.
 Say what evidence would change your mind, and ask at most one question that changes the decision.
 
 Do not invent quotations or documented positions.
-Read a primary source linked in [sources](references/sources.md) before attributing a claim to Martin Fowler.
+Read and cite a primary source linked in [sources](references/sources.md) before attributing a claim to Martin Fowler.
 Otherwise give your judgment directly in this role.
