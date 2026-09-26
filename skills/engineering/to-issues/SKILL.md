@@ -1,62 +1,47 @@
 ---
 name: to-issues
-description: Turn follow-up work, review findings, or plan items into issue
-  records someone can pick up later. Use when asked to file, track, or write up
-  follow-ups, to park work for later, to turn a plan or roadmap into issues, or
-  to publish recorded work to a tracker the user authorizes. Not for doing the follow-up now, and not
-  for leaving a TODO in the source.
+description: Record deferred work as issues someone can pick up later. Use for
+  follow-ups from reviews, plans, roadmaps, or an active change when the user
+  asks to file, track, or park the work.
 ---
 
 # To Issues
 
-Keep work that stays out of the current change as records someone can pick up
-later. Record an item only when the current change is correct and meets the
-agreed outcome without it; otherwise do the work now. A record is one issue:
-a local Markdown file or a tracker issue.
+Turn work outside the current change into issues someone can complete and close.
+If the agreed outcome depends on the work, do it now instead of deferring it.
 
-## Choose the destination
+## Decide what to record
 
-Record each outcome in exactly one place.
+Read the source of each item and existing issues. Record one issue per outcome
+that can ship independently. Add new evidence to an existing issue when it
+already covers the outcome.
 
-- **External tracker when authorized:** create or update tracker issues only
-  after explicit user authorization for that action; a tracker the user names
-  in passing is not authorization to publish to it. Then create the issues
-  there and nowhere else, and write a local record only where the repository
-  documents a local mirror.
-- **Local otherwise:** follow an existing repository convention; else write
-  one Markdown file per record under `docs/issues/`. Local records need no
-  separate authorization when repository changes are already approved.
-- **Migrating:** when a tracker is authorized for outcomes that already have
-  local records, move them into the tracker and delete the local files in the
-  same change; do not keep both.
-- **Response fallback:** when repository writes are not authorized or no
-  workspace exists, return issue drafts without creating files.
-- **Plans and roadmaps:** keep the durable plan as the technical source of
-  truth and record one issue that states the outcome and links the plan. For a
-  roadmap, record an umbrella issue plus one issue per milestone that ships on
-  its own.
+Keep a plan as the technical source of truth: make one issue for its outcome
+and link the plan. For a roadmap, make an umbrella issue and an issue for each
+milestone that ships independently.
 
-## Write the records
+## Choose where it lives
 
-1. Read the plan, conversation, pull request, review, findings, and code the
-   items come from, and the records that already exist. An outcome an existing
-   record already covers is not a second record; add the new evidence to that
-   record instead.
-2. One record per outcome that could be delivered and closed on its own. If
-   closing one record would leave another half-done, they are one record.
-3. Write each record on [assets/issue-template.md](assets/issue-template.md)
-   from the source context. A requirement, label, priority, owner, or
-   implementation detail you cannot point to in that source context is invented:
-   leave it out. Add a status or date field only where the repository already
-   uses one.
-4. Reference where a log, configuration, or finding lives instead of copying
-   it into the record. No record carries credentials, tokens, private keys,
-   `.env` contents, and internal hostnames the repository does not already
-   publish; name what the value identifies instead of pasting it.
+Use one destination per issue:
 
-## Report back
+- Publish to an external tracker only when the user has explicitly authorized
+  creating or updating issues there. Naming a tracker is not authorization.
+- Otherwise follow the repository's local issue convention, or write one
+  Markdown file per issue under `docs/issues/`.
+- If repository writes are outside the authorized scope or no workspace exists,
+  return drafts in the response.
 
-Report created local paths and external issue links. Distinguish local records
-from published tracker items and state any item that could not be created. When
-the user named a tracker you were not authorized to publish to, say that nothing
-was published there and offer to publish on their authorization.
+When authorized to publish an existing local issue, move it to the tracker and
+remove the local record, unless the repository requires a mirror.
+
+## Write for the next person
+
+Use [the issue template](assets/issue-template.md). State the outcome, why it
+matters, and evidence that will show it is done. Trace every acceptance
+criterion to the source; leave out plausible but unrequested edge cases.
+Include labels, priorities, owners, and implementation details only when sourced.
+Link to plans, code, reviews, or logs instead of copying them. Describe secrets
+and unpublished internal values by purpose rather than pasting them.
+
+Report the local paths and tracker links created, and identify any item left
+as a draft. Distinguish a draft from a published issue.
