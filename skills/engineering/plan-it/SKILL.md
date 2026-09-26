@@ -1,77 +1,61 @@
 ---
 name: plan-it
-description: Write the plan another agent implements from, with ordered steps, a
-  check that proves each step done, and the decisions behind them. Use when the
-  approach is settled and the work spans several steps or sessions, or when it
-  splits into milestones that ship separately. Not for shaping an unclear idea,
-  for sprint or capacity planning, or for work that fits in one step.
+description: Turn a settled approach into a plan another agent can execute.
+  Use when implementation spans several steps or independently shippable
+  milestones. Not for shaping an unsettled idea or scheduling capacity.
 ---
 
 # Plan It
 
-Turn the shared understanding into a plan file another agent executes without
-reconstructing this conversation. A step whose title is a process action —
-create a branch, commit, open a pull request, request review — is workflow
-around the work: delete it.
+Write a plan another agent can execute without this conversation.
 
-## Establish the facts
+Start from the shared understanding, repository instructions, related plans,
+and the checks the repository runs. Resolve facts you can find yourself.
+Ask the user only when a missing decision changes the scope, the steps, or a
+choice that is hard to reverse. Offer a recommendation they can accept or correct.
 
-1. Read the shared understanding, the repository's instructions, the plans this
-   work touches, and the check command CI runs or the verification commands the
-   repository documents.
-2. Ask the user only when a missing decision changes which steps exist, the
-   scope boundary, or a choice that is expensive to reverse, and then ask at
-   their decision level with one recommended answer they can accept or reject.
+## Decisions
 
-## Record the decisions
+Record choices that shape the implementation: the approach chosen, the viable
+alternative it beat, why, and what the choice requires. If a choice rests on an
+unverified assumption, state what observation would change it.
 
-Record every decision where two workable alternatives existed: the one chosen,
-why the other lost, and what the choice forces in implementation. Where a choice
-rests on an assumption you did not verify, add the observation that would
-reverse it.
+Keep the decision, not the conversation that led to it.
 
-A decision entry that narrates the conversation — "we first considered", "you
-then said" — is replay. State the choice, the alternative it beat, and the
-consequence.
+## Steps
 
-## Shape the work
+Make each step a change to the system with a clear outcome and a `Done when:`
+check the executor can run. Repository checks must pass after every step.
+Combine steps that would leave those checks broken.
 
-- Give each step an outcome and end it with `Done when:` and a check the
-  executor can run: a command, a file that exists, a test that passes.
-  "Reviewed", "looks right", or "works as expected" is not a check.
-- After every step the repository's checks pass — the check command CI runs or
-  the verification commands the repository documents. A step that leaves them
-  broken merges with the next step.
-- Order steps so each one can run when it starts: a step follows the step that
-  creates what it changes or what its check reads. Steps with no such relation
-  stay in any order; do not invent a sequence.
-- When a decision cannot be made from what you read, make the research its own
-  step, and name the decision it unlocks and the observation that settles it.
-- Validate at the end across behavior, the regressions this change could cause,
-  and every document or operational setting the change makes false.
-- Cut milestones as tracer bullets: one narrow case through every layer, the
-  system running after each. Use expand-contract only when the mechanical
-  change is too wide to slice by case.
-- When outcomes can ship without one another, write a roadmap plus one plan per
-  milestone. Keep the shared context in the roadmap, and in each milestone plan
-  enough to execute it without reading its siblings; the template's Related
-  plans section carries the links.
+Order steps by real dependencies. A step must have everything it needs when it
+starts, including what its check reads. Do not invent a sequence for independent
+work.
 
-## Write the handoff
+If research must settle a remaining choice, make that research a step. Name
+the decision it unlocks and the observation that settles it.
 
-Follow an existing repository convention. Otherwise write the plan under
-`docs/plans/` with a descriptive filename, starting from
-[assets/plan-template.md](assets/plan-template.md). Drop a section the work
-leaves empty instead of filling it with the obvious.
+For work across several layers, prefer a narrow working path through all of
+them before expanding it. Use expand-contract when a mechanical change cannot
+be sliced this way.
 
-Do not copy into the plan credentials, tokens, private keys, `.env` contents, and
-internal hostnames the repository does not already publish, or personal data;
-name where they live.
+If outcomes can ship independently, write a roadmap and one plan per milestone.
+Keep shared context in the roadmap and enough context in each milestone plan
+to execute it on its own. Link the related plans.
 
-The plan is done when every step carries a runnable check and nothing in it
-points back at this conversation: a sentence containing "as discussed", "as
-agreed", or "see above" names evidence the executor does not have.
+End with checks for the intended behavior, likely regressions, and documents
+or operational settings the change affects.
 
-Report the plan path, the outcome, the approach, and each open risk with the
-step or decision it affects. Hand the plan back and wait; begin implementation
-only when the user authorizes it.
+## Handoff
+
+Follow the repository's plan convention. Otherwise write under `docs/plans/`
+using [the plan template](assets/plan-template.md). Omit sections the work
+does not need. Point to sensitive information rather than copying secrets,
+personal data, or unpublished internal hostnames into the plan.
+
+Check that every step has a runnable completion check and every reference the
+executor needs is available outside this conversation.
+
+Present the plan path, outcome, approach, and each open risk with the step or
+decision it affects. Begin implementation only under the user's authorization,
+including authorization already given.
