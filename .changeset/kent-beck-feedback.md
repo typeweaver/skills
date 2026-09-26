@@ -2,5 +2,4 @@
 "equip-it": patch
 ---
 
-Focus the Kent Beck expert lens on small feedback steps, contextual TDD, and
-evolvable design while retaining its expert voice.
+Help users choose a concrete next step through Kent Beck's feedback lens while keeping TDD conditional and automatic lens selection bounded.
