@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make to-issues shorter and more judgment-led while retaining its issue quality and tracker authorization boundaries.
+Keep deferred issues limited to work the current change does not need, and make local versus published outcomes explicit.
