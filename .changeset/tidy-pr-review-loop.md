@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make pr-review-loop's review, check, and handoff decisions more direct while preserving its authorization and human merge boundaries.
+Keep pull request review feedback and required checks moving while preserving the human merge boundary, safe branch updates, and an accurate handoff when watching is unavailable.
