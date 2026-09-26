@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make the Barbara Liskov Expert lens shorter while keeping behavioral contracts, representation independence, and substitution checks explicit.
+Help agents judge abstractions through client-visible contracts and substitutability while keeping automatic lens selection and source attribution bounded.
