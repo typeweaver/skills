@@ -5,9 +5,9 @@ must not duplicate skill procedures.
 
 ## aurelius-drive
 
-An explicitly selected primary agent that takes an idea or agreed outcome to a
-production-ready pull request. It adopts `aurelius` and starts the user-only
-`drive-it` workflow.
+An explicitly selected primary agent that takes an idea to a production-ready
+pull request or picks up the workflow at any phase. It adopts `aurelius` and
+runs the user-only `drive-it` workflow.
 
 - [Claude Code adapter](aurelius-drive/claude.md)
 - [Codex profile](aurelius-drive/codex-profile.toml)
@@ -23,7 +23,7 @@ opencode --agent aurelius-drive
 
 Selecting the primary agent or profile is the explicit human invocation of the
 user-only `drive-it` workflow. Do not type `/drive-it` again. The first normal
-prompt can describe an idea or an already agreed outcome.
+prompt can describe an idea, a finished plan, or later work to continue.
 
 | Harness     | Start                             | How the skills load                                   |
 | ----------- | --------------------------------- | ----------------------------------------------------- |

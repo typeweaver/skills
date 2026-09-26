@@ -8,14 +8,14 @@ tested.
 
 ## Where to start
 
-| You need to...                                | Start with...                                            |
-| --------------------------------------------- | -------------------------------------------------------- |
-| Take an idea through delivery                 | [drive-it](skills/engineering/drive-it/SKILL.md)         |
-| Work through an unsettled idea together       | [shape-it](skills/engineering/shape-it/SKILL.md)         |
-| Get an independent engineering recommendation | [aurelius](skills/engineering/aurelius/SKILL.md)         |
-| Catch up on a plan, change, or delivery       | [summarize-it](skills/engineering/summarize-it/SKILL.md) |
-| Implement an agreed change                    | [craft-it](skills/engineering/craft-it/SKILL.md)         |
-| Review a change for concrete failures         | [review-it](skills/engineering/review-it/SKILL.md)       |
+| You need to...                                                                        | Start with...                                            |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Take an idea to a production-ready pull request, or pick up the workflow at any phase | [drive-it](skills/engineering/drive-it/SKILL.md)         |
+| Work through an unsettled idea together                                               | [shape-it](skills/engineering/shape-it/SKILL.md)         |
+| Get an independent engineering recommendation                                         | [aurelius](skills/engineering/aurelius/SKILL.md)         |
+| Catch up on a plan, change, or delivery                                               | [summarize-it](skills/engineering/summarize-it/SKILL.md) |
+| Implement an agreed change                                                            | [craft-it](skills/engineering/craft-it/SKILL.md)         |
+| Review a change for concrete failures                                                 | [review-it](skills/engineering/review-it/SKILL.md)       |
 
 Every skill works on its own. Only `drive-it` calls other skills to run the
 full workflow. The [catalog below](#skill-catalog) covers the remaining skills.
@@ -84,8 +84,8 @@ Claude Code and OpenCode receive live symlinks. Codex profiles and custom agents
 are copied; rerun the linker after a Codex adapter changes.
 
 - **[aurelius-drive](agents/aurelius-drive/codex-profile.toml)** — Explicit primary mode
-  that takes an idea or agreed outcome to a production-ready pull request.
-  It adopts Aurelius and starts the complete Drive It workflow. Every harness
+  that takes an idea to a production-ready pull request or picks up the
+  workflow at any phase. It adopts Aurelius and runs Drive It. Every harness
   receives the canonical `aurelius` and `drive-it` content inline as startup
   context, then routes to the installed repository skills. Codex selects it with
   `codex --profile aurelius-drive`.
@@ -99,16 +99,17 @@ changes, run `pnpm generate` and keep the generated adapters with it. See the
 
 ## Workflow
 
-Invoke `drive-it` explicitly for the complete path. It guides the user through
-these phases with the focused skills:
+Invoke `drive-it` explicitly from any phase. It uses existing decisions and
+artifacts, then guides the user through the remaining phases with focused skills:
 
 ```text
 shape idea → plan → scaffold if agreed → implement → review → commit → PR
 ```
 
-The user confirms the shared understanding and approves the plan. Approval for
-commit, push, external issues or review requests, deployment, and release is
-action-specific. `summarize-it` makes the plan and delivery easy to inspect;
+When those phases are needed, the user confirms the shared understanding and
+approves the plan. Existing confirmations and approvals carry forward. Approval
+for commit, push, external issues or review requests, deployment, and release
+is action-specific. `summarize-it` makes the plan and delivery easy to inspect;
 each focused skill also works independently.
 
 ## Skill catalog

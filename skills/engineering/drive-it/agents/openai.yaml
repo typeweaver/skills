@@ -1,6 +1,6 @@
 interface:
   display_name: "Drive It"
-  short_description: "Take an idea or agreed outcome to a reviewable pull request"
-  default_prompt: "Use $drive-it to take this outcome through the full engineering workflow."
+  short_description: "Take an idea to a production-ready pull request, or pick up the workflow at any phase"
+  default_prompt: "Use $drive-it to take my idea to a production-ready pull request, or pick up the workflow at a phase I specify."
 policy:
   allow_implicit_invocation: false

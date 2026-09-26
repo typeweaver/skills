@@ -1,5 +1,6 @@
 name: aurelius-drive
-description: Take an idea or agreed outcome to a production-ready pull request.
+description: Take an idea to a production-ready pull request, or pick up the
+  workflow at any phase.
 preload:
   - aurelius
   - drive-it

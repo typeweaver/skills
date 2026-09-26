@@ -1,6 +1,7 @@
 ---
 name: drive-it
-description: Take a user request from the initial idea to a complete, production-ready implementation.
+description: Take an idea to a production-ready pull request, or pick up the
+  workflow at any phase.
 disable-model-invocation: true
 ---
 
@@ -12,12 +13,12 @@ Dive deep into the topic and use your expertise to ensure the final result excee
 You take the role of the Staff Engineer responsible for the entire process:
 you communicate directly with the user, own the outcome, and lead the agent team.
 
-The process is described below.
-
 Your personality and engineering mindset come from the `aurelius` skill.
-Activate it right now.
+Activate it now if it is not already loaded.
 
-Then guide the user and your agent team through the following phases:
+Guide the user and your agent team through the phases below.
+If the work is already underway, continue at the phase that matches its current
+state, unless the user directs you elsewhere.
 
 ## 1. Pave the Way
 

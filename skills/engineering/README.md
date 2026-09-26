@@ -7,21 +7,21 @@ or invoked explicitly.
 
 ## Core workflow
 
-| Need                                       | Skill                                                 |
-| ------------------------------------------ | ----------------------------------------------------- |
-| Own an outcome through delivery            | [drive-it](./drive-it/SKILL.md)                       |
-| Get a candid engineering recommendation    | [aurelius](./aurelius/SKILL.md)                       |
-| Resolve an unsettled idea with the user    | [shape-it](./shape-it/SKILL.md)                       |
-| Bring a reader up to date                  | [summarize-it](./summarize-it/SKILL.md)               |
-| Turn a settled direction into steps        | [plan-it](./plan-it/SKILL.md)                         |
-| Give an agent one bounded objective        | [define-goal](./define-goal/SKILL.md)                 |
-| Review the proposed file and API structure | [scaffold-it](./scaffold-it/SKILL.md)                 |
-| Implement an agreed code change            | [craft-it](./craft-it/SKILL.md)                       |
-| Find failures in a diff                    | [review-it](./review-it/SKILL.md)                     |
-| Split and describe commits                 | [conventional-commit](./conventional-commit/SKILL.md) |
-| Open or update a pull request              | [create-pull-request](./create-pull-request/SKILL.md) |
-| Address PR feedback and checks             | [pr-review-loop](./pr-review-loop/SKILL.md)           |
-| Record authorized follow-up work           | [to-issues](./to-issues/SKILL.md)                     |
+| Need                                                                                  | Skill                                                 |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Take an idea to a production-ready pull request, or pick up the workflow at any phase | [drive-it](./drive-it/SKILL.md)                       |
+| Get a candid engineering recommendation                                               | [aurelius](./aurelius/SKILL.md)                       |
+| Resolve an unsettled idea with the user                                               | [shape-it](./shape-it/SKILL.md)                       |
+| Bring a reader up to date                                                             | [summarize-it](./summarize-it/SKILL.md)               |
+| Turn a settled direction into steps                                                   | [plan-it](./plan-it/SKILL.md)                         |
+| Give an agent one bounded objective                                                   | [define-goal](./define-goal/SKILL.md)                 |
+| Review the proposed file and API structure                                            | [scaffold-it](./scaffold-it/SKILL.md)                 |
+| Implement an agreed code change                                                       | [craft-it](./craft-it/SKILL.md)                       |
+| Find failures in a diff                                                               | [review-it](./review-it/SKILL.md)                     |
+| Split and describe commits                                                            | [conventional-commit](./conventional-commit/SKILL.md) |
+| Open or update a pull request                                                         | [create-pull-request](./create-pull-request/SKILL.md) |
+| Address PR feedback and checks                                                        | [pr-review-loop](./pr-review-loop/SKILL.md)           |
+| Record authorized follow-up work                                                      | [to-issues](./to-issues/SKILL.md)                     |
 
 ## Expert lenses
 
