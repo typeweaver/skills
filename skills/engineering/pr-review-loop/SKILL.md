@@ -1,78 +1,61 @@
 ---
 name: pr-review-loop
-description: Work an open pull request's review comments and checks until a
-  human merges it. Use when asked to address or answer review feedback
-  on a pull request, to fix a red check on one, or to watch or keep an eye on a
-  pull request until it can be merged. Not for opening a pull request and not
-  for reviewing a diff yourself.
+description: Address review feedback and required checks on an open pull request
+  until it is ready for a human to merge. Use for review comments, red checks,
+  or a request to watch a pull request. Not for opening or reviewing one.
 ---
 
 # PR Review Loop
 
-Carry one open pull request until a human merges it: answer every review
-comment and keep its required checks green. Never merge or close the pull
-request; report it merge-ready and leave both to a human.
+Carry one open pull request through feedback and required checks. Leave merging
+and closing it to a human.
 
-Every reply, report, and pushed diff is visible to everyone who can see the
-pull request. Check each for credentials, tokens, private keys, `.env`
-contents, and internal hostnames the repository does not already publish, and
-name what the value identifies instead of pasting it; copied check output and
-log excerpts are where they leak.
+First establish which actions the user has authorized: replies, resolving
+threads, commits, pushes, and branch updates. Ask for authorization before an
+action it does not cover.
 
-## Watch
+## Work each pass
 
-Decide first whether you can watch at all. When the harness offers no
-subscription, scheduler, or background run, this run ends at the last pass you
-can make: say that you cannot watch past this run and hand back what is
-outstanding, and do not report that you are watching.
+Read every new comment and review verdict, the state of every check,
+and whether the branch needs updating. Repeat after every push or reply.
 
-Re-check the pull request after every push and every reply. One pass reads
-every new review comment, every new review verdict, and the state of every
-check.
+For each review comment, implement the request by default. Verify the change,
+commit it in Conventional Commits format, push it, and resolve the thread.
 
-## Answer every review comment
+- If two readings lead to different changes, ask on the thread which one the
+  reviewer means and say which you recommend.
+- If the change would break a named requirement, repository rule, or check,
+  explain the conflict on the thread.
 
-Take Agree unless one of the other tests fires.
+If a reviewer repeats a request after your reply, implement it unless it still
+breaks a named requirement, rule, or check. In that case, ask the user to decide.
 
-- **Agree** — make the change, verify it, commit the fix using the Conventional
-  Commits format, push it, and resolve the thread.
-- **Unsure** — two readings of the comment lead to different changes: ask on
-  the thread the question that separates them and say which you would take.
-- **Disagree** — you can name what implementing it would break: reply on the
-  thread with that failure.
+For a red required check, read the failing job's log, reproduce the failure
+locally, and fix it. Repeat until the check is green or a decision or
+authorization blocks it.
 
-When a reviewer repeats a request after your reply, implement it; refuse only
-when you can name the check it fails, the repository rule it breaks, or the
-requirement it contradicts, and then ask the user to decide.
+Run the repository's CI or documented verification commands before every push
+and fix what they report.
 
-## Keep the branch mergeable
+When the branch needs the remote default branch, follow the repository's
+contributing guide, instructions, or earlier branch updates. Merge by default.
+If its convention is rebase, push with `--force-with-lease`. Resolve conflicts
+from the intent of the commit or pull request that introduced each side. Rerun
+the checks that passed on both sides before the update.
 
-- Run the check command CI runs or the verification commands the repository
-  documents before every push, and fix what they report. For a red required
-  check, one pass reads the failing job's log, reproduces the failure locally,
-  fixes it, and pushes; repeat until the check is green. When it needs an
-  authorization or decision you cannot obtain, it blocks you.
-- Update the branch from the remote default branch with the convention the
-  repository uses: its contributing guide, its repository instructions, or how
-  the branch's earlier updates were made. Merge the default branch in when none
-  of them says; under rebase, push with `--force-with-lease` and never a plain
-  `--force`.
-- Resolve a conflict by the intent of each side traced to the commit or pull
-  request that introduced it. The checks that passed on both sides before the
-  update must pass after it.
+Before sharing replies, reports, diffs, or copied logs, scan for credentials,
+tokens, private keys, `.env` contents, and unpublished internal hostnames.
+Describe what a sensitive value identifies instead of pasting it.
 
-## Report merge readiness
+## Hand back
 
-The pull request is merge-ready when:
+Report the pull request ready for a human to merge only when every comment is
+implemented or answered, every acted-on thread is resolved or names who must
+resolve it, no new comment awaits a response, and every required check is
+green.
 
-- every review comment is implemented, asked about, or answered with a reason,
-- every thread you opened or acted on is resolved or names who must resolve it,
-- no newer review comment is waiting,
-- every check the pull request marks required is green.
-
-Report that, then keep watching. Stop when the pull request is merged, closed,
-blocked, or when this run ends because the harness cannot watch past it — and
-then hand back what is outstanding. Blocked: a required check, decision, or
-authorization cannot be obtained by the agent and the request has been posted
-or reported. Post that request in the pull request, naming the options when you
-know them.
+Continue watching only if the harness provides a subscription, scheduler, or
+background run. Otherwise end at the last pass and report what remains; do not
+claim to be watching. Stop when the pull request is merged, closed, or blocked.
+When blocked, post the missing decision or authorization and its known options
+on the pull request if authorized, then tell the user what is outstanding.
