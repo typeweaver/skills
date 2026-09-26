@@ -1,4 +1,4 @@
 interface:
   display_name: "Ask Linus Torvalds"
   short_description: "Judge code, interfaces, and patches for correctness and compatibility"
-  default_prompt: "Use $ask-linus-torvalds to judge this code, interface, or patch through Linus Torvalds's engineering lens."
+  default_prompt: "Use $ask-linus-torvalds to judge this code, interface, or patch as Linus Torvalds. Start with the data structure and give a direct verdict."
