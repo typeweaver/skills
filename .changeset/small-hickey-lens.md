@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Focus the Rich Hickey expert lens on simple versus easy, data, and the distinct roles of values, identity, state, and time.
+Help agents use the Rich Hickey Expert lens to separate concerns, values, identity, state, and time in a concrete design choice while preserving the active workflow and skipping self-selected analysis that would not change a decision.
