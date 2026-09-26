@@ -1,69 +1,79 @@
 # Skill philosophy
 
-A skill is a document an agent runs that changes what the agent does. It should
-guide recurring decisions or actions while leaving room for judgment.
+Your task is to write skills that change what an agent does.
+Keep the instructions short enough to use and complete enough to trust.
 
-## Give each skill a clear job
+## Scope
 
-State the task and desired outcome first. Keep everything in the skill relevant
-to that job. When another task needs its own trigger and outcome, give it its
-own skill. An orchestrator may guide a longer workflow by calling focused
-skills; each focused skill should also work on its own.
+Give each skill one job and open with that job or the role that owns it.
+“Build the smallest complete change” and “You are Aurelius” put the agent to work before explaining the method.
 
-Describe when the skill applies in words the user would use. Distinguish it
-from neighboring skills where confusion is likely. Use model invocation when
-the agent should discover the skill from context. Reserve user-only invocation
-for workflows that should start exclusively through an explicit request, and
-encode that choice for every supported harness.
+Describe the outcome and the situations that call for the skill in words a user would use.
+Distinguish neighboring skills where a task could trigger the wrong one.
+Use model invocation when the agent should discover the skill from context, and user-only invocation when only an explicit human request should start it.
+Encode that choice for every supported harness.
 
-## Trust the agent's judgment
+An orchestrator can call focused skills by name, but each focused skill should also work on its own.
+Refer to another skill as “the `shape-it` skill” when the relationship matters; do not copy its instructions.
 
-Give the agent a goal, the considerations that change its decisions, and the
-constraints it must respect. Avoid generic advice, exhaustive edge cases, and
-instructions it would follow anyway. Use a fixed sequence or format when the
-task depends on one. Otherwise let the agent choose how to reach the outcome.
+## Judgment
 
-Make decision rules concrete enough to use. When several approaches could
-work, ask the agent to weigh their value, effort, and risks and recommend one.
-When a step is easy to end too early, say what must be true before moving on.
-Keep verification proportional to the change and focus on the outcome the
-skill is meant to produce.
+Give the agent a goal, the decisions it must make, and the boundaries it must keep.
+Trust it to choose reversible steps within the agreed scope.
+Ask the user for choices that change the outcome, scope, or a decision that is difficult to reverse, and offer a recommendation.
 
-## Write for action
+Pair a rule with its limit when judgment matters.
+“Follow the repository's conventions by default, but do not follow them blindly” gives a direction without turning it into a ritual.
 
-Use plain, direct English. Prefer short sentences and familiar words. Speak to
-the agent in the imperative, and lead with what matters most. Keep explanations
-that help the agent decide in cases the rule does not name. Cut repetition,
-filler, and commentary about the writing itself.
+Keep a concrete example when it makes a rule testable.
+“A test that fails after renaming an internal while behavior holds” says more than “avoid brittle tests.”
+Give a step a clear finish when an agent could otherwise move on too early.
 
-Use a term consistently once it has a defined meaning. Follow the repository's
-`GLOSSARY.md`. Prefer a positive instruction that names the desired behavior;
-state a prohibition when it is needed to protect a real boundary.
+A **No-op** is a sentence the agent would follow if it were deleted.
+Remove it, along with generic advice, repeated instructions, and edge cases that do not change a decision.
+Be as concise as possible and as detailed as necessary.
 
-Keep the main `SKILL.md` as short as the task allows. Put guidance every run
-needs there, beside the action it supports. Move substantial details used only
-in certain cases to a linked reference. Add scripts or assets only when they
-make the work more reliable or easier to repeat.
+## Form
 
-## Preserve ownership and boundaries
+Write in plain, direct English.
+Put one sentence or meaningful part of a sentence on a line, then leave space between thoughts.
+Keep paragraphs short and headings few.
+This is a reading rhythm, not a line-length rule.
 
-The agent should research facts it can find and make reversible decisions
-within the agreed scope. Bring the user choices that change the outcome, scope,
-or a decision that is difficult to reverse, with a recommendation they can
-accept or correct.
+Speak to the agent as a role with work to do.
+Give a skill a memorable line when that line carries its judgment, as “Assume that the best code is no code” does for `craft-it`.
+Do not invent a slogan to fill a slot.
 
-Authorization is specific to the action. A skill must not treat approval to
-implement as approval to push, publish, deploy, create external records, or
-merge. Harness adapters must preserve the same boundary. Learn the target
-repository's conventions at execution time; keep organization-specific policy
-out of reusable skills.
+Keep a fixed template when another step relies on that output or the user needs a predictable form.
+The question format in `shape-it` earns its place; ordinary advice does not need a template.
 
-## Revise with evidence
+State a hard boundary plainly: “Do not push” is clearer than a qualification that might permit it by accident.
+Keep the positive action beside a prohibition when it helps the agent continue.
+Use the terms in `GLOSSARY.md` exactly, without rotating synonyms.
 
-Read the existing skill and the behavior it protects before changing it.
-Simplify wording and structure without silently dropping a useful decision,
-constraint, or safety boundary. Check that the description triggers the right
-tasks and that the instructions lead to the intended result. For a substantial
-or uncertain revision, try representative tasks and inspect what the agent
-actually does. Use observed failures to sharpen the skill instead of adding
-rules for hypothetical ones.
+Keep guidance every run needs in `SKILL.md`, beside the action it supports.
+Move substantial details used only in some cases to a linked reference, and say when to read it.
+Use scripts or assets when they make repeated work more reliable.
+
+## Boundaries
+
+Authorization belongs to an action.
+Approval to implement does not authorize pushing, publishing, deploying, creating external records, or merging.
+An adapter must preserve the same role and boundary across harnesses.
+
+Research facts the agent can find instead of asking the user.
+Learn the target repository's conventions when the skill runs; keep local policy out of a reusable skill.
+
+An Expert lens may speak in its expert's voice.
+It still needs evidence for quotations and claims about that person's documented views.
+The active workflow keeps its own output and approval boundaries.
+
+## Revision
+
+Treat existing skill behavior as deliberate until a requested revision says otherwise.
+Read the old skill and identify its triggers, output contracts, examples, and hard boundaries before simplifying it.
+Shortening a sentence is useful only when the behavior survives.
+
+Check the description against tasks that should invoke the skill and nearby tasks that should not.
+For a substantial or uncertain change, try representative tasks and inspect what the agent actually does.
+Keep verification proportional to the change, and use observed failures to sharpen the instructions.
