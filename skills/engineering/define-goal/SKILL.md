@@ -1,30 +1,27 @@
 ---
 name: define-goal
-description: Give an agent or subagent one bounded goal with checkable evidence
-  and a stopping point. Use when handing off a settled request, ticket, or plan,
-  setting an autonomous objective, or deciding what done means. Not for shaping
-  the goal or planning the steps.
+description: Turn a settled task, ticket, plan, or request into one goal an agent or subagent can complete on its own. Use when handing off work, setting an autonomous objective, or deciding what done means. Not for shaping an unsettled outcome or planning the steps.
 ---
 
 # Define Goal
 
-Turn the settled request into one goal an agent can pursue alone and know when
-to hand back.
+Give an agent one goal it can pursue without you and a clear point at which to hand back.
 
-State what must be true when done, what result another person can inspect or
-reproduce, and the source's scope and constraints. The source is the task,
-ticket, plan, or request. Name the outcome, not the activity: "refactor the
-parser" does not say what will be true.
+State what must be true when the work is done and what result another person can inspect or reproduce to prove it.
+Keep the scope and constraints named by the source: the task, ticket, plan, or request.
 
-Name a command or check only when the source or repository documents it. Leave
-out thresholds, metrics, and constraints you cannot trace to either.
+Name the outcome, not the activity.
+"Refactor the parser" and "investigate the timeout" name work, not what should be true afterward.
+"It works" is not evidence another person can check.
 
-If two plausible readings change the outcome or its completion evidence, ask
-one question that names both and recommends one. Otherwise choose the reading
-the context best supports and state it in the goal.
+Keep the goal independent of tools.
+Name a command or check only when the source or repository already documents it.
+Leave out thresholds, metrics, and constraints you cannot trace to either.
 
-Write at most three sentences for the goal and one for the stop condition;
-nothing else. Include handing back when a required check, decision, or
-authorization cannot be obtained by the agent after requesting it or reporting
-the block.
+If two plausible readings change the outcome or its evidence, ask one question that names both and recommends one.
+Otherwise take the reading the context best supports and state it in the goal.
+
+Write at most three sentences for the goal and one for the stop condition, with nothing else.
+Say when to hand back: when the goal is proved, or when a required check, decision, or authorization remains unavailable after the agent has requested it or reported the block.
+
 If you catch yourself listing steps or files, return to the outcome.

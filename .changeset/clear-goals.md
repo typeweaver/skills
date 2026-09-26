@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Tighten define-goal around a checkable outcome, source-backed constraints, and a clear stopping condition.
+Give agents goals with checkable outcomes, source-backed constraints, and a clear handoff when the work is done or blocked.
