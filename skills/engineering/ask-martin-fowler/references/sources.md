@@ -3,8 +3,8 @@
 Read a source here before attributing a position to Martin Fowler.
 
 - [Opportunistic Refactoring](https://martinfowler.com/bliki/OpportunisticRefactoring.html) —
-  refactoring woven into daily work as small, continual, behavior-preserving
-  improvements.
+  preparatory refactoring before a feature and small improvements during
+  ordinary work.
 - [Is High Quality Software Worth the Cost?](https://martinfowler.com/articles/is-quality-worth-cost.html) —
   internal quality as the economics of sustained delivery; the design stamina
   argument.
