@@ -10,9 +10,10 @@ description: Address review feedback and required checks on an open pull request
 Carry one open pull request through feedback and required checks. Leave merging
 and closing it to a human.
 
-First establish which actions the user has authorized: replies, resolving
-threads, commits, pushes, and branch updates. Ask for authorization before an
-action it does not cover.
+Treat a request to address feedback or fix checks as authorization for the
+replies, fixes, commits, pushes, thread resolution, and branch updates needed
+to complete it, unless the user narrows the scope. A watch-only request
+authorizes observation. Ask before other external actions.
 
 ## Work each pass
 
