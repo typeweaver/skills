@@ -1,5 +1,15 @@
 # equip-it
 
+## 0.2.0
+
+### Minor Changes
+
+- 7e656c4: Let `drive-it` start from an existing plan, implementation, review, or delivery
+  phase and skip activating Aurelius when it is already loaded.
+- 1483bef: Focus the bundled skill set on the core engineering workflow. Rename
+  `challenge-me` to `shape-it` and `brief-me` to `summarize-it`, remove six
+  specialist skills, and update the retained agent adapters to use the new names.
+
 ## 0.1.2
 
 ### Patch Changes
