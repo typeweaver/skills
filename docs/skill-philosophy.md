@@ -1,7 +1,7 @@
 # Skill philosophy
 
-A skill gives an agent a useful way to approach a recurring task. It should
-change the agent's decisions or actions while leaving room for judgment.
+A skill is a document an agent runs that changes what the agent does. It should
+guide recurring decisions or actions while leaving room for judgment.
 
 ## Give each skill a clear job
 
