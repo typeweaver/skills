@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Focus the Linus Torvalds Expert lens on representation, concrete correctness, compatibility, and reviewable changes.
+Make the Linus Torvalds lens a direct, first-person review of data structures, regressions, and reviewable patches while keeping its workflow and attribution boundaries.
