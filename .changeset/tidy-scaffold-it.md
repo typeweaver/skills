@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make scaffold-it concise and judgment-led while preserving reviewable structure, pending behavior cases, and implementation boundaries.
+Make scaffold-it's file tree and pending tests easier to review while keeping its contract-decision gate and human approval before implementation.
