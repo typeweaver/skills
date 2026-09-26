@@ -1,78 +1,79 @@
 ---
 name: nextjs-feature-architecture
-description: Decide where a Next.js App Router feature belongs and who owns its
-  route, state, server work, client interaction, and cache. Use when adding or
-  restructuring a page or feature, choosing a state owner, or reviewing App
-  Router boundaries. Not for styling, version upgrades, or debugging one
-  component.
+description: Decide ownership in a Next.js App Router feature.
+  Use when adding or restructuring a feature, page, layout, or route, choosing a state owner, wiring Server Functions or cache invalidation, or reviewing App Router boundaries.
+  Not for styling, version upgrades, or debugging one failing component.
 ---
 
 # Next.js Feature Architecture
 
-Assign owners before choosing files, providers, or libraries. If you catch
-yourself adding a store or directory before you can name the responsibility it
-holds, stop and name that responsibility first.
+Your task is to give each part of an App Router feature one clear owner.
+Name the owner before adding a store, provider, public entry point, or directory.
 
-Work within the requested scope. For a fix, change the boundary needed for the
-fix. For a redesign, account for each boundary being moved. For a review,
-report the boundary problem and its consequence without changing code.
+```text
+request -> route contract -> page composition -> feature -> data access
+```
 
+This describes responsibility, not a folder template.
 Follow the target repository's conventions and installed Next.js version.
-Verify version-sensitive APIs against that version when they affect the design.
-The paths in this skill describe ownership, not a required folder structure.
+But move an inherited boundary when the task calls for it and ownership becomes clearer.
+Check version-sensitive APIs such as `error.tsx` props, request APIs, and cache primitives against that version before relying on them.
+If you cannot verify one, say so.
 
-A feature operation is the server-side entry point for one use case. It owns
-authorization, orchestration, and the data contract. A browser query cache is
-a client-side copy of server data, such as TanStack Query.
+Work within the requested scope.
+For a fix, change the boundary needed for the fix and leave neighboring routes alone.
+Record remaining boundary debt with a reason to revisit it.
+For an authorized redesign, name the new owners and move behavior in behavior-preserving steps.
+For a review, report findings without changing code.
+
+A **feature operation** is the server-side entry point for one use case.
+It owns authorization, orchestration, mapping, and its data and cache contracts.
+A **Server Function** is a function marked with `'use server'` that runs on the server and can be called from a Client Component.
+A **browser query cache** is a client-side copy of server data, such as TanStack Query.
 
 ## Decide ownership
 
-1. **Route:** The route owns the request contract. Normalize inputs before
-   feature behavior or cache keys consume them. A layout owns only what persists
-   across its child routes; a page composes the feature surfaces for its route.
-   Read [ownership](references/ownership.md) when deciding a feature split,
-   layout boundary, or cross-feature workflow.
-2. **Feature:** A feature owns one user capability: its behavior, operations,
-   and UI composition. Keep pieces together while their policy and lifecycle
-   change together. Expose a widget only when a named external compositor needs
-   it. Read [boundaries](references/boundaries.md) when adding a public entry
-   point, shared module, or cross-feature import. For a shadcn and Tailwind
-   repository, use the [UI mapping](references/shadcn.md).
-3. **State:** Give each value one authoritative owner. Use the URL for a
-   confirmed view that Back or a copied link must restore, local state for one
-   interaction, a browser query cache for a browser server-data lifecycle, and
-   a scoped store for a shared transient workflow. The server remains the
-   authority for persisted data. Read [state coordination](references/state-coordination.md)
-   when values cross widgets, need optimistic updates, or persist in the browser.
-4. **Runtime:** Start with Server Components. Put browser interaction behind the
-   smallest useful Client Component boundary. A browser read needs a browser
-   transport; a server read calls the feature operation directly. Read
-   [server composition](references/server-composition.md) when choosing a
-   Server Function, Route Handler, or component boundary.
-5. **Lifecycle:** Place Suspense and error boundaries around regions with their
-   own loading or failure behavior. Treat empty and expected failures as
-   product outcomes. Read [loading and failure](references/loading-and-failure.md)
-   when a boundary or fallback is part of the decision.
-6. **Cache:** Name each cache's identity, freshness, and invalidation owner.
-   A server cache and a browser query cache have separate invalidation
-   paths. Read [caching](references/caching.md) when adding caching or a mutation
-   that changes cached data.
+**Route and page.** The route owns its request contract: parse, validate, normalize, and default inputs before behavior or cache keys consume them.
+The page composes public feature surfaces; a layout owns only what persists across its child routes.
+Read [ownership](references/ownership.md) before assigning route, layout, page, or feature responsibility, splitting a feature, or coordinating features.
 
-Use one worked scenario only when it resolves an open decision:
-[search](references/examples/search-page.md) for a URL-owned view,
-[dashboard](references/examples/operations-dashboard.md) for mixed widget
-lifecycles, [editor](references/examples/editor-workflow.md) for an unsaved
-working copy, or [master-detail](references/examples/master-detail-workspace.md)
-for navigable selection.
+**Feature and dependencies.** A feature owns one user capability, including its behavior, operations, and UI composition.
+Keep pieces together while policy and lifecycle change together.
+Shared UI owns reusable visual and interaction primitives, without feature behavior or authoritative product state.
+Expose a widget only when a named outside compositor needs it.
+Read [boundaries](references/boundaries.md) before adding a public entry point, shared module, cross-feature import, or new architecture folder.
+For a shadcn and Tailwind repository, read the [UI mapping](references/shadcn.md) before placing shared UI.
+
+**State.** Give each value one authoritative owner.
+Use the URL for a confirmed view that Back or a copied link must restore, local state for one interaction, a browser query cache for browser-managed server data, and a scoped store for shared transient work.
+The server remains authoritative for persisted data.
+A shallow URL update through `history.*` changes client hooks but does not rerender Server Components or refresh page `searchParams`.
+Read [state coordination](references/state-coordination.md) before choosing a state library or coordinating state across widgets, and when URL behavior, optimistic updates, or browser persistence matter.
+
+**Runtime.** Start with Server Components and put browser interaction behind the smallest useful Client Component boundary.
+A server read calls a feature operation directly.
+A browser read needs a browser-safe transport.
+Read [server composition](references/server-composition.md) before adding a Client Component boundary or choosing a Server Function or Route Handler.
+
+**Loading and failure.** Give separate regions their own Suspense or error boundary only when they have separate loading or failure behavior.
+Treat empty results and expected failures as product outcomes.
+Read [loading and failure](references/loading-and-failure.md) before placing a boundary or fallback.
+
+**Cache.** Name what identifies a cache entry, how fresh it must be, and who invalidates it.
+The server cache and browser query cache need separate invalidation paths: `queryClient.invalidateQueries` cannot refresh a Server Component.
+Read [caching](references/caching.md) before caching a feature operation or changing data shown by a cached reader.
+
+Use a worked scenario when it resolves an open decision: [search](references/examples/search-page.md) for a URL-owned view, [dashboard](references/examples/operations-dashboard.md) for mixed widget lifecycles, [editor](references/examples/editor-workflow.md) for an unsaved working copy, or [master-detail](references/examples/master-detail-workspace.md) for navigable selection.
 
 ## Finish
 
 State the owner of each changed route input, behavior, state value, and cache.
-Show where runtime and feature boundaries meet. If two places can write the
-same value, or a mutation invalidates a cache the UI does not read, the design
-is unfinished.
+Show where runtime and feature boundaries meet, how mutations reach their readers, and how loading, empty, expected-failure, and unexpected-failure states behave.
+Cross-feature imports should use public entry points or an explicit workflow owner.
+A design with two writers for one value, an unsafe client import, or invalidation that cannot reach the shown UI is unfinished.
 
-In a review, lead with broken runtime imports, competing state writers, or
-cache invalidation that cannot reach its reader. Name the affected file and the
-owner that should hold the responsibility. Keep existing debt separate from
-problems introduced by the change.
+In a review, lead with **Blocking** findings that are wrong as written: an unsafe runtime import, competing state writers, or ineffective cache invalidation.
+Mark **Important** findings where the next change pays for a boundary problem, such as a deep import into another feature or feature behavior in a page.
+Keep **Follow-up** boundary debt separate from problems the change introduced.
+For each finding, cite the affected file and import line where relevant, name the consequence and intended owner, and state when the change is worth making.
+Order findings by the cost of leaving them.

@@ -2,4 +2,4 @@
 "equip-it": patch
 ---
 
-Make the Next.js feature architecture skill shorter and lead with ownership decisions while keeping detailed App Router guidance behind focused references.
+Help agents choose reliable owners for App Router features and reviews, including shallow URL updates, separate browser and server cache invalidation, and version-sensitive APIs.
