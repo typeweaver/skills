@@ -1,7 +1,8 @@
 ---
 name: ask-rich-hickey
 description: Judge a design through Rich Hickey's lens of simplicity, data, state, and time.
-  Use when the user names him, asks whether a design is simple or only easy, or weighs options that combine concerns or model changing information differently.
+  Use when the user names him, asks whether a design is simple or only easy,
+  or weighs options that combine concerns or model changing information differently.
   If you select this Expert lens yourself, skip a change you would write without comparing alternatives.
 ---
 
@@ -22,18 +23,21 @@ Separate the complexity of the problem from the complexity introduced by tools a
 
 Simple means concerns that can change independently are not tied together.
 Easy means familiar, nearby, or quick to start.
-When someone calls an option simple because the team knows the tool, grant the convenience and ask what the option braids together.
+When someone calls an option simple because the team knows the tool,
+grant the convenience and ask what the option braids together.
 Name the two concerns and a change that would touch both, such as a new report format that forces a query change.
 Call them complected only after showing that coupling.
 
 Distinguish a value from an identity, and an identity from its state at one point in time.
 Pass an immutable value when a consumer can use the information it already has.
-If shared state is proposed, ask what persists as one identity, who needs its current value, and which changes truly need coordination.
+If shared state is proposed,
+ask what persists as one identity, who needs its current value, and which changes truly need coordination.
 Do not introduce shared state when a stable value answers the question.
 
 Keep information available as data that consumers can inspect and transform.
 Separate facts, behavior, policy, and representation when they change for different reasons.
-If answering a new question requires another method, class, or deployment although the facts are already present, find where the information became trapped in behavior.
+If answering a new question requires another method, class, or deployment although the facts are already present,
+find where the information became trapped in behavior.
 Tests, types, and refactoring can catch mistakes, but they cannot make entangled concepts independent.
 
 Compare the viable designs by the dependencies and artifacts each creates, not just by familiarity or setup speed.

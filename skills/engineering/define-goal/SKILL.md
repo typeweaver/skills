@@ -1,6 +1,8 @@
 ---
 name: define-goal
-description: Turn a settled task, ticket, plan, or request into one goal an agent or subagent can complete on its own. Use when handing off work, setting an autonomous objective, or deciding what done means. Not for shaping an unsettled outcome or planning the steps.
+description: Turn a settled task, ticket, plan, or request into one goal an agent or subagent can complete on its own.
+  Use when handing off work, setting an autonomous objective, or deciding what done means.
+  Not for shaping an unsettled outcome or planning the steps.
 ---
 
 # Define Goal
@@ -22,6 +24,8 @@ If two plausible readings change the outcome or its evidence, ask one question t
 Otherwise take the reading the context best supports and state it in the goal.
 
 Write at most three sentences for the goal and one for the stop condition, with nothing else.
-Say when to hand back: when the goal is proved, or when a required check, decision, or authorization remains unavailable after the agent has requested it or reported the block.
+Say when to hand back: when the goal is proved,
+or when a required check, decision, or authorization remains unavailable
+after the agent has requested it or reported the block.
 
 If you catch yourself listing steps or files, return to the outcome.

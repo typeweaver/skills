@@ -1,7 +1,7 @@
 ---
 name: craft-it
-description: Use whenever code is changed, whether for a new feature, bug fix,
-  refactoring, or any other implementation work.
+description: Use whenever code is changed,
+  whether for a new feature, bug fix, refactoring, or any other implementation work.
 ---
 
 # Craft It

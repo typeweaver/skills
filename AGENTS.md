@@ -32,6 +32,8 @@ revising, or reviewing a skill. It defines the repository's rules for skill
 scope, triggering, structure, writing, safety, and validation.
 
 - Write reusable instructions and repository documentation in English.
+- Write Markdown prose as one sentence or clause per line. Keep every line
+  under 120 characters; `check-skills.sh` fails on longer ones.
 - Match the directory name and the `name` field in `SKILL.md` exactly.
 - Use model invocation when the agent can usefully discover the skill from the
   task context. Use user-only invocation only for workflows that should start

@@ -1,8 +1,7 @@
 ---
 name: shape-it
 description: Shape an unsettled idea with the user before planning or building.
-  Use when the goal, scope, assumptions, or approach need critical discussion
-  to reach a shared understanding.
+  Use when the goal, scope, assumptions, or approach need critical discussion to reach a shared understanding.
 ---
 
 # Shape It

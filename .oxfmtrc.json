@@ -1,3 +1,10 @@
 {
-  "ignorePatterns": []
+  "ignorePatterns": [],
+  "proseWrap": "preserve",
+  "overrides": [
+    {
+      "files": ["**/*.md"],
+      "options": { "printWidth": 120, "embeddedLanguageFormatting": "off" }
+    }
+  ]
 }

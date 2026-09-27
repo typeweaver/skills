@@ -1,9 +1,8 @@
 ---
 name: conventional-commit
-description: Create Conventional Commits from completed changes. Use when asked
-  to stage or commit work, write or revise a commit message, or split work into
-  separate commits. Not for pushing, tagging, opening a pull request, or
-  explaining the format when there is nothing to commit.
+description: Create Conventional Commits from completed changes.
+  Use when asked to stage or commit work, write or revise a commit message, or split work into separate commits.
+  Not for pushing, tagging, opening a pull request, or explaining the format when there is nothing to commit.
 ---
 
 # Conventional Commit
@@ -16,7 +15,8 @@ Create the commits and stop there.
 Read every changed file's staged and unstaged diff before deciding what belongs together.
 Split independent changes, but keep code and the tests that cover it in one commit.
 
-Before staging, scan both diffs for credentials, tokens, private keys, `.env` contents, and internal hostnames the repository does not already publish.
+Before staging, scan both diffs
+for credentials, tokens, private keys, `.env` contents, and internal hostnames the repository does not already publish.
 Unstage and withhold any affected file, then report it.
 
 Stage one commit by path and check `git status` for unintended staged changes.
@@ -37,7 +37,8 @@ Check `git log --oneline -20` for the scope used in this area; do not invent one
 
 Add a body when the diff shows what changed but not why.
 Leave out a body that only restates the subject or lists files.
-Mark a breaking change with `!` or a `BREAKING CHANGE:` footer only when an existing caller, consumer, or configuration needs a change on its side.
+Mark a breaking change with `!` or a `BREAKING CHANGE:` footer
+only when an existing caller, consumer, or configuration needs a change on its side.
 
 ## Boundary
 

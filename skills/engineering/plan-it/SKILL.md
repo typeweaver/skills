@@ -1,7 +1,6 @@
 ---
 name: plan-it
-description:
-  Write a plan another agent can execute, with decisions and a runnable check for every step.
+description: Write a plan another agent can execute, with decisions and a runnable check for every step.
   Use when a settled approach spans several steps or independently shippable milestones.
   Not for shaping an unclear idea, sprint planning, or a one-step change.
 ---
@@ -17,7 +16,8 @@ Offer a recommendation the user can accept or correct.
 
 ## Decisions
 
-Record each decision where two workable approaches existed: what you chose, why the alternative lost, and what the choice requires in implementation.
+Record each decision where two workable approaches existed:
+what you chose, why the alternative lost, and what the choice requires in implementation.
 If the choice rests on an unverified assumption, name the observation that would reverse it.
 
 Keep the decision, not the conversation that led to it.
@@ -42,17 +42,21 @@ When outcomes can ship independently, write a roadmap and one plan per milestone
 Keep shared context in the roadmap and enough context in each milestone plan to execute it without reading its siblings.
 Link the related plans.
 
-End with checks for intended behavior, likely regressions, and documents or operational settings the implementation affects.
+End with checks for intended behavior, likely regressions,
+and documents or operational settings the implementation affects.
 
 ## Handoff
 
 Follow the repository's plan convention.
 Otherwise write under `docs/plans/` using [the plan template](assets/plan-template.md), and omit sections the work does not need.
 
-Leave workflow actions such as creating a branch, committing, and opening a pull request out of the implementation steps.
-Point to sensitive information instead of copying secrets, personal data, or unpublished internal hostnames into the plan.
+Leave workflow actions such as creating a branch, committing, and opening a pull request
+out of the implementation steps.
+Point to sensitive information
+instead of copying secrets, personal data, or unpublished internal hostnames into the plan.
 
-Check that every step has a runnable completion check and every reference the executor needs is available outside this conversation.
+Check that every step has a runnable completion check
+and every reference the executor needs is available outside this conversation.
 Report the plan path, outcome, approach, and each open risk with the step or decision it affects.
 
 Hand the plan back and wait; begin implementation only when the user authorizes it.
