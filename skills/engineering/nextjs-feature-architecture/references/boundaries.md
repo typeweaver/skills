@@ -1,7 +1,7 @@
 # Boundaries, Public Interfaces, and Structure
 
-Step 2 of the procedure. Trees are growth consequences, not starting
-templates. Do not reproduce them mechanically.
+Use when an import, entry point, or new module changes a boundary. Trees are
+growth consequences, not starting templates.
 
 ## Protect dependency direction
 

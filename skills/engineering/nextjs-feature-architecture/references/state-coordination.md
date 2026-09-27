@@ -1,6 +1,7 @@
 # State Coordination Across Widgets
 
-Step 3 of the procedure, and the single owner of the state table.
+Use when state crosses widgets, needs browser persistence, or has an optimistic
+projection.
 
 Assign ownership before choosing a library. Libraries implement a lifecycle;
 they do not decide which lifecycle the product needs.
@@ -23,9 +24,9 @@ questions under "Decide by restoration and lifecycle" pick one.
 | Unsaved multi-widget working copy      | Scoped feature store with explicit base state |
 | Behavior spanning independent features | Explicit workflow feature                     |
 
-Distinguish the authoritative source from a useful representation. A TanStack
-The browser query cache may own the browser's current server-data projection while the
-server remains authoritative. An editor store may own the unsaved working copy
+Distinguish the authoritative source from a useful representation. The browser
+query cache may own the current server-data projection while the server remains
+authoritative. An editor store may own the unsaved working copy
 while recording which server revision it was derived from.
 
 ## Decide by restoration and lifecycle

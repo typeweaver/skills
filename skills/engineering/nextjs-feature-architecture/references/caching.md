@@ -1,6 +1,6 @@
 # Cache Contracts and Invalidation
 
-Step 6 of the procedure.
+Use when a feature caches data or a mutation changes cached data.
 
 - Treat caching as part of each feature operation's data contract, not as an
   incidental optimization. Keep the policy next to the operation and define

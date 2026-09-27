@@ -1,7 +1,6 @@
 # Ownership Vocabulary and Responsibilities
 
-Step 1 of the procedure. This file defines the terms the heuristic in
-`SKILL.md` produces and states what each owner is responsible for.
+Use when a route, feature split, layout, or cross-feature workflow needs an owner.
 
 ## Vocabulary
 
