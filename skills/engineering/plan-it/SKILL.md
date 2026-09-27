@@ -1,77 +1,59 @@
 ---
 name: plan-it
-description: Write the plan another agent implements from, with ordered steps, a
-  check that proves each step done, and the decisions behind them. Use when the
-  approach is settled and the work spans several steps or sessions, or when it
-  splits into milestones that ship separately. Not for shaping an unclear idea,
-  for sprint or capacity planning, or for work that fits in one step.
+description:
+  Write a plan another agent can execute, with decisions and a runnable check for every step.
+  Use when a settled approach spans several steps or independently shippable milestones.
+  Not for shaping an unclear idea, sprint planning, or a one-step change.
 ---
 
 # Plan It
 
-Turn the shared understanding into a plan file another agent executes without
-reconstructing this conversation. A step whose title is a process action —
-create a branch, commit, open a pull request, request review — is workflow
-around the work: delete it.
+Your task is to write a plan another agent can execute without this conversation.
 
-## Establish the facts
+Start from the shared understanding, repository instructions, related plans, and the checks the repository runs.
+Find facts yourself before asking the user.
+Ask only when a missing decision changes the scope, the steps, or a choice that is expensive to reverse.
+Offer a recommendation the user can accept or correct.
 
-1. Read the shared understanding, the repository's instructions, the plans this
-   work touches, and the check command CI runs or the verification commands the
-   repository documents.
-2. Ask the user only when a missing decision changes which steps exist, the
-   scope boundary, or a choice that is expensive to reverse, and then ask at
-   their decision level with one recommended answer they can accept or reject.
+## Decisions
 
-## Record the decisions
+Record each decision where two workable approaches existed: what you chose, why the alternative lost, and what the choice requires in implementation.
+If the choice rests on an unverified assumption, name the observation that would reverse it.
 
-Record every decision where two workable alternatives existed: the one chosen,
-why the other lost, and what the choice forces in implementation. Where a choice
-rests on an assumption you did not verify, add the observation that would
-reverse it.
+Keep the decision, not the conversation that led to it.
 
-A decision entry that narrates the conversation — "we first considered", "you
-then said" — is replay. State the choice, the alternative it beat, and the
-consequence.
+## Steps
 
-## Shape the work
+Give each step a change to the system and an observable outcome.
+End it with `Done when:` and a check the executor can run: a command, a file that exists, or a test that passes.
+"Reviewed", "looks right", and "works as expected" are not checks.
 
-- Give each step an outcome and end it with `Done when:` and a check the
-  executor can run: a command, a file that exists, a test that passes.
-  "Reviewed", "looks right", or "works as expected" is not a check.
-- After every step the repository's checks pass — the check command CI runs or
-  the verification commands the repository documents. A step that leaves them
-  broken merges with the next step.
-- Order steps so each one can run when it starts: a step follows the step that
-  creates what it changes or what its check reads. Steps with no such relation
-  stay in any order; do not invent a sequence.
-- When a decision cannot be made from what you read, make the research its own
-  step, and name the decision it unlocks and the observation that settles it.
-- Validate at the end across behavior, the regressions this change could cause,
-  and every document or operational setting the change makes false.
-- Cut milestones as tracer bullets: one narrow case through every layer, the
-  system running after each. Use expand-contract only when the mechanical
-  change is too wide to slice by case.
-- When outcomes can ship without one another, write a roadmap plus one plan per
-  milestone. Keep the shared context in the roadmap, and in each milestone plan
-  enough to execute it without reading its siblings; the template's Related
-  plans section carries the links.
+The repository's checks pass after each step.
+Combine steps that would leave them broken.
+Order steps by real dependencies, including what a later check reads, without inventing a sequence for independent work.
 
-## Write the handoff
+If research must settle a remaining choice, make the research its own step.
+Name the decision it unlocks and the observation that settles it.
 
-Follow an existing repository convention. Otherwise write the plan under
-`docs/plans/` with a descriptive filename, starting from
-[assets/plan-template.md](assets/plan-template.md). Drop a section the work
-leaves empty instead of filling it with the obvious.
+For work across several layers, build one narrow working path through them before expanding it.
+Use expand-contract when a mechanical change is too wide to slice by case.
 
-Do not copy into the plan credentials, tokens, private keys, `.env` contents, and
-internal hostnames the repository does not already publish, or personal data;
-name where they live.
+When outcomes can ship independently, write a roadmap and one plan per milestone.
+Keep shared context in the roadmap and enough context in each milestone plan to execute it without reading its siblings.
+Link the related plans.
 
-The plan is done when every step carries a runnable check and nothing in it
-points back at this conversation: a sentence containing "as discussed", "as
-agreed", or "see above" names evidence the executor does not have.
+End with checks for intended behavior, likely regressions, and documents or operational settings the implementation affects.
 
-Report the plan path, the outcome, the approach, and each open risk with the
-step or decision it affects. Hand the plan back and wait; begin implementation
-only when the user authorizes it.
+## Handoff
+
+Follow the repository's plan convention.
+Otherwise write under `docs/plans/` using [the plan template](assets/plan-template.md), and omit sections the work does not need.
+
+Leave workflow actions such as creating a branch, committing, and opening a pull request out of the implementation steps.
+Point to sensitive information instead of copying secrets, personal data, or unpublished internal hostnames into the plan.
+
+Check that every step has a runnable completion check and every reference the executor needs is available outside this conversation.
+Report the plan path, outcome, approach, and each open risk with the step or decision it affects.
+
+Hand the plan back and wait; begin implementation only when the user authorizes it.
+The `drive-it` skill requires that approval after the plan briefing.
