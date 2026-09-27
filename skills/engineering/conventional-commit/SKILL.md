@@ -1,58 +1,48 @@
 ---
 name: conventional-commit
-description: Create Conventional Commits from completed changes, split so each
-  one could be reverted alone. Use when asked to commit work, to stage and
-  commit, to write or redo a commit message, or to break a working tree into
-  several commits. Not for pushing or opening a pull request, and not for a
-  question about the commit format with no changes to commit.
+description: Create Conventional Commits from completed changes. Use when asked
+  to stage or commit work, write or revise a commit message, or split work into
+  separate commits. Not for pushing, tagging, opening a pull request, or
+  explaining the format when there is nothing to commit.
 ---
 
 # Conventional Commit
 
-Turn finished changes into commits whose split and message follow from the
-diff. Create the commits and stop there: do not push, tag, or open a pull
-request.
+Turn finished work into commits that can each be reverted without breaking the build or tests.
+Create the commits and stop there.
 
-## Process
+## Method
 
-1. Read the diff contents of every changed file, staged and unstaged. Type,
-   scope, and split all follow from them, not from the file list.
-2. Split into separate commits when each part could be reverted alone without
-   breaking the build or tests; keep code and the tests that cover it in one
-   commit.
-3. Before staging, scan both diffs from step 1 for credentials, tokens, private keys, `.env`
-   contents, and internal hostnames the repository does not already publish.
-   Leave a file that carries one out of the commit — unstage it if it is
-   already staged — and report it instead of committing.
-4. Stage one commit's files by path, confirm `git status` shows only those
-   paths staged, and commit. `git add -A`, `git add .`, and `git commit -a`
-   sweep unrelated work into the commit.
-5. Read `git show` for the commit you just made: it carries the files you
-   staged and a message the diff supports.
-6. Repeat from step 3 until every change the task produced is either committed
-   or reported as withheld.
+Read every changed file's staged and unstaged diff before deciding what belongs together.
+Split independent changes, but keep code and the tests that cover it in one commit.
 
-## Commit message
+Before staging, scan both diffs for credentials, tokens, private keys, `.env` contents, and internal hostnames the repository does not already publish.
+Unstage and withhold any affected file, then report it.
 
-Always follow Conventional Commits, even where the repository previously used
-another style. Write the subject, body, and footers in English.
+Stage one commit by path and check `git status` for unintended staged changes.
+Do not use `git add -A`, `git add .`, or `git commit -a`; they can sweep unrelated work into the commit.
 
-`<type>(<scope>): <imperative description>`, or `<type>: <imperative
-description>` without a scope.
+Commit, then read `git show` to confirm the contents and message.
+Repeat until every change the task produced is committed or reported as withheld.
+Leave unrelated work in the tree.
 
-- Derive type and scope from the diff, not from the ticket or the branch name.
-  Read the subjects `git log --oneline -20` prints and take the scope those
-  subjects use for the area you changed. When the log has no scope for that
-  area, omit the scope rather than inventing one.
-- Add a body when the diff shows what changed but not why. A body that
-  restates the subject or lists the changed files goes.
-- Insert `!` before `:` or add a `BREAKING CHANGE:` footer only when an
-  existing caller, consumer, or configuration stops working without changes on
-  their side.
+## Message
 
-## Safety
+Use Conventional Commits even if the repository's earlier history differs.
+Write the subject, body, and footers in English.
 
-- Commit only what the task changed; other work in the tree stays uncommitted.
-- Do not amend or rewrite an existing commit unless asked; add a new one.
-- Do not pass `--no-verify` or `-n`; fix what a failing hook reports, or
-  report it.
+Use `<type>(<scope>): <imperative description>`, or omit the scope when none fits.
+Derive type and scope from the diff, not the ticket or branch name.
+Check `git log --oneline -20` for the scope used in this area; do not invent one when none exists.
+
+Add a body when the diff shows what changed but not why.
+Leave out a body that only restates the subject or lists files.
+Mark a breaking change with `!` or a `BREAKING CHANGE:` footer only when an existing caller, consumer, or configuration needs a change on its side.
+
+## Boundary
+
+Do not amend or rewrite an existing commit unless asked; add a new one.
+Let hooks run. Do not pass `--no-verify` or `-n`; fix a failing hook or report it.
+
+Do not push, tag, or open a pull request as part of this skill.
+If the user also authorized one of those actions, follow its own workflow after committing.
