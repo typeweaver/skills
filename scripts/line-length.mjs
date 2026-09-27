@@ -88,7 +88,7 @@ export const findLongLines = (contents, limit = MAX_LINE_LENGTH) => {
 };
 
 /**
- * Checks every hand-written Markdown file in the repository.
+ * Checks the Markdown files under the checked directories, `skills/` and `docs/`.
  * @param {string} root repository root
  * @returns {{ files: number, errors: string[] }}
  */
