@@ -14,3 +14,6 @@ Read a source here before attributing a position to Barbara Liskov.
 - [Data Abstraction and Hierarchy](https://www.cs.tufts.edu/~nr/cs257/archive/barbara-liskov/data-abstraction-and-hierarchy.pdf) —
   the 1987 keynote paper introducing the substitution property behind
   behavioral subtyping.
+- [MIT oral-history interview](https://infinite.mit.edu/video/barbara-liskov/) —
+  her own account of simple interfaces, hidden implementations, and reasoning
+  about modules independently.
