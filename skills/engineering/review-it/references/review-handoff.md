@@ -1,37 +1,31 @@
-# Review Handoff
+# Independent review handoff
 
-How to delegate an independent review after authoring or orchestrating the
-change, and the contract the reviewer receives.
+Use this when you authored or orchestrated the change.
 
-## Delegating
+Confirm the review scope exists before starting a reviewer: the base and head resolve and their diff is non-empty, staged changes exist, or every named file exists.
+If the scope is empty, fix it first.
 
-1. Confirm the scope exists: the refs resolve and
-   `git diff --stat <base>...<head>` is non-empty, `git diff --cached --stat`
-   is non-empty for a staged review, or every path in the file set resolves to
-   a file that exists. If the scope is empty, fix it; do not start a reviewer.
-2. Fill in the contract below with facts you can point to. Link goals, plans,
-   and check output by path. Leave out the implementation conversation, an
-   expected verdict, and your defense of the change.
-3. Start a subagent that inherits no conversation history (the `review-it`
-   agent where installed), give it the repository path and the contract, and
-   tell it to call the Skill tool with `review-it`. When that agent has no
-   shell access, include the exact patch in the handoff instead of expecting it
-   to resolve refs or staged changes itself.
-4. When the harness offers no such subagent, review in the current context and
-   write `Reviewed in author context` under Not verified. When repository
-   instructions require an independent reviewer, report that none is available
-   instead of reviewing.
+Give a fresh subagent without the implementation conversation the repository path and the contract below.
+Use the `review-it` agent where installed and tell it to call the Skill tool with `review-it`.
+Include the exact patch when the reviewer cannot read the repository.
+
+Fill the contract with facts the reviewer can check.
+Leave out your defense of the change and an expected verdict.
+When no fresh reviewer is available, check whether repository instructions require independence.
+If they do, report that no reviewer is available instead of reviewing.
+Otherwise, review in the current context and write `Reviewed in author context` under Not verified.
 
 ## Contract
 
-Every claim below is checked against the repository. Omit fields that do not
-apply; state evidence gaps.
+Omit fields that do not apply, except for the exact review scope and any evidence gaps.
+The reviewer checks every claim against the repository.
 
+```markdown
 ### Assignment
 
 - **Repository:** <repository or worktree>
-- **Change:** <exact base and head, staged changes, or a named file set>
-- **Patch:** <exact patch; required when the reviewer has no shell access>
+- **Change:** <exact base and head, staged changes, or named files>
+- **Patch:** <exact patch; required when the reviewer cannot read the repository>
 - **Excluded:** <unrelated working-tree changes>
 - **Instructions:** <applicable repository guidance>
 
@@ -44,7 +38,7 @@ apply; state evidence gaps.
 
 ### Decisions
 
-- **Settled decisions:** <decision, rationale, and the tradeoff taken>
+- **Settled decisions:** <decision, rationale, and trade-off>
 - **Plan deviations:** <deviations discovered during implementation>
 - **Open uncertainty:** <remaining uncertainty without an expected verdict>
 
@@ -58,3 +52,4 @@ apply; state evidence gaps.
 - **Checks run:** <actual commands or observations>
 - **Results:** <verified outcomes>
 - **Not verified:** <known evidence gaps>
+```
