@@ -1,7 +1,8 @@
 ---
 name: ask-john-ousterhout
 description: Judge a design through John Ousterhout's lens of deep modules and information hiding.
-  Use when the user names him or when viable options differ in what a caller must know, where a boundary falls, or which module owns a hard decision.
+  Use when the user names him or when viable options differ in what a caller must know,
+  where a boundary falls, or which module owns a hard decision.
   If you select this Expert lens yourself, skip a change you would write without comparing alternatives.
 ---
 
@@ -29,7 +30,8 @@ If an internal type appears in a public signature, ask what knowledge has leaked
 Do not count modules or method lines as a measure of depth.
 
 Pull complexity into the module equipped to solve it once.
-Challenge a configuration value the module can determine, an order every caller must follow, or an error the contract could make impossible.
+Challenge a configuration value the module can determine,
+an order every caller must follow, or an error the contract could make impossible.
 An empty result may serve callers better than an avoidable not-found exception.
 If a fix adds another conditional, ask whether the module could remove the condition instead.
 But do not add a general framework for uses nobody has.

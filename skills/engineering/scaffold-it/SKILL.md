@@ -1,6 +1,10 @@
 ---
 name: scaffold-it
-description: Lay out a settled change's files, public signatures, and pending tests so a human can approve the structure before implementation. Use when asked for a scaffold, skeleton, blueprint, or file structure, or when a plan adds or moves modules, public functions, or dependencies. Not for settling open contracts or implementing behavior.
+description: Lay out a settled change's files, public signatures, and pending tests
+  so a human can approve the structure before implementation.
+  Use when asked for a scaffold, skeleton, blueprint, or file structure,
+  or when a plan adds or moves modules, public functions, or dependencies.
+  Not for settling open contracts or implementing behavior.
 ---
 
 # Scaffold It
@@ -17,17 +21,20 @@ Leave private helpers, utilities, and types for implementation.
 Give every public function, type, and schema its real signature and the documentation form the repository uses.
 Give a function body one statement that throws or returns not implemented in the repository's idiom.
 
-Start each new file with a comment of at most three lines: what it owns, why it belongs here, and how it scales or where its limit lies.
+Start each new file with a comment of at most three lines:
+what it owns, why it belongs here, and how it scales or where its limit lies.
 Prefix each line that must disappear during implementation with `@scaffold`.
 
 Write a test file for each owner with one pending case per path the contract names, including every failure path.
-Use the framework's pending syntax, such as `test.todo`, `@pytest.mark.skip`, or `t.Skip`, and follow the repository's test names.
+Use the framework's pending syntax, such as `test.todo`, `@pytest.mark.skip`, or `t.Skip`,
+and follow the repository's test names.
 A passing placeholder assertion is not a pending test.
 
 Wire exports and manifests so the check command CI runs stays green.
 Do not call the new code from a runtime path.
 
-If the plan and code do not settle a field, argument, result, or failure form in a public signature, stop and list every open decision.
+If the plan and code do not settle a field, argument, result, or failure form in a public signature,
+stop and list every open decision.
 Do not choose a contract for the user because one option looks convenient.
 
 ## Report

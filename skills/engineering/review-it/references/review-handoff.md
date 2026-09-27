@@ -2,7 +2,8 @@
 
 Use this when you authored or orchestrated the change.
 
-Confirm the review scope exists before starting a reviewer: the base and head resolve and their diff is non-empty, staged changes exist, or every named file exists.
+Confirm the review scope exists before starting a reviewer:
+the base and head resolve and their diff is non-empty, staged changes exist, or every named file exists.
 If the scope is empty, fix it first.
 
 Give a fresh subagent without the implementation conversation the repository path and the contract below.

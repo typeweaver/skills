@@ -1,7 +1,6 @@
 ---
 name: to-issues
-description:
-  Record follow-up work, review findings, plans, or roadmap milestones as issues someone can complete later.
+description: Record follow-up work, review findings, plans, or roadmap milestones as issues someone can complete later.
   Use when asked to file, track, or park that work, or to publish it to an authorized tracker.
   Not for work the current change still needs or for leaving a TODO in source.
 ---
@@ -47,4 +46,5 @@ Describe what a value identifies instead.
 ## Finish
 
 Report created local paths and tracker links, and identify any item left as a draft or not created.
-If the user named a tracker but did not authorize publication, say that nothing was published there and offer to publish on their authorization.
+If the user named a tracker but did not authorize publication,
+say that nothing was published there and offer to publish on their authorization.

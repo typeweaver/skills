@@ -43,6 +43,10 @@ if ! node "$repo_dir/scripts/check-skill-frontmatter.mjs"; then
   status=1
 fi
 
+if ! node "$repo_dir/scripts/check-line-length.mjs"; then
+  status=1
+fi
+
 if [ "$status" -ne 0 ]; then
   exit "$status"
 fi

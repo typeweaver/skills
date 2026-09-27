@@ -1,6 +1,8 @@
 ---
 name: pr-review-loop
-description: Work an open pull request's review comments and required checks until a human can merge it. Use when asked to address feedback, fix red checks, or watch a pull request. Not for opening a pull request or reviewing its diff yourself.
+description: Work an open pull request's review comments and required checks until a human can merge it.
+  Use when asked to address feedback, fix red checks, or watch a pull request.
+  Not for opening a pull request or reviewing its diff yourself.
 ---
 
 # PR Review Loop
@@ -8,7 +10,9 @@ description: Work an open pull request's review comments and required checks unt
 Carry one open pull request through review and required checks until it is ready for a human to merge.
 Do not merge or close the pull request.
 
-A request to address feedback or fix checks authorizes the replies, fixes, commits, pushes, thread resolution, and branch updates needed to complete it, unless the user narrows the scope.
+A request to address feedback or fix checks authorizes the replies, fixes, commits, pushes, thread resolution,
+and branch updates needed to complete it,
+unless the user narrows the scope.
 A request only to watch authorizes observation.
 Ask before other external actions.
 
@@ -17,9 +21,11 @@ Ask before other external actions.
 Read every new review comment and verdict, the state of every check, and whether the branch needs updating.
 Repeat after every push or reply.
 
-Implement a review comment by default, verify the change, commit in Conventional Commits format, push, and resolve the thread.
+Implement a review comment by default,
+verify the change, commit in Conventional Commits format, push, and resolve the thread.
 
-- If two readings would lead to different changes, ask on the thread which the reviewer means and say which you recommend.
+- If two readings would lead to different changes,
+  ask on the thread which the reviewer means and say which you recommend.
 - If the request would break a named requirement, repository rule, or check, explain the conflict on the thread.
 
 If a reviewer repeats a request after your reply, implement it unless that conflict remains.
@@ -30,12 +36,14 @@ Repeat until the check is green or a decision or authorization blocks the work.
 
 Run the checks CI runs or the repository documents before every push, and fix what they report.
 
-Before sharing replies, reports, diffs, or copied logs, check for credentials, tokens, private keys, `.env` contents, and unpublished internal hostnames.
+Before sharing replies, reports, diffs, or copied logs,
+check for credentials, tokens, private keys, `.env` contents, and unpublished internal hostnames.
 Describe what a sensitive value identifies instead of pasting it.
 
 ## Keep the branch mergeable
 
-Update the PR branch from the remote default branch when needed, following the repository's contributing guide, instructions, or earlier branch updates.
+Update the PR branch from the remote default branch when needed,
+following the repository's contributing guide, instructions, or earlier branch updates.
 If none sets a convention, merge the default branch into the PR branch.
 
 If the convention is rebase, push with `--force-with-lease`, never a plain `--force`.
@@ -55,4 +63,5 @@ Continue watching only if the harness provides a subscription, scheduler, or bac
 Otherwise end at the last pass, say that you cannot watch beyond it, and report what remains.
 Stop when the pull request is merged, closed, or blocked.
 
-When blocked, post the missing decision or authorization and its known options on the pull request if authorized, then tell the user what is outstanding.
+When blocked, post the missing decision or authorization and its known options on the pull request if authorized,
+then tell the user what is outstanding.
