@@ -39,6 +39,9 @@ Case names follow the repository's existing tests. The `->` form belongs to
 the report, not to the code.
 
 ```ts
+// @scaffold Owns: the observable cases for completing a to-do.
+// @scaffold Why: the transition contract needs approval before behavior exists.
+// @scaffold Scale: add cases here when the transition gains a new result.
 import { describe, test } from "vitest";
 
 describe("completeTodo", () => {
