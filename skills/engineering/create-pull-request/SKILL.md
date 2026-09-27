@@ -1,52 +1,46 @@
 ---
 name: create-pull-request
-description: Open or update the pull request for a finished branch, with the
-  title, description, and review comments it needs. Use when asked to open,
-  create, or raise a pull request or PR, to update an existing one, or to put
-  finished work up for review. Not for reviewing a diff, for handling review
-  comments on an open pull request, or for committing work.
+description: Open or update a pull request for a finished branch. Use when asked to put completed work up for review. Not for reviewing a diff, addressing review comments, or committing work.
 ---
 
 # Create Pull Request
 
-Present one finished change so a reviewer can judge it from the pull request
-alone. Write the title, description, and comments in English. Hand the pull
-request back for a human to merge; never merge it yourself.
+Your task is to present one finished change so a reviewer can judge it from the pull request alone.
+Write the title, description, and comments in English.
+Hand the pull request back for a human to merge.
+Do not merge it yourself.
 
-## Process
+## Before publication
 
-1. Read the complete diff against the target branch and the repository's
-   instructions.
-2. Confirm every hunk supports the one outcome the Summary will state. Report
-   each hunk that does not — debug output, an unrelated edit, a comment
-   narrating the change history — and ask whether to drop it or split it out.
-   Do not amend or rewrite an existing commit to do so unless asked.
-3. Run the check command CI runs or the verification commands the repository
-   documents.
-4. Before pushing, scan the diff and the title, description, and comments you
-   will publish for credentials, tokens, private keys, `.env` contents, and
-   internal hostnames the repository does not already publish. Stop and report
-   what you found instead of pushing.
-5. Push the branch, then update the pull request it already has; open one only
-   when it has none. Post the comments below that the pull request does not
-   already carry. Request the reviewer the user named through the platform's
-   review-request mechanism; when none was named, ask once who should review,
-   unless the pull request already has a reviewer or an orchestrating workflow
-   defers the choice.
-6. Confirm the title, the description, and the diff you pushed agree, and that
-   any review request you made registered.
+Read the complete diff against the target branch and the repository's instructions.
+Every hunk should support the one outcome the PR will state.
+If you find debug output, an unrelated edit, or a comment narrating change history, report it and ask whether to drop or separate it.
+Do not amend or rewrite an existing commit unless asked.
 
-Follow-up work you discover stays out of this pull request; list it in your
-report. Create external issues only with explicit authorization for that
-action.
+Run the checks CI runs or the verification commands the repository documents.
+Report the results you saw, including failures.
 
-## Title
+Before pushing, scan the diff and the title, description, and comments you will publish for credentials, tokens, private keys, `.env` contents, and internal hostnames the repository does not already publish.
+If you find any, stop and report them instead of pushing.
 
-`<type>(<scope>): <description>` in Conventional Commits format. For a
-single-commit pull request the title is that commit's subject; for several,
-write the subject covering them all, in the type and scope those commits use.
+## Publication
+
+Use a Conventional Commits title: `<type>(<scope>): <description>`.
+For one commit, use its subject.
+For several, write the subject that covers them all, using the type and scope those commits support.
+
+Once authorized to publish, push the branch and update its existing pull request, or open one if none exists.
+Post only comments the pull request does not already carry.
+Request the reviewer the user named through the platform's review-request mechanism.
+If none was named and the pull request has no reviewer, ask once who should review, unless an orchestrating workflow defers the choice.
+
+Check that the published title, description, and diff agree and that any review request registered.
+Report the pull request link and follow-up work you found.
+Keep that follow-up work out of this pull request, and create external issues only when authorized to do so.
 
 ## Description
+
+Use this form so the reviewer can find the outcome, the change, and the evidence without reconstructing the conversation:
 
 ```markdown
 ### Summary
@@ -68,14 +62,11 @@ write the subject covering them all, in the type and scope those commits use.
 - <issue, plan, or specification; omit this section when empty>
 ```
 
-The whole description stays under about 150 words. Analysis, rejected
-alternatives, and the reasoning behind each finding belong in the diff, a plan
-file, or a comment a reviewer asked for, not here.
+Keep the whole description under about 150 words.
+Analysis, rejected alternatives, and the reasoning behind each finding belong in the diff, a plan file, or a comment a reviewer asked for.
 
 ## Comments
 
-Post one comment for a decision a reviewer can see in the diff and could
-reasonably have made the other way: name the decision, why you chose it, and
-what you want confirmed. Post one comment naming the reading order when a
-reviewer starting in the wrong file has to backtrack. If neither applies, post
-nothing.
+Post one comment when the diff contains a decision a reviewer could reasonably have made another way: name the decision, why you chose it, and what you want confirmed.
+Post one comment naming the reading order when starting in the wrong file would make a reviewer backtrack.
+If neither applies, post nothing.
