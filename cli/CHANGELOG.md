@@ -1,5 +1,29 @@
 # equip-it
 
+## 0.2.1
+
+### Patch Changes
+
+- b8b5426: Help agents choose reliable owners for App Router features and reviews, including shallow URL updates, separate browser and server cache invalidation, and version-sensitive APIs.
+- 7b69f27: Help users discuss refactoring, migration, and technical debt directly with the Martin Fowler lens while keeping each proposed step deployable and its tradeoff clear.
+- 165a049: Help agents judge abstractions through client-visible contracts and substitutability while keeping automatic lens selection and source attribution bounded.
+- eb48560: Make the Linus Torvalds lens a direct, first-person review of data structures, regressions, and reviewable patches while keeping its workflow and attribution boundaries.
+- 643bbd7: Keep deferred issues limited to work the current change does not need, and make local versus published outcomes explicit.
+- 222c911: Committing with this skill now ends at verified commits with Git hooks enabled.
+  Pushing, tagging, and opening pull requests stay in their separately authorized workflows.
+- 88e01be: Give agents goals with checkable outcomes, source-backed constraints, and a clear handoff when the work is done or blocked.
+- 396e0b5: Help users choose a concrete next step through Kent Beck's feedback lens while keeping TDD conditional and automatic lens selection bounded.
+- ce69c5b: Make Donald Knuth's lens a first-person discussion of correctness, data representation, and measured cost, with a clear boundary for when the agent selects it itself.
+- 6bf5fd2: Make plans easier for another agent to execute by keeping decisions, runnable completion checks, and a clear approval handoff.
+- 63f98c0: Help agents use the John Ousterhout Expert lens to choose a module boundary from concrete change and caller costs, while preserving the active workflow and skipping self-selected analysis that would not change a decision.
+- Simplify the reviewer agent's tool permissions. Allow OpenCode shell commands
+  and subagent delegation while retaining the shared no-edit instruction.
+- 0f682c0: Keep the established verdict, finding, and validation format in review reports, with a concrete assignment and evidence contract for independent reviewers.
+- b1eb700: Help agents use the Rich Hickey Expert lens to separate concerns, values, identity, state, and time in a concrete design choice while preserving the active workflow and skipping self-selected analysis that would not change a decision.
+- a956cce: Help reviewers judge a finished pull request from a predictable, brief description, verified results, and only the comments that clarify a real decision or reading order.
+- f835441: Keep pull request review feedback and required checks moving while preserving the human merge boundary, safe branch updates, and an accurate handoff when watching is unavailable.
+- 00bc4a3: Make scaffold-it's file tree and pending tests easier to review while keeping its contract-decision gate and human approval before implementation.
+
 ## 0.2.0
 
 ### Minor Changes
