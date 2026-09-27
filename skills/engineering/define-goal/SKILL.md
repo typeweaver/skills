@@ -1,44 +1,27 @@
 ---
 name: define-goal
-description: Turn a task, ticket, plan, or request into one goal an agent can
-  work against on its own. It names the outcome, the evidence that proves it
-  done, and when to stop. Use when handing work to an agent or subagent,
-  setting the objective for an autonomous run, or asked what done means here.
-  Use after the outcome is understood, not to explore or challenge it, and not
-  to plan the work.
+description: Turn a settled task, ticket, plan, or request into one goal an agent or subagent can complete on its own. Use when handing off work, setting an autonomous objective, or deciding what done means. Not for shaping an unsettled outcome or planning the steps.
 ---
 
 # Define Goal
 
-State the intended outcome as one goal an agent can work against without you
-and know when to stop. The source is the task, ticket, plan, or request you
-were given.
+Give an agent one goal it can pursue without you and a clear point at which to hand back.
 
-The goal states:
+State what must be true when the work is done and what result another person can inspect or reproduce to prove it.
+Keep the scope and constraints named by the source: the task, ticket, plan, or request.
 
-- what must be true when the work is done,
-- what evidence proves it,
-- the scope boundaries and constraints the source names,
-- that the agent stops and hands back when blocked. Blocked: a required check,
-  decision, or authorization cannot be obtained by the agent and the request
-  has been posted or reported.
+Name the outcome, not the activity.
+"Refactor the parser" and "investigate the timeout" name work, not what should be true afterward.
+"It works" is not evidence another person can check.
 
-Name the outcome, not the activity: "refactor the parser", "improve error
-handling", and "investigate the timeout" name work, not what is true once that
-work is done.
+Keep the goal independent of tools.
+Name a command or check only when the source or repository already documents it.
+Leave out thresholds, metrics, and constraints you cannot trace to either.
 
-Evidence is a result a third party can check, not "it works". Keep the goal
-tool-independent: name a command or check only when the source or the
-repository already documents it.
+If two plausible readings change the outcome or its evidence, ask one question that names both and recommends one.
+Otherwise take the reading the context best supports and state it in the goal.
 
-A threshold, metric, or constraint you cannot point to in the source or the
-repository is invented: leave it out.
+Write at most three sentences for the goal and one for the stop condition, with nothing else.
+Say when to hand back: when the goal is proved, or when a required check, decision, or authorization remains unavailable after the agent has requested it or reported the block.
 
-Ask one clarification question only when two plausible readings of the request
-lead to different outcomes or different completion evidence. Ask it as the two
-readings with the one you recommend. Otherwise take the reading the context
-supports best and name it in the goal.
-
-Output the goal in at most three sentences, then the stop condition in one
-more, and nothing else. If you catch yourself listing steps or files, you are
-planning: state the outcome instead.
+If you catch yourself listing steps or files, return to the outcome.
