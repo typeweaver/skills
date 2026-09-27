@@ -1,5 +1,11 @@
 # equip-it
 
+## 0.2.2
+
+### Patch Changes
+
+- 8c2dcf7: Break skill text into one clause per line, with no line over 120 characters.
+
 ## 0.2.1
 
 ### Patch Changes
