@@ -1,0 +1,6 @@
+interface:
+  display_name: "Own It"
+  short_description: "Finish agreed work autonomously without waiting for the user"
+  default_prompt: "Use $own-it to finish the agreed work on your own, asking only what blocks you now."
+policy:
+  allow_implicit_invocation: false
