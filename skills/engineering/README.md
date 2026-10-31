@@ -1,15 +1,16 @@
 # Engineering
 
 Use a skill on its own for one job. `drive-it` is the only orchestrator: it
-calls other skills to carry an outcome across the full workflow. It starts only
-when the user invokes it. The other skills can be discovered from task context
-or invoked explicitly.
+calls other skills to carry an outcome across the full workflow. It and `own-it`
+start only when the user invokes them. The other skills can be discovered from
+task context or invoked explicitly.
 
 ## Core workflow
 
 | Need                                                                                  | Skill                                                 |
 | ------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | Take an idea to a production-ready pull request, or pick up the workflow at any phase | [drive-it](./drive-it/SKILL.md)                       |
+| Finish agreed work without waiting for the user                                       | [own-it](./own-it/SKILL.md)                           |
 | Get a candid engineering recommendation                                               | [aurelius](./aurelius/SKILL.md)                       |
 | Resolve an unsettled idea with the user                                               | [shape-it](./shape-it/SKILL.md)                       |
 | Bring a reader up to date                                                             | [summarize-it](./summarize-it/SKILL.md)               |
