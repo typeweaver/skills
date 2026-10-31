@@ -118,6 +118,8 @@ each focused skill also works independently.
 
 - [drive-it](skills/engineering/drive-it/SKILL.md) — Run the full workflow on
   explicit request.
+- [own-it](skills/engineering/own-it/SKILL.md) — Finish agreed work without
+  waiting for the user, on explicit request.
 - [aurelius](skills/engineering/aurelius/SKILL.md) — Give an independent senior
   engineering recommendation.
 - [shape-it](skills/engineering/shape-it/SKILL.md) — Resolve an unsettled idea
