@@ -1,5 +1,15 @@
 # equip-it
 
+## 0.3.0
+
+### Minor Changes
+
+- 1579822: Add `own-it`, a user-only skill that finishes agreed work autonomously: it asks blocking questions up front, treats workflow approvals as given, delivers stacked pull requests, and reports done work, the user's choices, and blocked parts.
+
+### Patch Changes
+
+- 8c2dcf7: Break skill text into one clause per line, with no line over 120 characters.
+
 ## 0.2.1
 
 ### Patch Changes
